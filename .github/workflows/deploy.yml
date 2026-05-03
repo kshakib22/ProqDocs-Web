@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2 # Specific latest patch
+        uses: actions/checkout@v4
       - name: Setup Node
-        uses: actions/setup-node@v4.1.0 # Specific latest patch
+        uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: 'npm'
@@ -29,7 +29,7 @@ jobs:
       - name: Build Astro
         run: npm run build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3.1.1 # Updated
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -42,4 +42,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4.0.5 # Updated
+        uses: actions/deploy-pages@v4
