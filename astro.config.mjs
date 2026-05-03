@@ -14,10 +14,8 @@ export default defineConfig({
     starlight({
       title: "ProqDocs",
       sidebar: [
-        {
-          label: "Documentation",
-          autogenerate: { directory: "" },
-        },
+        // This removes the "Documentation" wrapper and shows folders directly
+        { autogenerate: { directory: "" } },
       ],
     }),
   ],
