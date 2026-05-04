@@ -2,6 +2,7 @@
 name: BoqSheetResource
 description: Laravel API resource for BOQ (Bill of Quantities) sheet transformation - handles serialization of sheet data for API responses
 type: entity
+title: "BoqSheetResource"
 ---
 
 # BoqSheetResource
@@ -206,10 +207,10 @@ return new BoqSheetResource($sheet);
 
 ## Cross-References
 
-- [[BoqSheet-Model]] - Data model for sheets
-- [[BoqSheetController]] - Controller that uses this resource
-- [[BoqEntryResource]] - Resource for entry data
-- [[BoqSheetMergeResource]] - Resource for merge data
+- [BoqSheet-Model](BoqSheet-Model.md) - Data model for sheets
+- [BoqSheetController](BoqSheetController.md) - Controller that uses this resource
+- [BoqEntryResource](BoqEntryResource.md) - Resource for entry data
+- [BoqSheetMergeResource](BoqSheetMergeResource.md) - Resource for merge data
 - [[ProjectResource]] - Resource for project data
 
 ## Architecture Notes

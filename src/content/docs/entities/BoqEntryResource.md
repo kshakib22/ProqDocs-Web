@@ -2,6 +2,7 @@
 name: BoqEntryResource
 description: Laravel API resource for BOQ (Bill of Quantities) entry transformation - handles serialization of entry data for API responses
 type: entity
+title: "BoqEntryResource"
 ---
 
 # BoqEntryResource
@@ -405,11 +406,11 @@ return new BoqSheetResource($sheet);
 ## Cross-References
 
 - [[BoqEntry-Model]] - Data model for entries
-- [[BoqSheet-Model]] - Parent sheet for entries
+- [BoqSheet-Model](BoqSheet-Model.md) - Parent sheet for entries
 - [[BoqSheetMerge-Model]] - Merge configurations
-- [[BoqEntryController]] - Controller that uses this resource
-- [[QuotationResource]] - Resource for quotation data
-- [[RfqResource]] - Resource for RFQ data
+- [BoqEntryController](BoqEntryController.md) - Controller that uses this resource
+- [QuotationResource](QuotationResource.md) - Resource for quotation data
+- [RfqResource](RfqResource.md) - Resource for RFQ data
 - [[VendorResource]] - Resource for vendor data
 - [[BuyerResource]] - Resource for buyer data
 

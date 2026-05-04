@@ -2,6 +2,7 @@
 name: BoqEntry-Model
 description: Laravel Eloquent model for BOQ (Bill of Quantities) entries - individual line items within a BOQ sheet
 type: entity
+title: "BoqEntry Model"
 ---
 
 # BoqEntry Model
@@ -347,11 +348,11 @@ total_amount = total + tax_amount + shipping_amount + loading_charge + services_
 
 ## Cross-References
 
-- [[BoqSheet-Model]] - Parent sheet containing this entry
-- [[BoqSheetService]] - Business logic for entry operations
-- [[BoqEntryController]] - HTTP endpoint handler
+- [BoqSheet-Model](BoqSheet-Model.md) - Parent sheet containing this entry
+- [BoqSheetService](BoqSheetService.md) - Business logic for entry operations
+- [BoqEntryController](BoqEntryController.md) - HTTP endpoint handler
 - [[PurchaseList]] - Downstream purchase order item
-- [[BoqEntry-BoqSheet-Domain]] - Domain overview
+- [BoqEntry-BoqSheet-Domain](BoqEntry-BoqSheet-Domain.md) - Domain overview
 
 ## Usage Examples
 

@@ -1,3 +1,6 @@
+---
+title: "QuotationResource"
+---
 # QuotationResource
 
 **File**: `app/Http/Resources/QuotationResource.php`

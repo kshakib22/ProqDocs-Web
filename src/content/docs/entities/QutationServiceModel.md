@@ -2,6 +2,7 @@
 name: QutationService-Model
 description: Laravel Eloquent model for Quotation Service line items - represents service/product breakdown within a quotation
 type: entity
+title: "QutationService Model"
 ---
 
 # QutationService Model
@@ -194,9 +195,9 @@ public function quotationServiceItems(): HasMany
 
 ## Cross-References
 
-- [[Quotation-Model]] - Parent quotation for this service
-- [[QuotationService]] - Business logic for quotation operations
-- [[QuotationsServiceResource]] - API resource for serialization
+- [Quotation-Model](Quotation-Model.md) - Parent quotation for this service
+- [QuotationService](QuotationService.md) - Business logic for quotation operations
+- [QuotationsServiceResource](QuotationsServiceResource.md) - API resource for serialization
 
 ## Usage Examples
 

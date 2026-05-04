@@ -2,6 +2,7 @@
 name: BoqSheetController
 description: Laravel HTTP controller for BOQ (Bill of Quantities) sheet management - handles all HTTP requests for BOQ sheet operations
 type: entity
+title: "BoqSheetController"
 ---
 
 # BoqSheetController
@@ -17,7 +18,7 @@ type: entity
 - **Export functionality**: Export sheets to Excel format
 - **Authorization**: Enforce buyer ownership and access control
 
-This controller delegates business logic to [[BoqSheetService]] and [[BoqSheetMergeService]], following the thin controller pattern.
+This controller delegates business logic to [BoqSheetService](BoqSheetService.md) and [BoqSheetMergeService](BoqSheetMergeService.md), following the thin controller pattern.
 
 ## Controller Dependencies
 
@@ -499,11 +500,11 @@ private function currentBuyer()
 
 ## Cross-References
 
-- [[BoqSheetService]] - Business logic for sheet operations
-- [[BoqSheetMergeService]] - Business logic for merge operations
-- [[BoqSheet-Model]] - Data model for sheets
-- [[BoqEntryController]] - Controller for entries
-- [[BoqSheetResource]] - API resource for serialization
+- [BoqSheetService](BoqSheetService.md) - Business logic for sheet operations
+- [BoqSheetMergeService](BoqSheetMergeService.md) - Business logic for merge operations
+- [BoqSheet-Model](BoqSheet-Model.md) - Data model for sheets
+- [BoqEntryController](BoqEntryController.md) - Controller for entries
+- [BoqSheetResource](BoqSheetResource.md) - API resource for serialization
 
 ## Usage Examples
 

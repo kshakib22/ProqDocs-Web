@@ -1,6 +1,7 @@
 ---
 aliases: []
 tags: [technical-debt, bugs, sql-risks, postgres-migration, auto-generated]
+title: "Tech Debt Ledger"
 ---
 
 # Tech Debt Ledger
@@ -456,7 +457,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 ## Related Files
 
-- [[Payment-Domain]]
-- [[Project-Domain]]
-- [[Vendor-Domain]]
-- [[Delivery-Domain]]
+- [Payment-Domain](../entities/Payment-Domain.md)
+- [Project-Domain](../entities/Project-Domain.md)
+- [Vendor-Domain](../entities/Vendor-Domain.md)
+- [Delivery-Domain](../entities/Delivery-Domain.md)

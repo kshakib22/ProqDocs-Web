@@ -2,6 +2,7 @@
 name: BoqSheetEntryService
 description: Laravel service class for BOQ (Bill of Quantities) entry business logic - handles entry creation, deletion, and integration with PurchaseList domain
 type: entity
+title: "BoqSheetEntryService"
 ---
 
 # BoqSheetEntryService
@@ -369,9 +370,9 @@ The `BoqSheetEntryService` has deep integration with the `PurchaseList` domain:
 ## Cross-References
 
 - [[BoqEntry-Model]] - Data model for entries
-- [[BoqSheet-Model]] - Data model for sheets
+- [BoqSheet-Model](BoqSheet-Model.md) - Data model for sheets
 - [[PurchaseListService]] - Procurement workflow integration
-- [[BoqSheetMergeService]] - Merge operations
+- [BoqSheetMergeService](BoqSheetMergeService.md) - Merge operations
 - [[Quotation]] - Source data for entries
 - [[Rfq]] - Request for quotation management
 

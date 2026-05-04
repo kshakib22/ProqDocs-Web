@@ -2,6 +2,7 @@
 name: BoqSheet-Model
 description: Laravel Eloquent model for BOQ (Bill of Quantities) sheets - the primary container for construction project quantity data
 type: entity
+title: "BoqSheet Model"
 ---
 
 # BoqSheet Model
@@ -194,11 +195,11 @@ Converts an array of column names back to a comma-separated string for storage.
 
 ## Cross-References
 
-- [[BoqSheetService]] - Business logic for sheet operations
+- [BoqSheetService](BoqSheetService.md) - Business logic for sheet operations
 - [[BoqEntry-Model]] - Line items contained within sheets
 - [[BoqSheetMerge-Model]] - Merge operations tracking
 - [[PurchaseListService]] - Downstream consumer of BOQ data
-- [[BoqSheetController]] - HTTP endpoint handler
+- [BoqSheetController](BoqSheetController.md) - HTTP endpoint handler
 
 ## Usage Examples
 

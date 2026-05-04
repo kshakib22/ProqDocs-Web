@@ -2,6 +2,7 @@
 name: BoqSheetService
 description: Laravel service class for BOQ (Bill of Quantities) sheet business logic - handles sheet creation and extra column management
 type: entity
+title: "BoqSheetService"
 ---
 
 # BoqSheetService
@@ -373,10 +374,10 @@ return $this->success(
 
 ## Cross-References
 
-- [[BoqSheet-Model]] - Data model for sheets
+- [BoqSheet-Model](BoqSheet-Model.md) - Data model for sheets
 - [[BoqEntry-Model]] - Data model for entries
 - [[BoqSheetMerge-Model]] - Data model for merges
-- [[BoqSheetController]] - Controller that uses this service
+- [BoqSheetController](BoqSheetController.md) - Controller that uses this service
 - [[ServiceResponder]] - Trait for standardized responses
 
 ## Usage Examples

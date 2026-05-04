@@ -2,6 +2,7 @@
 name: Rfq-Model
 description: Laravel Eloquent model for RFQ (Request for Quotation) - the central entity in the procurement workflow
 type: entity
+title: "Rfq Model"
 ---
 
 # Rfq Model
@@ -299,10 +300,10 @@ These accessors are automatically included in JSON serialization.
 
 ## Cross-References
 
-- [[Quotation-Model]] - Vendor responses to this RFQ
-- [[RfqService]] - Business logic for RFQ operations
-- [[RfqController]] - HTTP endpoint handler
-- [[RfqResource]] - API resource for serialization
+- [Quotation-Model](Quotation-Model.md) - Vendor responses to this RFQ
+- [RfqService](RfqService.md) - Business logic for RFQ operations
+- [RfqController](RfqController.md) - HTTP endpoint handler
+- [RfqResource](RfqResource.md) - API resource for serialization
 - [[PurchaseList]] - Downstream purchase order
 
 ## Usage Examples

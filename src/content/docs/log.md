@@ -1,3 +1,6 @@
+---
+title: "Documentation Log"
+---
 # Documentation Log
 
 ## [2026-05-01] ingest | Payment Domain Documentation

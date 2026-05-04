@@ -2,6 +2,7 @@
 name: RfqService
 description: Laravel service class for RFQ (Request for Quotation) business logic - handles RFQ creation, management, and vendor engagement
 type: entity
+title: "RfqService"
 ---
 
 # RfqService
@@ -430,10 +431,10 @@ private function getStatusCounts(Buyer $buyer): array
 
 ## Cross-References
 
-- [[Rfq-Model]] - Data model for RFQs
-- [[RfqController]] - Controller that uses this service
-- [[Quotation-Model]] - Vendor responses to RFQs
-- [[QuotationService]] - Service for quotation operations
+- [Rfq-Model](Rfq-Model.md) - Data model for RFQs
+- [RfqController](RfqController.md) - Controller that uses this service
+- [Quotation-Model](Quotation-Model.md) - Vendor responses to RFQs
+- [QuotationService](QuotationService.md) - Service for quotation operations
 
 ## Usage Examples
 

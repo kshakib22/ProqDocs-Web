@@ -2,6 +2,7 @@
 name: BoqSheetMerge-Model
 description: Laravel Eloquent model for BOQ sheet merge operations - tracks when multiple BOQ sheets are combined
 type: entity
+title: "BoqSheetMerge Model"
 ---
 
 # BoqSheetMerge Model
@@ -178,10 +179,10 @@ protected static function booted(): void
 
 ## Cross-References
 
-- [[BoqSheet-Model]] - Parent sheet that owns this merge
-- [[BoqSheetMergeService]] - Business logic for merge operations
+- [BoqSheet-Model](BoqSheet-Model.md) - Parent sheet that owns this merge
+- [BoqSheetMergeService](BoqSheetMergeService.md) - Business logic for merge operations
 - [[BoqEntry-Model]] - Entries affected by merge
-- [[BoqSheetController]] - HTTP endpoint handler
+- [BoqSheetController](BoqSheetController.md) - HTTP endpoint handler
 
 ## Usage Examples
 

@@ -1,3 +1,6 @@
+---
+title: "RfqResource - RFQ API Transformation Layer"
+---
 # RfqResource - RFQ API Transformation Layer
 
 **Entity**: `App\Http\Resources\RfqResource`

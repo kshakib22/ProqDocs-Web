@@ -2,6 +2,7 @@
 name: QuotationService
 description: Laravel service class for Quotation business logic - handles vendor quotation submission, management, and buyer acceptance
 type: entity
+title: "QuotationService"
 ---
 
 # QuotationService
@@ -422,11 +423,11 @@ private function getBuyerStatusCounts(Buyer $buyer): array
 
 ## Cross-References
 
-- [[Quotation-Model]] - Data model for quotations
-- [[QutationService-Model]] - Line items for quotations
-- [[Rfq-Model]] - Parent RFQ for quotations
-- [[QuotationController]] - Controller that uses this service
-- [[QuotationResource]] - API resource for serialization
+- [Quotation-Model](Quotation-Model.md) - Data model for quotations
+- [QutationService-Model](QutationService-Model.md) - Line items for quotations
+- [Rfq-Model](Rfq-Model.md) - Parent RFQ for quotations
+- [QuotationController](QuotationController.md) - Controller that uses this service
+- [QuotationResource](QuotationResource.md) - API resource for serialization
 
 ## Usage Examples
 

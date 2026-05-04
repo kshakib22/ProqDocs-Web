@@ -2,6 +2,7 @@
 name: BoqSheetMergeResource
 description: Laravel API resource for BOQ sheet merge transformation - handles serialization of merge configurations for API responses
 type: entity
+title: "BoqSheetMergeResource"
 ---
 
 # BoqSheetMergeResource
@@ -117,9 +118,9 @@ return new BoqSheetMergeResource($merge);
 ## Cross-References
 
 - [[BoqSheetMerge-Model]] - Data model for merges
-- [[BoqSheet-Model]] - Parent sheet for merges
+- [BoqSheet-Model](BoqSheet-Model.md) - Parent sheet for merges
 - [[BoqEntry-Model]] - Entries included in merges
-- [[BoqSheetMergeService]] - Service that creates merges
+- [BoqSheetMergeService](BoqSheetMergeService.md) - Service that creates merges
 
 ## Architecture Notes
 

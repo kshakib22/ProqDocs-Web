@@ -2,6 +2,7 @@
 name: RfqController
 description: Laravel HTTP controller for RFQ (Request for Quotation) management - handles all HTTP requests for RFQ operations for buyers
 type: entity
+title: "RfqController"
 ---
 
 # RfqController
@@ -18,7 +19,7 @@ type: entity
 - **Document Handling**: Handle RFQ document uploads
 - **Image Management**: Handle product images for RFQs
 
-This controller delegates business logic to [[RfqService]], following the thin controller pattern. It enforces strict authorization rules to ensure only authorized buyers can access their RFQs.
+This controller delegates business logic to [RfqService](RfqService.md), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized buyers can access their RFQs.
 
 ## Controller Dependencies
 
@@ -372,10 +373,10 @@ if (!$buyer) {
 
 ## Cross-References
 
-- [[RfqService]] - Business logic for RFQ operations
-- [[Rfq-Model]] - Data model for RFQs
-- [[Quotation-Model]] - Vendor responses to RFQs
-- [[RfqResource]] - API resource for serialization
+- [RfqService](RfqService.md) - Business logic for RFQ operations
+- [Rfq-Model](Rfq-Model.md) - Data model for RFQs
+- [Quotation-Model](Quotation-Model.md) - Vendor responses to RFQs
+- [RfqResource](RfqResource.md) - API resource for serialization
 - [[PrivateRfqResource]] - API resource for private RFQs
 
 ## Usage Examples

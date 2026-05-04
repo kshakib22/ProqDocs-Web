@@ -1,11 +1,12 @@
 ---
 aliases: []
 tags: [laravel, backend, auto-generated, resource]
+title: "QuotationsServiceResource"
 ---
 
 # QuotationsServiceResource
 
-API transformation for [[QutationService Model]] (the itemized services within a quotation).
+API transformation for [QutationService Model](QutationService Model.md) (the itemized services within a quotation).
 
 ## Current Architecture & Flow
 
@@ -13,4 +14,4 @@ API transformation for [[QutationService Model]] (the itemized services within a
 
 ## Dependencies & Graph Links
 
-- [[QutationService Model]]
+- [QutationService Model](QutationService Model.md)
