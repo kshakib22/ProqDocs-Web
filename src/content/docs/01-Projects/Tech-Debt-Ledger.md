@@ -1,18 +1,18 @@
 ---
 aliases: []
 tags: [technical-debt, bugs, sql-risks, postgres-migration, auto-generated]
-title: "Tech Debt Ledger"
 ---
+
 # Tech Debt Ledger
 
 Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgres migration warnings across all documented domains.
 
 ## Summary
 
-- **Total Items**: 45
-- **Critical**: 12 (race conditions, data integrity risks, security issues)
-- **High**: 18 (performance issues, N+1 queries, missing indexes)
-- **Medium**: 10 (code quality, duplication, incomplete features)
+- **Total Items**: 63
+- **Critical**: 16 (race conditions, data integrity risks, security issues)
+- **High**: 24 (performance issues, N+1 queries, missing indexes)
+- **Medium**: 18 (code quality, duplication, incomplete features)
 - **Low**: 5 (cosmetic issues, commented code)
 
 ---
@@ -278,6 +278,79 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 ---
 
+## BOQ Domain (8 items)
+
+### Critical
+
+- [ ] **Fragile Dynamic Schema** - `app/Models/BoqSheet.php`
+  - `extra_columns` is a comma-separated string.
+  - No database-level validation for column names.
+  - **Fix**: Migrate to JSONB array in Postgres.
+
+- [ ] **Race Condition in Entry Ordering** - `app/Service/BoqSheetEntryService.php:400-410`
+  - `decrement('entry_order')` on deletion doesn't use row-level locking.
+  - Concurrent deletions could lead to inconsistent order numbers.
+  - **Fix**: Use `DB::transaction` with shared locks.
+
+### High
+
+- [ ] **Missing Transactions** - `app/Service/BoqSheetService.php:125-200`
+  - `updateExtraColumnName` updates Sheets, Entries, and Merges without a transaction.
+  - A failure halfway through leaves the BOQ in a corrupted state (some rows renamed, others not).
+  - **Fix**: Wrap in `DB::transaction()`.
+
+- [ ] **Performance Bottleneck (O(N) Renaming)** - `app/Service/BoqSheetService.php`
+  - Renaming a column iterates through every entry in PHP.
+  - **Fix**: Use a single `UPDATE` query with JSON path manipulation (Postgres `jsonb_set`).
+
+### Medium
+
+- [ ] **N+1 Query in BoqSheetController::index()**
+  - Loading sheets with entries and merges for a project causes N+1 queries.
+  - **Fix**: Use `with(['entries', 'boqSheetMerges'])`.
+
+- [ ] **Lack of Audit Trail**
+  - Changes to BOQ entries (price, quantity) aren't logged.
+  - **Fix**: Implement an `activity_log` or dedicated audit table.
+
+---
+
+## RFQ/Quotation Domain (10 items)
+
+### Critical
+
+- [ ] **Typo in Model Name** - `app/Models/QutationService.php`
+  - `QutationService` (missing 'o') is used throughout the bidding system.
+  - **Fix**: Rename to `QuotationServiceItem` and update all relations.
+
+- [ ] **Data Integrity Risk (Duplicate Quotes)** - `app/Service/QuotationService.php`
+  - One-quote-per-vendor-per-RFQ check is done in PHP.
+  - Concurrent requests could bypass this.
+  - **Fix**: Add a unique index on `(rfq_id, vendor_id)` in the `quotations` table.
+
+### High
+
+- [ ] **Manual File Cleanup** - `app/Service/RfqService.php:328-345`
+  - `deleteRfq` manually loops through and deletes files from storage.
+  - If the database delete fails after files are gone, files are lost forever without record.
+  - **Fix**: Use Model Observers (`deleting` event) or a robust media library.
+
+- [ ] **Base64 Complexity** - `app/Service/QuotationService.php:380-450`
+  - Business logic contains low-level base64 decoding and MIME mapping.
+  - **Fix**: Extract to a dedicated `FileUploadService` or use Laravel's `UploadedFile::fake()` or similar abstractions.
+
+### Medium
+
+- [ ] **Manual Total Calculation** - `app/Service/QuotationService.php`
+  - `total_amount` is calculated in PHP; if any component (tax, shipping, service) is updated incorrectly, the total becomes stale.
+  - **Fix**: Use Postgres generated columns or a model `saving` hook for total aggregation.
+
+- [ ] **Inconsistent Notification Status**
+  - Notifications are try-catched and ignored on failure.
+  - **Fix**: Use a reliable queue system with retries.
+
+---
+
 ## Postgres Migration Warnings
 
 ### Schema Changes Required
@@ -383,7 +456,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 ## Related Files
 
-- [Payment-Domain](../entities/Payment-Domain.md)
-- [Project-Domain](../entities/Project-Domain.md)
-- [Vendor-Domain](../entities/Vendor-Domain.md)
-- [Delivery-Domain](../entities/Delivery-Domain.md)
+- [[Payment-Domain]]
+- [[Project-Domain]]
+- [[Vendor-Domain]]
+- [[Delivery-Domain]]

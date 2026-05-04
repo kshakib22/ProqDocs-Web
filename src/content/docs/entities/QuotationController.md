@@ -1,126 +1,435 @@
 ---
-aliases: []
-tags: [laravel, backend, auto-generated]
-title: "QuotationController"
+name: QuotationController
+description: Laravel HTTP controller for Quotation management - handles all HTTP requests for vendor and buyer quotation operations
+type: entity
 ---
+
 # QuotationController
 
-The QuotationController handles HTTP requests for quotation operations from the vendor perspective. Located at `app/Http/Controllers/Vendor/QuotationController.php`.
+## Architectural Purpose
 
-## Current Architecture & Flow
+`QuotationController` (located in `App\Http\Controllers\Vendor\`) is the primary HTTP endpoint handler for all Quotation operations for vendors. This controller serves as the API gateway for:
 
-### Endpoints
+- **Quotation CRUD**: Create, read, update, and delete quotations
+- **Vendor Engagement**: Managing vendor quotation submissions
+- **Buyer Review**: Enabling buyers to review and accept/reject quotes
+- **Status Management**: Handling quotation status transitions
+- **Document Management**: Handling quotation document uploads
+- **RFQ Integration**: Linking quotations to parent RFQs
 
-#### Quotation Management
-- `GET /api/vendor/{vendor}/quotations` - List vendor's quotations
-- `POST /api/vendor/{vendor}/quotations` - Create new quotation
-- `GET /api/vendor/{vendor}/quotations/{quotation}` - Get specific quotation
-- `PUT /api/vendor/{vendor}/quotations/{quotation}` - Update quotation
-- `DELETE /api/vendor/{vendor}/quotations/{quotation}` - Delete quotation
+This controller delegates business logic to [[QuotationService]], following the thin controller pattern. It enforces strict authorization rules to ensure only authorized vendors can access their quotations.
 
-#### Private Quotations
-- `POST /api/vendor/{vendor}/private-quotations` - Create private quotation
+## Controller Dependencies
 
-#### RFQ Discovery
-- `GET /api/vendor/{vendor}/public-rfqs` - Get public RFQs available for quoting
-- `GET /api/vendor/{vendor}/private-rfqs` - Get private RFQs assigned to vendor
-- `GET /api/vendor/{vendor}/rfqs/{rfq}` - Get specific RFQ details
+```php
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\StoreQuotationRequest;
+use App\Http\Requests\UpdateQuotationRequest;
+use App\Http\Resources\PrivateRfqResource;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\PublicRfqResource;
+use App\Http\Resources\RfqResource;
+use App\Models\Document;
+use App\Models\Product;
+use App\Models\Quotation;
+use App\Models\Rfq;
+use App\Models\Vendor;
+use App\Service\QuotationService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
+```
 
-#### Document Management
-- `DELETE /api/vendor/{vendor}/quotations/{quotation}/documents/{document}` - Remove document
+- **QuotationService**: Handles all quotation business logic
+- **BaseController**: Provides common controller functionality
+- **AuthorizesRequests**: Enables authorization middleware
 
-#### Product Quotations
-- `GET /api/vendor/{vendor}/product-quotations/{category_id}` - Get products by category
+## API Endpoints
 
-### Authorization
-- Only vendors can access quotation endpoints
-- Only quotation owner can update/delete
-- Private RFQs restricted to assigned vendor
-- Public RFQs available to all vendors
+### `GET /api/vendor/{vendor}/quotations` - `index()`
 
-### Request Validation
-- Uses [StoreQuotationRequest](StoreQuotationRequest.md) for creation
-- Uses [UpdateQuotationRequest](UpdateQuotationRequest.md) for updates
+**Purpose:** Get all quotations for the authenticated vendor.
 
-## Dependencies & Graph Links
+**Authorization:** Requires authenticated vendor with valid vendor profile.
 
-- Uses [QuotationService](QuotationService.md) for all business logic
-- Returns [QuotationResource](QuotationResource.md), [PublicRfqResource](PublicRfqResource.md), [PrivateRfqResource](PrivateRfqResource.md)
-- Extends [BaseController](BaseController.md)
+**Behavior:**
+1. Validates vendor ownership
+2. Delegates to `QuotationService::getQuotationsForVendor()`
+3. Returns paginated results with status counts
 
-## Red Flags & Tech Debt
-
-### Fat Controller
-- **577 lines** - too much logic in controller
-- **Inline authorization checks** repeated across methods
-- **Mixed concerns**: authorization, validation, business logic
-
-### Code Quality Issues
-- **Inconsistent authentication**:
-  - Uses `Auth::user()` in some methods
-  - Uses `JWTAuth::user()` in others
-  - Should standardize on one approach
-
-- **Duplicate authorization logic**:
-  ```php
-  if (! $user->vendor_id || $user->vendor_id !== $vendor->id) {
-      return $this->error('Only the vendor can access their quotations', [], 403);
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Quotations fetched successfully",
+  "data": {
+    "quotations": [ /* QuotationResource collection */ ],
+    "total": 50,
+    "per_page": 15,
+    "current_page": 1,
+    "last_page": 4,
+    "next_page_url": "https://api.example.com/api/vendor/1/quotations?page=2",
+    "prev_page_url": null,
+    "status_counts": {
+      "total": 50,
+      "in_review": 25,
+      "accepted": 15,
+      "rejected": 10
+    }
   }
-  ```
+}
+```
 
-### Business Logic in Controller
-- Image validation in controller:
-  ```php
-  if (!$firstQuotationImage || !str_starts_with((string) $firstQuotationImage->getMimeType(), 'image/')) {
-      return $this->error('First quotation image file is required...', [], 400);
+### `POST /api/vendor/{vendor}/quotations` - `store()`
+
+**Purpose:** Create a new quotation for an RFQ.
+
+**Authorization:** Requires authenticated vendor with valid vendor profile.
+
+**Request Body:**
+```json
+{
+  "rfq_id": 1,
+  "unit_price": 50.00,
+  "total_amount": 1050.00,
+  "quotation_date": "2024-01-15",
+  "validity_period": 30
+}
+```
+
+**Validation:**
+- `rfq_id`: Required, exists in rfqs
+- `unit_price`: Required, numeric, min 0
+- `total_amount`: Required, numeric, min 0
+- `quotation_date`: Required, date format
+- `validity_period`: Required, integer, min 1
+
+**Behavior:**
+1. Validates vendor ownership
+2. Validates RFQ deadline not passed
+3. Checks for existing quotation
+4. Validates public RFQ requires image
+5. Delegates to `QuotationService::createQuotation()`
+6. Returns created quotation with 201 status
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Quotation created successfully",
+  "data": { /* QuotationResource */ },
+  "code": 201
+}
+```
+
+### `GET /api/vendor/{vendor}/quotations/{quotation}` - `show()`
+
+**Purpose:** Get a specific quotation with full details.
+
+**Authorization:** Requires authenticated vendor who owns the quotation.
+
+**Behavior:**
+1. Validates vendor ownership
+2. Delegates to `QuotationService::getQuotation()`
+3. Returns quotation resource
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Quotation fetched successfully",
+  "data": { /* QuotationResource */ }
+}
+```
+
+### `PUT /api/vendor/{vendor}/quotations/{quotation}` - `update()`
+
+**Purpose:** Update an existing quotation.
+
+**Authorization:** Requires authenticated vendor who created the quotation.
+
+**Request Body:**
+```json
+{
+  "product_id": 1,
+  "unit_price": 60.00,
+  "total_amount": 1200.00,
+  "tax_amount": 60.00,
+  "shipping_amount": 30.00,
+  "quotation_date": "2024-01-16",
+  "validity_period": 45
+}
+```
+
+**Validation:**
+- `product_id`: Nullable, exists in products
+- `unit_price`: Nullable, numeric, min 0
+- `total_amount`: Nullable, numeric, min 0
+- `tax_amount`: Nullable, numeric, min 0
+- `shipping_amount`: Nullable, numeric, min 0
+- `quotation_date`: Nullable, date format
+- `validity_period`: Nullable, integer, min 1
+
+**Behavior:**
+1. Validates vendor ownership
+2. Validates status is 'in_review'
+3. Delegates to `QuotationService::updateQuotation()`
+4. Returns updated quotation
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Quotation updated successfully",
+  "data": { /* QuotationResource */ }
+}
+```
+
+### `DELETE /api/vendor/{vendor}/quotations/{quotation}` - `destroy()`
+
+**Purpose:** Delete a quotation.
+
+**Authorization:** Requires authenticated vendor who created the quotation.
+
+**Behavior:**
+1. Validates vendor ownership
+2. Validates status is 'in_review'
+3. Delegates to `QuotationService::deleteQuotation()`
+4. Returns success
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Quotation deleted successfully"
+}
+```
+
+### `GET /api/vendor/{vendor}/quotations/{rfq}` - `getRfq()`
+
+**Purpose:** Get RFQ details for a vendor's quotation.
+
+**Authorization:** Requires authenticated vendor who owns the quotation.
+
+**Behavior:**
+1. Validates vendor ownership
+2. Loads RFQ with relationships
+3. Returns RFQ resource
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "RFQ fetched successfully",
+  "data": { /* PrivateRfqResource */ }
+}
+```
+
+### `GET /api/vendor/{vendor}/quotations/{rfq}` - `getProductQuotations()`
+
+**Purpose:** Get product-based quotations for a vendor.
+
+**Authorization:** Requires authenticated vendor with valid vendor profile.
+
+**Behavior:**
+1. Validates vendor ownership
+2. Filters products by category
+3. Returns products with quotations
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Products fetched successfully",
+  "data": [ /* ProductResource collection */ ]
+}
+```
+
+### `GET /api/vendor/{vendor}/public-rfqs` - `getPublicRfqs()`
+
+**Purpose:** Get public RFQs available for quoting.
+
+**Authorization:** Requires authenticated vendor with valid vendor profile.
+
+**Behavior:**
+1. Validates vendor ownership
+2. Filters by category if provided
+3. Filters to RFQs without vendor quotations
+4. Filters to active RFQs
+5. Returns paginated results
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Public RFQs fetched successfully",
+  "data": {
+    "rfqs": [ /* RfqResource collection */ ],
+    "total": 50,
+    "per_page": 10,
+    "current_page": 1,
+    "last_page": 4,
+    "next_page_url": "https://api.example.com/api/vendor/1/public-rfqs?page=2",
+    "prev_page_url": null
   }
-  ```
+}
+```
 
-### API Design Issues
-- Inconsistent response formats
-- No rate limiting
-- No request throttling
-- Mixed REST patterns
+### `GET /api/vendor/{vendor}/private-rfqs` - `getPrivateRfqs()`
 
-## Future Upgrades (Postgres & Scalability)
+**Purpose:** Get private RFQs sent to this vendor.
 
-### Controller Refactoring
-1. **Extract authorization to middleware**:
-   ```php
-   class VendorOnlyMiddleware
-   {
-       public function handle(Request $request, Closure $next)
-       {
-           if (! $request->user()?->vendor_id) {
-               return response()->json(['error' => 'Only vendors can access'], 403);
-           }
-           return $next($request);
-       }
-   }
-   ```
+**Authorization:** Requires authenticated vendor with valid vendor profile.
 
-2. **Extract to policies**:
-   ```php
-   class QuotationPolicy
-   {
-       public function view(User $user, Quotation $quotation): bool
-       public function update(User $user, Quotation $quotation): bool
-       public function delete(User $user, Quotation $quotation): bool
-   }
-   ```
+**Behavior:**
+1. Validates vendor ownership
+2. Filters to private RFQs for this vendor
+3. Applies sorting options
+4. Filters by status if provided
+5. Returns paginated results
 
-3. **Standardize authentication** - choose either Auth or JWTAuth
+**Sorting Options:**
+- `newest`: Sort by created_at DESC
+- `oldest`: Sort by created_at ASC
+- `price_low_to_high`: Sort by budget_min ASC
+- `price_high_to_low`: Sort by budget_min DESC
 
-### API Improvements
-1. Add rate limiting middleware
-2. Add request throttling
-3. Standardize response formats
-4. Add API versioning
-5. Add OpenAPI documentation
-6. Use resource collections consistently
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Private RFQs fetched successfully",
+  "data": {
+    "rfqs": [ /* PrivateRfqResource collection */ ],
+    "total": 50,
+    "per_page": 10,
+    "current_page": 1,
+    "last_page": 4,
+    "next_page_url": "https://api.example.com/api/vendor/1/private-rfqs?page=2",
+    "prev_page_url": null
+  }
+}
+```
 
-### Performance
-- Add caching for public RFQ listings
-- Use pagination for all list endpoints
-- Add query optimization for large datasets
-- Consider using cursor-based pagination for large result sets
+### `DELETE /api/vendor/{vendor}/quotations/{quotation}/documents/{document}` - `removeDocument()`
+
+**Purpose:** Remove a document from a quotation.
+
+**Authorization:** Requires authenticated vendor who owns the quotation.
+
+**Behavior:**
+1. Validates document ownership
+2. Delegates to `QuotationService::removeDocument()`
+3. Returns success
+
+**Response:**
+```json
+{
+  "status": "success",
+  "message": "Document removed successfully",
+  "data": { /* Document */ }
+}
+```
+
+## Authorization Pattern
+
+All methods follow this authorization pattern:
+
+```php
+$user = Auth::user();
+if (! $user->vendor_id || $vendor->id !== $user->vendor_id) {
+    return $this->error('Only the vendor can access their quotations', [], 403);
+}
+```
+
+**Helper Method:**
+```php
+// Uses Auth facade for authentication
+// Uses JWTAuth for vendor authentication
+```
+
+## Tech Debt Summary
+
+| Issue | Severity | Impact | Recommended Action |
+|-------|----------|--------|-------------------|
+| No transaction in `rejectRfq()` | MEDIUM | Partial updates on failure | Wrap in `DB::transaction()` |
+| Commented code in `getPrivateRfqs()` | LOW | Code confusion | Remove or document |
+| No rate limiting | LOW | Potential abuse | Add rate limiting middleware |
+| No input sanitization | LOW | XSS risk | Add sanitization middleware |
+
+## Cross-References
+
+- [[QuotationService]] - Business logic for quotation operations
+- [[Quotation-Model]] - Data model for quotations
+- [[Rfq-Model]] - Parent RFQ for quotations
+- [[QuotationResource]] - API resource for serialization
+- [[PrivateRfqResource]] - API resource for private RFQs
+
+## Usage Examples
+
+### Getting all quotations for vendor
+
+```bash
+GET /api/vendor/1/quotations
+Authorization: Bearer {jwt_token}
+```
+
+### Creating a quotation
+
+```bash
+POST /api/vendor/1/quotations
+Authorization: Bearer {jwt_token}
+Content-Type: application/json
+
+{
+  "rfq_id": 1,
+  "unit_price": 50.00,
+  "total_amount": 1050.00,
+  "quotation_date": "2024-01-15",
+  "validity_period": 30
+}
+```
+
+### Updating a quotation
+
+```bash
+PUT /api/vendor/1/quotations/1
+Authorization: Bearer {jwt_token}
+Content-Type: application/json
+
+{
+  "unit_price": 60.00,
+  "total_amount": 1200.00,
+  "quotation_date": "2024-01-16",
+  "validity_period": 45
+}
+```
+
+### Deleting a quotation
+
+```bash
+DELETE /api/vendor/1/quotations/1
+Authorization: Bearer {jwt_token}
+```
+
+### Getting public RFQs
+
+```bash
+GET /api/vendor/1/public-rfqs
+Authorization: Bearer {jwt_token}
+```
+
+### Getting private RFQs
+
+```bash
+GET /api/vendor/1/private-rfqs
+Authorization: Bearer {jwt_token}
+```
+
+### Getting RFQ details
+
+```bash
+GET /api/vendor/1/quotations/1/rfq
+Authorization: Bearer {jwt_token}
+```

@@ -1,7 +1,3 @@
----
-title: "Documentation Log"
----
-
 # Documentation Log
 
 ## [2026-05-01] ingest | Payment Domain Documentation
@@ -236,3 +232,45 @@ title: "Documentation Log"
 - Default eager loading in Shipment and ShipmentItem models may cause unnecessary queries
 
 **Next Domain**: TBD
+
+---
+
+---
+
+## [2026-05-03] ingest | BOQ and RFQ/Quotation Domains
+
+**Action**: Performed bulk ingest and generation for BOQ and RFQ domains to fill grey links in index.md.
+
+**Files Created**:
+- `docs/wiki/entities/Boq Model.md`
+- `docs/wiki/entities/BoqSheet Model.md`
+- `docs/wiki/entities/BoqEntry Model.md`
+- `docs/wiki/entities/BoqSheetMerge Model.md`
+- `docs/wiki/entities/BoqSheetController.md`
+- `docs/wiki/entities/BoqEntryController.md`
+- `docs/wiki/entities/BoqSheetService.md`
+- `docs/wiki/entities/BoqSheetEntryService.md`
+- `docs/wiki/entities/BoqSheetMergeService.md`
+- `docs/wiki/entities/BoqSheetResource.md`
+- `docs/wiki/entities/BoqEntryResource.md`
+- `docs/wiki/entities/BoqSheetMergeResource.md`
+- `docs/wiki/entities/Rfq Model.md`
+- `docs/wiki/entities/Quotation Model.md`
+- `docs/wiki/entities/QutationService Model.md`
+- `docs/wiki/entities/RfqService.md`
+- `docs/wiki/entities/QuotationService.md`
+- `docs/wiki/entities/RfqController.md`
+- `docs/wiki/entities/QuotationController.md`
+- `docs/wiki/entities/RfqResource.md`
+- `docs/wiki/entities/QuotationResource.md`
+- `docs/wiki/entities/QuotationsServiceResource.md`
+
+**Key Findings**:
+- **Critical Typo**: `QutationService` model name (missing 'o') throughout the RFQ domain.
+- **Fragile dynamic schema**: BOQ `extra_columns` stored as comma-separated strings; renaming/deleting columns requires O(N) manual PHP loops.
+- **Missing Transactions**: Critical multi-table updates in `BoqSheetService` and `BoqSheetMergeService` lack explicit `DB::beginTransaction`.
+- **Race Conditions**: `entry_order` decrements and one-quote-per-vendor rules rely on PHP checks rather than DB locks or unique constraints.
+- **Manual File Cleanup**: `RfqService` manually handles storage deletions, creating a risk of orphaned files or premature data loss.
+- **Base64 Bloat**: Low-level decoding logic inside `QuotationService` adds unnecessary complexity to business logic.
+
+**Next Domain**: PurchaseOrder (Validation)
