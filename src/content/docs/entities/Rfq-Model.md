@@ -23,14 +23,14 @@ The RFQ (Request for Quotation) model represents a buyer's request for product q
   - `urgency`: `low`, `medium`, `high`
 
 ### Relationships
-- `buyer()`: BelongsTo [Buyer Model](Buyer Model.md)
-- `vendor()`: BelongsTo [Vendor Model](Vendor Model.md) (only for private RFQs)
-- `product()`: BelongsTo [Product Model](Product Model.md)
-- `project()`: BelongsTo [Project Model](Project Model.md)
-- `category()`: BelongsTo [Category Model](Category Model.md)
-- `documents()`: MorphMany [Document Model](Document Model.md)
-- `quotations()`: HasMany [Quotation Model](Quotation Model.md)
-- `purchaseList()`: HasOne [PurchaseList Model](PurchaseList Model.md)
+- `buyer()`: BelongsTo [Buyer Model](./Buyer Model.md)
+- `vendor()`: BelongsTo [Vendor Model](./Vendor Model.md) (only for private RFQs)
+- `product()`: BelongsTo [Product Model](./Product Model.md)
+- `project()`: BelongsTo [Project Model](./Project Model.md)
+- `category()`: BelongsTo [Category Model](./Category Model.md)
+- `documents()`: MorphMany [Document Model](./Document Model.md)
+- `quotations()`: HasMany [Quotation Model](./Quotation Model.md)
+- `purchaseList()`: HasOne [PurchaseList Model](./PurchaseList Model.md)
 
 ### Scopes
 - `public()`: Filter public RFQs
@@ -43,9 +43,9 @@ The RFQ (Request for Quotation) model represents a buyer's request for product q
 
 ## Dependencies & Graph Links
 
-- Used by [RfqService](RfqService.md) for all RFQ operations
-- Referenced by [Quotation Model](Quotation Model.md) via `rfq_id`
-- Transformed by [RfqResource](RfqResource.md), [PublicRfqResource](PublicRfqResource.md), [PrivateRfqResource](PrivateRfqResource.md)
+- Used by [RfqService](./RfqService.md) for all RFQ operations
+- Referenced by [Quotation Model](./Quotation Model.md) via `rfq_id`
+- Transformed by [RfqResource](./RfqResource.md), [PublicRfqResource](./PublicRfqResource.md), [PrivateRfqResource](./PrivateRfqResource.md)
 
 ## Red Flags & Tech Debt
 

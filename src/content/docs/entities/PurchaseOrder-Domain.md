@@ -7,7 +7,7 @@ title: "PurchaseOrder Domain"
 
 ## Overview
 
-The PurchaseOrder Domain manages the procurement lifecycle from order creation through delivery confirmation. It serves as the central entity connecting [Buyer-Domain](Buyer-Domain.md), [Vendor-Domain](Vendor-Domain.md), [Product-Domain](Product-Domain.md), [RFQ-Quotation-Domain](RFQ-Quotation-Domain.md), and [PurchaseList-Domain](PurchaseList-Domain.md).
+The PurchaseOrder Domain manages the procurement lifecycle from order creation through delivery confirmation. It serves as the central entity connecting [Buyer-Domain](./Buyer-Domain.md), [Vendor-Domain](./Vendor-Domain.md), [Product-Domain](./Product-Domain.md), [RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md), and [PurchaseList-Domain](./PurchaseList-Domain.md).
 
 ## Current Architecture & Flow
 
@@ -27,10 +27,10 @@ The central entity representing a formal purchase order sent to a vendor.
 - `receipt_time`, `delivery_completion_time`, `confirm_time` - Timestamps for status transitions
 
 **Relationships:**
-- `belongsTo` [Project](Project.md), [Vendor](Vendor.md), [Buyer](Buyer.md)
-- `hasMany` [PurchaseList](PurchaseList.md), [PurchaseOrderPayment](PurchaseOrderPayment.md), [PurchaseOrderTransactionDetail](PurchaseOrderTransactionDetail.md), [PurchaseOrderPaymentInfo](PurchaseOrderPaymentInfo.md)
-- `hasOne` [DeliveryDetail](DeliveryDetail.md)
-- `hasManyThrough` [Shipment](Shipment.md)
+- `belongsTo` [Project](./Project.md), [Vendor](./Vendor.md), [Buyer](./Buyer.md)
+- `hasMany` [PurchaseList](./PurchaseList.md), [PurchaseOrderPayment](./PurchaseOrderPayment.md), [PurchaseOrderTransactionDetail](./PurchaseOrderTransactionDetail.md), [PurchaseOrderPaymentInfo](./PurchaseOrderPaymentInfo.md)
+- `hasOne` DeliveryDetail
+- `hasManyThrough` [Shipment](./Shipment.md)
 
 **Query Scopes:**
 - `scopeStatusCounts()` - Aggregates order status counts
@@ -54,8 +54,8 @@ Represents payment records for purchase orders.
 - `metadata` - JSON for gateway-specific data
 
 **Relationships:**
-- `belongsTo` [PurchaseOrder](PurchaseOrder.md), [PaymentType](PaymentType.md), [Buyer](Buyer.md)
-- `belongsTo` [PurchaseOrderTransactionDetail](PurchaseOrderTransactionDetail.md) (one-to-one)
+- `belongsTo` [PurchaseOrder](./PurchaseOrder.md), [PaymentType](./PaymentType.md), [Buyer](./Buyer.md)
+- `belongsTo` [PurchaseOrderTransactionDetail](./PurchaseOrderTransactionDetail.md) (one-to-one)
 
 **Helper Methods:**
 - `isCompleted()` - Checks if payment status is completed
@@ -77,8 +77,8 @@ Tracks individual payment transactions with verification status.
 - `PAYMENT_METHODS` - Supported methods: SSL Commerce, Bank Transfer, Cash, Cheque, BEFTN, RTGS, NPSB
 
 **Relationships:**
-- `hasOne` [PurchaseOrderPayment](PurchaseOrderPayment.md)
-- `belongsTo` [PurchaseOrder](PurchaseOrder.md), [PaymentType](PaymentType.md), [Buyer](Buyer.md)
+- `hasOne` [PurchaseOrderPayment](./PurchaseOrderPayment.md)
+- `belongsTo` [PurchaseOrder](./PurchaseOrder.md), [PaymentType](./PaymentType.md), [Buyer](./Buyer.md)
 
 **Helper Methods:**
 - `isSuccess()` - Checks status + verification
@@ -93,7 +93,7 @@ Tracks individual payment transactions with verification status.
 Stores verified payment information for due amount calculations.
 
 **Relationships:**
-- `belongsTo` [PurchaseOrder](PurchaseOrder.md)
+- `belongsTo` [PurchaseOrder](./PurchaseOrder.md)
 
 ### Controllers
 
@@ -174,19 +174,19 @@ Notifies buyer about their payment status.
 ## Dependencies & Graph Links
 
 ### Domain Dependencies
-- [Buyer-Domain](Buyer-Domain.md) - PO owner
-- [Vendor-Domain](Vendor-Domain.md) - PO recipient
-- [Project-Domain](Project-Domain.md) - Associated project
-- [Product-Domain](Product-Domain.md) - Items being purchased
-- [RFQ-Quotation-Domain](RFQ-Quotation-Domain.md) - Source of pricing
-- [PurchaseList-Domain](PurchaseList-Domain.md) - Line items
-- [Payment-Domain](Payment-Domain.md) - Payment processing
-- [Delivery-Domain](Delivery-Domain.md) - Shipment tracking
+- Buyer-Domain - PO owner
+- Vendor-Domain - PO recipient
+- [Project-Domain](./Project-Domain.md) - Associated project
+- [Product-Domain](./Product-Domain.md) - Items being purchased
+- [RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md) - Source of pricing
+- [PurchaseList-Domain](./PurchaseList-Domain.md) - Line items
+- [Payment-Domain](./Payment-Domain.md) - Payment processing
+- [Delivery-Domain](./Delivery-Domain.md) - Shipment tracking
 
 ### Cross-Domain Flows
-1. **PO Creation:** [PurchaseList-Domain](PurchaseList-Domain.md) → PurchaseOrder (items aggregated)
-2. **Payment:** [Payment-Domain](Payment-Domain.md) → PurchaseOrderPayment → PurchaseOrder
-3. **Delivery:** [Delivery-Domain](Delivery-Domain.md) → PurchaseOrder status updates
+1. **PO Creation:** [PurchaseList-Domain](./PurchaseList-Domain.md) → PurchaseOrder (items aggregated)
+2. **Payment:** [Payment-Domain](./Payment-Domain.md) → PurchaseOrderPayment → PurchaseOrder
+3. **Delivery:** [Delivery-Domain](./Delivery-Domain.md) → PurchaseOrder status updates
 4. **Notifications:** PurchaseOrder events → Notification system
 
 ## Red Flags & Tech Debt
@@ -281,3 +281,6 @@ Notifies buyer about their payment status.
 2. **Queue PDF Generation** - Move PDF generation to background jobs
 3. **Caching Strategy** - Cache status counts with invalidation on status changes
 4. **Read Replica** - Route read-heavy queries (list, show) to read replicas
+s
+cas
+s

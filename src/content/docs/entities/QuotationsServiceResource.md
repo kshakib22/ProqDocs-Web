@@ -6,7 +6,7 @@ title: "QuotationsServiceResource"
 
 # QuotationsServiceResource
 
-API transformation for [QutationService Model](QutationService Model.md) (the itemized services within a quotation).
+API transformation for [QutationService Model](./QutationService Model.md) (the itemized services within a quotation).
 
 ## Current Architecture & Flow
 
@@ -14,4 +14,4 @@ API transformation for [QutationService Model](QutationService Model.md) (the it
 
 ## Dependencies & Graph Links
 
-- [QutationService Model](QutationService Model.md)
+- [QutationService Model](./QutationService Model.md)

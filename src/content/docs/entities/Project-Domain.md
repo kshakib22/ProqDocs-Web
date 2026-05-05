@@ -13,17 +13,17 @@ The Project domain manages construction projects within the system. Projects are
 
 ### Core Components
 
-#### [Project Model](Project Model.md)
+#### [Project Model](./Project Model.md)
 - **Location**: `app/Models/Project.php` (64 lines)
 - **Relationships**:
-  - `buyer()` - BelongsTo [Buyer Model](Buyer Model.md)
-  - `projectManager()` - BelongsTo [User Model](User Model.md)
-  - `boqEntries()` - HasMany [BoqEntry Model](BoqEntry Model.md)
-  - `boqSheets()` - HasMany [BoqSheet Model](BoqSheet Model.md)
-  - `rfqs()` - HasMany [Rfq Model](Rfq Model.md)
+  - `buyer()` - BelongsTo [Buyer Model](./Buyer Model.md)
+  - `projectManager()` - BelongsTo [User Model](./User Model.md)
+  - `boqEntries()` - HasMany [BoqEntry Model](./BoqEntry Model.md)
+  - `boqSheets()` - HasMany [BoqSheet Model](./BoqSheet Model.md)
+  - `rfqs()` - HasMany [Rfq Model](./Rfq Model.md)
 - **Features**: Soft deletes enabled
 
-#### [ProjectService](ProjectService.md)
+#### [ProjectService](./ProjectService.md)
 - **Location**: `app/Service/ProjectService.php` (183 lines)
 - **Methods**:
   - `listProjects()` - Paginated listing with search, filters, and RFQ counts
@@ -34,18 +34,18 @@ The Project domain manages construction projects within the system. Projects are
   - `prepareData()` - Prepares data with auto-generated project codes
   - `generateUniqueProjectCode()` - Generates unique codes (PRJ-XXX-XXXXX)
 
-#### [ProjectController](ProjectController.md)
+#### [ProjectController](./ProjectController.md)
 - **Location**: `app/Http/Controllers/Buyer/ProjectController.php` (93 lines)
 - **Endpoints**: index, store, show, update, destroy
 - **Authentication**: Uses `JWTAuth::user()` for buyer resolution
 - **Pattern**: Thin controller delegating to service layer
 
 #### Resources
-- `[ProjectResource](ProjectResource.md)` - Basic project data (40 lines)
-- `[ProjectResourceWithCompletion](ProjectResourceWithCompletion.md)` - Includes RFQ counts (41 lines)
+- `[ProjectResource](./ProjectResource.md)` - Basic project data (40 lines)
+- `[ProjectResourceWithCompletion](./ProjectResourceWithCompletion.md)` - Includes RFQ counts (41 lines)
 
 #### Validation
-- `[ProjectRequest](ProjectRequest.md)` - Form request with validation rules (93 lines)
+- `[ProjectRequest](./ProjectRequest.md)` - Form request with validation rules (93 lines)
 
 ### Database Schema
 
@@ -97,19 +97,19 @@ The Project domain manages construction projects within the system. Projects are
 ## Dependencies & Graph Links
 
 ### Community 11 (Cohesion: 0.07)
-- [ProjectController](ProjectController.md)
-- [PurchaseOrderController](PurchaseOrderController.md)
-- [EnsureBoqSheetForProjects](EnsureBoqSheetForProjects.md) (Console Command)
-- [Buyer Model](Buyer Model.md)
-- [ProjectResourceWithCompletion](ProjectResourceWithCompletion.md)
-- [ProjectSeeder](ProjectSeeder.md)
-- [ProjectService](ProjectService.md)
+- [ProjectController](./ProjectController.md)
+- [PurchaseOrderController](./PurchaseOrderController.md)
+- EnsureBoqSheetForProjects (Console Command)
+- [Buyer Model](./Buyer Model.md)
+- [ProjectResourceWithCompletion](./ProjectResourceWithCompletion.md)
+- [ProjectSeeder](./ProjectSeeder.md)
+- [ProjectService](./ProjectService.md)
 
 ### External Connections
-- Connects to [BoqSheet Model](BoqSheet Model.md) via `boqSheets()` relationship
-- Connects to [BoqEntry Model](BoqEntry Model.md) via `boqEntries()` relationship
-- Connects to [Rfq Model](Rfq Model.md) via `rfqs()` relationship
-- Connects to [PurchaseOrderController](PurchaseOrderController.md) (cross-community bridge)
+- Connects to [BoqSheet Model](./BoqSheet Model.md) via `boqSheets()` relationship
+- Connects to [BoqEntry Model](./BoqEntry Model.md) via `boqEntries()` relationship
+- Connects to [Rfq Model](./Rfq Model.md) via `rfqs()` relationship
+- Connects to [PurchaseOrderController](./PurchaseOrderController.md) (cross-community bridge)
 
 ## Red Flags & Tech Debt
 
@@ -243,9 +243,11 @@ The Project domain manages construction projects within the system. Projects are
    - Alert on unusual activity
 
 ## Related Entities
-- [Buyer Model](Buyer Model.md) - Project owner
-- [User Model](User Model.md) - Project manager
-- [BoqSheet Model](BoqSheet Model.md) - Project BOQ sheets
-- [BoqEntry Model](BoqEntry Model.md) - Project BOQ entries
-- [Rfq Model](Rfq Model.md) - Project RFQs
-- [PurchaseOrderController](PurchaseOrderController.md) - Related purchase orders
+- Buyer Model - Project owner
+- User Model - Project manager
+- [BoqSheet Model](./BoqSheet Model.md) - Project BOQ sheets
+- BoqEntry Model - Project BOQ entries
+- [Rfq Model](./Rfq Model.md) - Project RFQs
+- [PurchaseOrderController](./PurchaseOrderController.md) - Related purchase orders
+hase orders
+rs

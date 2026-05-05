@@ -15,16 +15,16 @@ The Product domain is the second most interconnected domain in the application (
 
 #### Models
 
-- **[Product](Product.md)** - Core product model with soft deletes, status flags (active/draft/archived), and relationships to vendor, categories, variations, documents, and slide images.
-- **[ProductVariation](ProductVariation.md)** - Product variations (colors, sizes, etc.).
-- **[ProductFavorite](ProductFavorite.md)** - User's favorite products.
-- **[ProductComparison](ProductComparison.md)** - User's product comparison list (max 3 products).
-- **[SlideImage](SlideImage.md)** - Product gallery/slide images.
-- **[Document](Document.md)** - Product documents (PDFs, CAD files, etc.) via polymorphic relationship.
+- **Product** - Core product model with soft deletes, status flags (active/draft/archived), and relationships to vendor, categories, variations, documents, and slide images.
+- **ProductVariation** - Product variations (colors, sizes, etc.).
+- **ProductFavorite** - User's favorite products.
+- **ProductComparison** - User's product comparison list (max 3 products).
+- **SlideImage** - Product gallery/slide images.
+- **Document** - Product documents (PDFs, CAD files, etc.) via polymorphic relationship.
 
 #### Services
 
-- **[ProductService](ProductService.md)** - Core product management service (1090 lines). Handles:
+- **ProductService** - Core product management service (1090 lines). Handles:
   - Product CRUD operations
   - File uploads (main image, specification file, slide images, documents)
   - Thumbnail generation using Intervention Image
@@ -33,18 +33,18 @@ The Product domain is the second most interconnected domain in the application (
   - Product status management (active/draft/archived)
   - Elasticsearch synchronization
 
-- **[ElasticService](ElasticService.md)** - Elasticsearch integration (1012 lines). Handles:
+- **ElasticService** - Elasticsearch integration (1012 lines). Handles:
   - Product indexing and search
   - Vendor indexing and search
   - Boost score management for subscription-based ranking
   - Cache invalidation for public catalog
   - Slot-based product indexing for architectural/interior subscriptions
 
-- **[ProductFavoriteComparisonService](ProductFavoriteComparisonService.md)** - Buyer favorites and comparison management (98 lines).
+- **ProductFavoriteComparisonService** - Buyer favorites and comparison management (98 lines).
 
 #### Controllers
 
-- **[Vendor/ProductController](Vendor/ProductController.md)** - Vendor-facing product endpoints (587 lines):
+- **Vendor/ProductController** - Vendor-facing product endpoints (587 lines):
   - `index()` - List products with filtering and search
   - `store()` - Create new product
   - `show()` - Get specific product
@@ -56,22 +56,23 @@ The Product domain is the second most interconnected domain in the application (
   - `downloadImportTemplate()` - Download Excel template
   - `checkUniqueSKU()` - Validate SKU uniqueness
 
-- **[Buyer/ProductFavoriteComparisonController](Buyer/ProductFavoriteComparisonController.md)** - Buyer favorites and comparison endpoints (91 lines).
+- **Buyer/ProductFavoriteComparisonController** - Buyer favorites and comparison endpoints (91 lines).
 
 #### Resources
 
-- **[ProductResource](ProductResource.md)** - Full product details with vendor, categories, documents, and favorite status.
-- **[ShortProductResource](ShortProductResource.md)** - Minimal product representation.
-- **[ProductShow](ProductShow.md)** - Product display resource.
+- **ProductResource** - Full product details with vendor, categories, documents, and favorite status.
+- **ShortProductResource** - Minimal product representation.
+- **ProductShow** - Product display resource.
 
 #### Jobs
 
-- **[ImportProductsJob](ImportProductsJob.md)** - Background job for Excel product import.
+- **ImportProductsJob** - Background job for Excel product import.
 
 #### Imports/Exports
 
-- **[ProductImport](ProductImport.md)** - Excel import with image extraction from cells (739 lines).
-- **[ProductTemplateExport](ProductTemplateExport.md)** - Excel template export.
+- **ProductImport** - Excel import with image extraction from cells (739 lines).
+- **ProductTemplateExport** - Excel template export.
+
 
 ### Product Flow
 
@@ -163,17 +164,18 @@ Model methods: `scopeSetActive()`, `scopeSetDraft()`, `scopeSetArchive()`
 
 ### Direct Dependencies
 
-- **[Vendor](Vendor.md)** - Products belong to vendors
-- **[Category](Category.md)** - Products have many-to-many relationship with categories
-- **[Unit](Unit.md)** - Products have a unit (kg, pcs, box, etc.)
-- **[Subscription](Subscription.md)** - Products can be featured in subscription slots
-- **[Elasticsearch](Elasticsearch.md)** - Products are indexed for search
+- **[Vendor](./Vendor-Domain.md)** - Products belong to vendors
+- **Category** - Products have many-to-many relationship with categories
+- **Unit** - Products have a unit (kg, pcs, box, etc.)
+- **Subscription** - Products can be featured in subscription slots
+- **Elasticsearch** - Products are indexed for search
 
 ### Cross-Domain Connections
 
-- **[Document](Document.md)** - Polymorphic relationship for product documents
-- **[User](User.md)** - Favorites and comparisons are user-specific
-- **[Notification](Notification.md)** - Product upload completion notifications
+- **Document** - Polymorphic relationship for product documents
+- **User** - Favorites and comparisons are user-specific
+- **Notification** - Product upload completion notifications
+
 
 ## Red Flags & Tech Debt
 

@@ -431,10 +431,10 @@ private function getStatusCounts(Buyer $buyer): array
 
 ## Cross-References
 
-- [Rfq-Model](Rfq-Model.md) - Data model for RFQs
-- [RfqController](RfqController.md) - Controller that uses this service
-- [Quotation-Model](Quotation-Model.md) - Vendor responses to RFQs
-- [QuotationService](QuotationService.md) - Service for quotation operations
+- [Rfq-Model](./Rfq-Model.md) - Data model for RFQs
+- [RfqController](./RfqController.md) - Controller that uses this service
+- [Quotation-Model](./Quotation-Model.md) - Vendor responses to RFQs
+- [QuotationService](./QuotationService.md) - Service for quotation operations
 
 ## Usage Examples
 

@@ -5,7 +5,7 @@ title: "PurchaseList-Domain"
 ---
 # PurchaseList-Domain
 
-The PurchaseList domain manages the procurement cart where buyers accumulate items for purchase orders. Items can be added from RFQs, quotations, or directly from BOQ entries. This domain bridges the [RFQ-Quotation-Domain](RFQ-Quotation-Domain.md) and [BoqEntry-BoqSheet-Domain](BoqEntry-BoqSheet-Domain.md) with the purchase order workflow.
+The PurchaseList domain manages the procurement cart where buyers accumulate items for purchase orders. Items can be added from RFQs, quotations, or directly from BOQ entries. This domain bridges the [RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md) and [BoqEntry-BoqSheet-Domain](./BoqEntry-BoqSheet-Domain.md) with the purchase order workflow.
 
 ## Current Architecture & Flow
 
@@ -13,7 +13,7 @@ The PurchaseList domain manages the procurement cart where buyers accumulate ite
 
 1. **From RFQ** via `PurchaseListService::addToPurchaseListFromRfq()`
    - Buyer selects a product from an RFQ
-   - Creates/links to a pending [PurchaseOrder](PurchaseOrder.md)
+   - Creates/links to a pending PurchaseOrder
    - Calculates: `total_price = unit_price × estimated_quantity`
    - Calculates tax: `tax_amount = total_price × vat_rate / 100`
    - Status: `pending`, `is_ordered: false`
@@ -76,27 +76,27 @@ PurchaseOrder → has many → PurchaseList
 ## Dependencies & Graph Links
 
 ### Models
-- [PurchaseList Model](PurchaseList Model.md) - Purchase list entity with scopes
-- [PurchaseOrder Model](PurchaseOrder Model.md) - Parent purchase order with status counts
+- [PurchaseList Model](./PurchaseList Model.md) - Purchase list entity with scopes
+- [PurchaseOrder Model](./PurchaseOrder Model.md) - Parent purchase order with status counts
 
 ### Services
-- [PurchaseListService](PurchaseListService.md) - Purchase list business logic (451 lines)
+- [PurchaseListService](./PurchaseListService.md) - Purchase list business logic (451 lines)
 
 ### Controllers
-- [PurchaseOrderController](PurchaseOrderController.md) - Purchase order endpoints that manage purchase lists
+- [PurchaseOrderController](./PurchaseOrderController.md) - Purchase order endpoints that manage purchase lists
 
 ### Resources
-- [PurchaseListResource](PurchaseListResource.md) - Purchase list API transformation with image handling
+- [PurchaseListResource](./PurchaseListResource.md) - Purchase list API transformation with image handling
 
 ### Related Domains
-- [RFQ-Quotation-Domain](RFQ-Quotation-Domain.md) - Source of RFQ-based purchase lists
-- [BoqEntry-BoqSheet-Domain](BoqEntry-BoqSheet-Domain.md) - Source of BOQ-based purchase lists
+- [RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md) - Source of RFQ-based purchase lists
+- [BoqEntry-BoqSheet-Domain](./BoqEntry-BoqSheet-Domain.md) - Source of BOQ-based purchase lists
 
 ## Red Flags & Tech Debt
 
 ### Service Layer Issues
 
-**[PurchaseListService](PurchaseListService.md)**: 451 lines with multiple concerns
+**[PurchaseListService](./PurchaseListService.md)**: 451 lines with multiple concerns
 
 1. **Inconsistent Costing Methods**:
    - `updatePurchaseOrderCosting()` - Incremental updates (lines 415-425)

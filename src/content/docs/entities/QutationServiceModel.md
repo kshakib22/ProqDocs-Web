@@ -195,9 +195,9 @@ public function quotationServiceItems(): HasMany
 
 ## Cross-References
 
-- [Quotation-Model](Quotation-Model.md) - Parent quotation for this service
-- [QuotationService](QuotationService.md) - Business logic for quotation operations
-- [QuotationsServiceResource](QuotationsServiceResource.md) - API resource for serialization
+- [Quotation-Model](./Quotation-Model.md) - Parent quotation for this service
+- [QuotationService](./QuotationService.md) - Business logic for quotation operations
+- [QuotationsServiceResource](./QuotationsServiceResource.md) - API resource for serialization
 
 ## Usage Examples
 

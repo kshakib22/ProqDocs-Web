@@ -300,11 +300,11 @@ These accessors are automatically included in JSON serialization.
 
 ## Cross-References
 
-- [Quotation-Model](Quotation-Model.md) - Vendor responses to this RFQ
-- [RfqService](RfqService.md) - Business logic for RFQ operations
-- [RfqController](RfqController.md) - HTTP endpoint handler
-- [RfqResource](RfqResource.md) - API resource for serialization
-- [[PurchaseList]] - Downstream purchase order
+- [Quotation-Model](./Quotation-Model.md) - Vendor responses to this RFQ
+- [RfqService](./RfqService.md) - Business logic for RFQ operations
+- [RfqController](./RfqController.md) - HTTP endpoint handler
+- [RfqResource](./RfqResource.md) - API resource for serialization
+- PurchaseList - Downstream purchase order
 
 ## Usage Examples
 

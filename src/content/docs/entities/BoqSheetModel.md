@@ -15,7 +15,7 @@ title: "BoqSheet Model"
 - **BoqEntry**: Contains the actual line items/rows of the quantity sheet
 - **BoqSheetMerge**: Tracks merge operations when sheets are combined
 
-The BOQ sheet is the foundational document used throughout the procurement lifecycle, feeding into [[PurchaseListService]] and RFQ generation workflows.
+The BOQ sheet is the foundational document used throughout the procurement lifecycle, feeding into [PurchaseListService](./PurchaseListService.md) and RFQ generation workflows.
 
 ## Database Schema
 
@@ -103,7 +103,7 @@ public function entries(): HasMany
 - **Cardinality:** One-to-many (one sheet has many entries)
 - **Cascade:** Database-level `onDelete('cascade')` on foreign key
 - **Usage:** Primary access point for iterating through quantity data
-- **Related:** [[BoqEntry-Model]]
+- **Related**: BoqEntry-Model
 
 ### `boqSheetMerges(): HasMany`
 
@@ -118,7 +118,7 @@ public function boqSheetMerges(): HasMany
 - **Cardinality:** One-to-many
 - **Cascade:** Application-level deletion via `booted()` hook
 - **Usage:** Audit trail for sheet combination operations
-- **Related:** [[BoqSheetMerge-Model]]
+- **Related:** BoqSheetMerge-Model
 
 ## Lifecycle Hooks
 
@@ -143,7 +143,7 @@ $table->foreignId('boq_sheet_id')->constrained()->onDelete('cascade');
 ```
 
 **Analysis:**
-- `boqSheetMerges()` has no database-level FK (see [[BoqSheetMerge-Model]]), so application-level cleanup is required
+- `boqSheetMerges()` has no database-level FK (see BoqSheetMerge-Model), so application-level cleanup is required
 - `entries()` has database-level cascade, so no application-level cleanup needed
 - This is actually correct architecture - the hook only handles what the database cannot
 
@@ -243,12 +243,12 @@ Converts an array of column names back to a comma-separated string for storage.
 
 ## Cross-References
 
-- [BoqSheetService](BoqSheetService.md) - Business logic for sheet operations
-- [[BoqEntry-Model]] - Line items contained within sheets
-- [[BoqSheetMerge-Model]] - Merge operations tracking
-- [[PurchaseListService]] - Downstream consumer of BOQ data
-- [BoqSheetController](BoqSheetController.md) - HTTP endpoint handler
-- [BoqEntry-BoqSheet-Domain](BoqEntry-BoqSheet-Domain.md) - Domain overview
+- [BoqSheetService](./BoqSheetService.md) - Business logic for sheet operations
+- [BoqEntry-Model](./BoqEntryModel.md) - Line items contained within sheets
+- BoqSheetMerge-Model - Merge operations tracking
+- [PurchaseListService](./PurchaseListService.md) - Downstream consumer of BOQ data
+- [BoqSheetController](./BoqSheetController.md) - HTTP endpoint handler
+- [BoqEntry-BoqSheet-Domain](./BoqEntry-BoqSheet-Domain.md) - Domain overview
 
 ## Usage Examples
 
@@ -290,4 +290,6 @@ $sheets = BoqSheet::where('project_id', $projectId)
 ```php
 $sheet->extra_columns_array = ['new_column', 'another_column'];
 $sheet->save();
+```
+();
 ```

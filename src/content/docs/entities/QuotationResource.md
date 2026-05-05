@@ -598,8 +598,7 @@ This enables automatic API documentation generation via tools like Swagger UI or
 
 ## See Also
 
-- `Quotation` Model: The underlying Eloquent model
-- `QuotationService` Model: Service line items
-- `Document` Model: Supporting documents
-- `RfqResource`: Related RFQ API resource
-- `VendorResource`: Related vendor API resource
+- [QuotationService](./QuotationService.md) - Service line items
+- Document Model: Supporting documents
+- [RfqResource](./RfqResource.md): Related RFQ API resource
+- VendorResource: Related vendor API resource

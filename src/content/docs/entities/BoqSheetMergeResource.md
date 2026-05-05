@@ -117,10 +117,10 @@ return new BoqSheetMergeResource($merge);
 
 ## Cross-References
 
-- [[BoqSheetMerge-Model]] - Data model for merges
-- [BoqSheet-Model](BoqSheet-Model.md) - Parent sheet for merges
-- [[BoqEntry-Model]] - Entries included in merges
-- [BoqSheetMergeService](BoqSheetMergeService.md) - Service that creates merges
+- BoqSheetMerge-Model - Data model for merges
+- [BoqSheet-Model](./BoqSheet-Model.md) - Parent sheet for merges
+- [BoqEntry-Model](./BoqEntryModel.md) - Entries included in merges
+- [BoqSheetMergeService](./BoqSheetMergeService.md) - Service that creates merges
 
 ## Architecture Notes
 

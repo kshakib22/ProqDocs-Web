@@ -7,7 +7,7 @@ title: "Elasticsearch Domain"
 
 ## Overview
 
-The Elasticsearch domain is the 5th most interconnected domain in the application (21 edges in the knowledge graph), handling all search functionality for products and vendors. It provides full-text search, filtering, sorting, and subscription-based boost scoring for the public catalog. The domain integrates with the [Product](Product.md) and [Vendor](Vendor.md) domains to index and search data efficiently.
+The Elasticsearch domain is the 5th most interconnected domain in the application (21 edges in the knowledge graph), handling all search functionality for products and vendors. It provides full-text search, filtering, sorting, and subscription-based boost scoring for the public catalog. The domain integrates with the Product and Vendor domains to index and search data efficiently.
 
 ## Current Architecture & Flow
 
@@ -15,7 +15,7 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Services
 
-- **[ElasticService](ElasticService.md)** - Core Elasticsearch service (1012 lines). Handles:
+- **[ElasticService](./ElasticService.md)** - Core Elasticsearch service (1012 lines). Handles:
   - Index management (products, vendors, architectural/interior slot products)
   - Product and vendor indexing with boost scores
   - Public catalog search with filters, pagination, and sorting
@@ -25,7 +25,7 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Controllers
 
-- **[ElasticsearchHomeController](ElasticsearchHomeController.md)** - Public search endpoints (400 lines):
+- **[ElasticsearchHomeController](./ElasticsearchHomeController.md)** - Public search endpoints (400 lines):
   - `getProducts()` - Search products with filters and sorting
   - `getVendors()` - Search vendors with filters and sorting
   - `getVendorProducts()` - Get products for a specific vendor
@@ -35,13 +35,13 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Console Commands
 
-- **[IndexSubscribedProductsToElasticsearch](IndexSubscribedProductsToElasticsearch.md)** - Index all products and vendors with subscription boost scores
-- **[RebuildProjectElasticsearchIndexes](RebuildProjectElasticsearchIndexes.md)** - Rebuild all Elasticsearch indexes with environment-safe names
+- **[IndexSubscribedProductsToElasticsearch](./IndexSubscribedProductsToElasticsearch.md)** - Index all products and vendors with subscription boost scores
+- **[RebuildProjectElasticsearchIndexes](./RebuildProjectElasticsearchIndexes.md)** - Rebuild all Elasticsearch indexes with environment-safe names
 
 #### Tests
 
-- **[ElasticsearchHomeControllerTest](ElasticsearchHomeControllerTest.md)** - Tests for Elasticsearch home controller endpoints
-- **[ProductElasticsearchLifecycleTest](ProductElasticsearchLifecycleTest.md)** - Tests for product Elasticsearch sync lifecycle
+- **[ElasticsearchHomeControllerTest](./ElasticsearchHomeControllerTest.md)** - Tests for Elasticsearch home controller endpoints
+- **[ProductElasticsearchLifecycleTest](./ProductElasticsearchLifecycleTest.md)** - Tests for product Elasticsearch sync lifecycle
 
 ### Index Structure
 
@@ -155,12 +155,12 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
    - Indexes product document with all fields
 
 2. **Sync on Changes**: `ElasticService::syncProductToIndex()`
-   - Called by [ProductService](ProductService.md) on create/update
+   - Called by [ProductService](./ProductService.md) on create/update
    - Loads missing relationships
    - Upserts product document
 
 3. **Remove on Delete**: `ElasticService::removeProductFromIndex()`
-   - Called by [ProductService](ProductService.md) on delete
+   - Called by [ProductService](./ProductService.md) on delete
    - Deletes product document (ignores 404)
 
 4. **Bulk Indexing**: `ElasticService::indexAllProducts()`
@@ -203,18 +203,18 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 ### Direct Dependencies
 
-- **[Product](Product.md)** - Products are indexed and searched
-- **[Vendor](Vendor.md)** - Vendors are indexed and searched
-- **[Category](Category.md)** - Used for filtering in search
-- **[VendorType](VendorType.md)** - Used for filtering in vendor search
-- **[Subscription](Subscription.md)** - Provides boost scores for products and vendors
-- **[Package](Package.md)** - Determines slot-based product indexing
+- **[Product](./Product.md)** - Products are indexed and searched
+- **Vendor** - Vendors are indexed and searched
+- **[Category](./Category.md)** - Used for filtering in search
+- **[VendorType](./VendorType.md)** - Used for filtering in vendor search
+- **[Subscription](./Subscription.md)** - Provides boost scores for products and vendors
+- **[Package](./Package.md)** - Determines slot-based product indexing
 
 ### Cross-Domain Connections
 
-- **[HomeController](HomeController.md)** - Fallback when Elasticsearch fails
-- **[ProductService](ProductService.md)** - Triggers Elasticsearch sync on product changes
-- **[SubscriptionSlotScoreService](SubscriptionSlotScoreService.md)** - Syncs boost scores before indexing
+- **[HomeController](./HomeController.md)** - Fallback when Elasticsearch fails
+- **[ProductService](./ProductService.md)** - Triggers Elasticsearch sync on product changes
+- **[SubscriptionSlotScoreService](./SubscriptionSlotScoreService.md)** - Syncs boost scores before indexing
 
 ## Red Flags & Tech Debt
 
@@ -517,3 +517,4 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 - `tests/Feature/ProductElasticsearchLifecycleTest.php`
 - `tests/Feature/ElasticsearchIndexCatalogTest.php`
 - `tests/Feature/RebuildProjectElasticsearchIndexesCommandTest.php`
+.php`

@@ -18,7 +18,7 @@ title: "QuotationController"
 - **Document Management**: Handling quotation document uploads
 - **RFQ Integration**: Linking quotations to parent RFQs
 
-This controller delegates business logic to [QuotationService](QuotationService.md), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized vendors can access their quotations.
+This controller delegates business logic to [QuotationService](./QuotationService.md), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized vendors can access their quotations.
 
 ## Controller Dependencies
 
@@ -361,11 +361,11 @@ if (! $user->vendor_id || $vendor->id !== $user->vendor_id) {
 
 ## Cross-References
 
-- [QuotationService](QuotationService.md) - Business logic for quotation operations
-- [Quotation-Model](Quotation-Model.md) - Data model for quotations
-- [Rfq-Model](Rfq-Model.md) - Parent RFQ for quotations
-- [QuotationResource](QuotationResource.md) - API resource for serialization
-- [[PrivateRfqResource]] - API resource for private RFQs
+- [QuotationService](./QuotationService.md) - Business logic for quotation operations
+- [Quotation-Model](./Quotation-Model.md) - Data model for quotations
+- [Rfq-Model](./Rfq-Model.md) - Parent RFQ for quotations
+- [QuotationResource](./QuotationResource.md) - API resource for serialization
+- PrivateRfqResource - API resource for private RFQs
 
 ## Usage Examples
 

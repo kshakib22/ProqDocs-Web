@@ -15,7 +15,7 @@ title: "Quotation Model"
 - **Price negotiation**: Detailed breakdown of costs
 - **Vendor selection**: Buyer can compare and select the best quote
 - **Purchase order generation**: Accepted quotations become purchase orders
-- **Service breakdown**: Line items for complex quotes via [QutationService-Model](QutationService-Model.md)
+- **Service breakdown**: Line items for complex quotes via [QutationService-Model](./QutationService-Model.md)
 
 ## Database Schema
 
@@ -173,7 +173,7 @@ public function quotationServices(): HasMany
 - **Cardinality:** One-to-many
 - **Usage:** Detailed cost breakdown for complex quotes
 
-**Note:** Uses [QutationService-Model](QutationService-Model.md) (note the typo in class name).
+**Note:** Uses [QutationService-Model](./QutationService-Model.md) (note the typo in class name).
 
 ## Total Calculation Formula
 
@@ -240,12 +240,12 @@ total_amount = sub_amount + services_charge + tax_amount + shipping_amount + loa
 
 ## Cross-References
 
-- [Rfq-Model](Rfq-Model.md) - Parent RFQ for this quotation
-- [QutationService-Model](QutationService-Model.md) - Line items/service breakdown
-- [QuotationService](QuotationService.md) - Business logic for quotation operations
-- [QuotationController](QuotationController.md) - HTTP endpoint handler
-- [QuotationResource](QuotationResource.md) - API resource for serialization
-- [[PurchaseList]] - Downstream purchase order
+- [Rfq-Model](./Rfq-Model.md) - Parent RFQ for this quotation
+- [QutationService-Model](./QutationService-Model.md) - Line items/service breakdown
+- [QuotationService](./QuotationService.md) - Business logic for quotation operations
+- [QuotationController](./QuotationController.md) - HTTP endpoint handler
+- [QuotationResource](./QuotationResource.md) - API resource for serialization
+- PurchaseList - Downstream purchase order
 
 ## Usage Examples
 

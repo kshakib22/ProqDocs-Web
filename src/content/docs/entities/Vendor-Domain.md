@@ -15,54 +15,54 @@ The Vendor domain is the third most interconnected domain in the application (22
 
 #### Models
 
-- **[Vendor](Vendor.md)** - Core vendor model with soft deletes, verification status, profile completion tracking, and relationships to user, products, categories, vendor types, certificates, contacts, reviews, RFQs, quotations, catalogues, and purchase orders.
-- **[VendorType](VendorType.md)** - Vendor types (e.g., Manufacturer, Distributor, Wholesaler).
-- **[FavoriteVendor](FavoriteVendor.md)** - Buyer's favorite vendors.
+- **[Vendor](./Vendor.md)** - Core vendor model with soft deletes, verification status, profile completion tracking, and relationships to user, products, categories, vendor types, certificates, contacts, reviews, RFQs, quotations, catalogues, and purchase orders.
+- **[VendorType](./VendorType.md)** - Vendor types (e.g., Manufacturer, Distributor, Wholesaler).
+- **[FavoriteVendor](./FavoriteVendor.md)** - Buyer's favorite vendors.
 
 #### Controllers
 
-- **[Admin/VendorController](Admin/VendorController.md)** - Admin-facing vendor management (203 lines):
+- **[Admin/VendorController](./Admin/VendorController.md)** - Admin-facing vendor management (203 lines):
   - `index()` - List vendors with filtering and search
   - `approveVendor()` - Approve vendor registration
   - `rejectVendor()` - Reject vendor registration with reason
   - `show()` - Get vendor details
 
-- **[Vendor/VendorDashBoardController](Vendor/VendorDashBoardController.md)** - Vendor dashboard (93 lines):
+- **[Vendor/VendorDashBoardController](./Vendor/VendorDashBoardController.md)** - Vendor dashboard (93 lines):
   - `__invoke()` - Get vendor dashboard with RFQ counts, product counts, quotations
 
 #### Resources
 
-- **[VendorResource](VendorResource.md)** - Full vendor details for admin listing.
-- **[VendorProfileResource](VendorProfileResource.md)** - Detailed vendor profile with scores and documents.
-- **[PublicVendorResource](PublicVendorResource.md)** - Public vendor profile (similar to profile but without sensitive data).
-- **[NewVendorResource](NewVendorResource.md)** - Minimal vendor resource for new registrations.
-- **[ShortVendorResource](ShortVendorResource.md)** - Minimal vendor representation (id, name, logo).
-- **[FavoriteVendorResource](FavoriteVendorResource.md)** - Favorite vendor with purchase order summary.
+- **[VendorResource](./VendorResource.md)** - Full vendor details for admin listing.
+- **[VendorProfileResource](./VendorProfileResource.md)** - Detailed vendor profile with scores and documents.
+- **[PublicVendorResource](./PublicVendorResource.md)** - Public vendor profile (similar to profile but without sensitive data).
+- **[NewVendorResource](./NewVendorResource.md)** - Minimal vendor resource for new registrations.
+- **[ShortVendorResource](./ShortVendorResource.md)** - Minimal vendor representation (id, name, logo).
+- **[FavoriteVendorResource](./FavoriteVendorResource.md)** - Favorite vendor with purchase order summary.
 
 #### Policies
 
-- **[VendorProfilePolicy](VendorProfilePolicy.md)** - Vendor profile access control (93 lines):
+- **[VendorProfilePolicy](./VendorProfilePolicy.md)** - Vendor profile access control (93 lines):
   - `create()`, `update()`, `view()` - Vendor can only access their own profile
   - `updateContacts()`, `updateCertificates()`, `updateTypesAndCategories()` - Section-specific updates
   - `deleteContact()`, `deleteCertificates()` - Delete permissions
 
 #### Middleware
 
-- **[VendorVerified](VendorVerified.md)** - Middleware to ensure vendor is verified and not rejected.
+- **[VendorVerified](./VendorVerified.md)** - Middleware to ensure vendor is verified and not rejected.
 
 #### Notifications
 
-- **[VendorApproveNotification](VendorApproveNotification.md)** - Sent to vendor on approval (mail + database).
-- **[VendorRejectedNotification](VendorRejectedNotification.md)** - Sent to vendor on rejection (mail + database).
-- **[VendorRegistrationNotification](VendorRegistrationNotification.md)** - Sent to vendor on registration (mail + database).
-- **[AdminVendorApprovedNotification](AdminVendorApprovedNotification.md)** - Sent to admins on vendor approval (database only).
-- **[AdminVendorRejectedNotification](AdminVendorRejectedNotification.md)** - Sent to admins on vendor rejection (database only).
-- **[AdminVendorRegistrationNotification](AdminVendorRegistrationNotification.md)** - Sent to admins on new vendor registration (database only).
+- **[VendorApproveNotification](./VendorApproveNotification.md)** - Sent to vendor on approval (mail + database).
+- **[VendorRejectedNotification](./VendorRejectedNotification.md)** - Sent to vendor on rejection (mail + database).
+- **[VendorRegistrationNotification](./VendorRegistrationNotification.md)** - Sent to vendor on registration (mail + database).
+- **[AdminVendorApprovedNotification](./AdminVendorApprovedNotification.md)** - Sent to admins on vendor approval (database only).
+- **[AdminVendorRejectedNotification](./AdminVendorRejectedNotification.md)** - Sent to admins on vendor rejection (database only).
+- **[AdminVendorRegistrationNotification](./AdminVendorRegistrationNotification.md)** - Sent to admins on new vendor registration (database only).
 
 #### Mail
 
-- **[VendorWelcome](VendorWelcome.md)** - Welcome email for new vendor registration.
-- **[VendorVerified](VendorVerified.md)** - Verification email for approved vendors.
+- **[VendorWelcome](./VendorWelcome.md)** - Welcome email for new vendor registration.
+- **[VendorVerified](./VendorVerified.md)** - Verification email for approved vendors.
 
 ### Vendor Flow
 
@@ -164,22 +164,22 @@ Model scope: `scopeVerified()` - filters for verified vendors
 
 ### Direct Dependencies
 
-- **[User](User.md)** - Vendors belong to users
-- **[Category](Category.md)** - Vendors have many-to-many relationship with categories
-- **[VendorType](VendorType.md)** - Vendors have many-to-many relationship with vendor types
-- **[Product](Product.md)** - Vendors have many products
-- **[Subscription](Subscription.md)** - Vendors can have subscriptions for boost scores
+- **[User](./User.md)** - Vendors belong to users
+- **[Category](./Category.md)** - Vendors have many-to-many relationship with categories
+- **[VendorType](./VendorType.md)** - Vendors have many-to-many relationship with vendor types
+- **[Product](./Product.md)** - Vendors have many products
+- **[Subscription](./Subscription.md)** - Vendors can have subscriptions for boost scores
 
 ### Cross-Domain Connections
 
-- **[Document](Document.md)** - Polymorphic relationship for vendor documents
-- **[Certificate](Certificate.md)** - Polymorphic relationship for vendor certificates
-- **[ContactPerson](ContactPerson.md)** - Polymorphic relationship for vendor contacts
-- **[Review](Review.md)** - Polymorphic relationship for vendor reviews
-- **[Rfq](Rfq.md)** - Vendors receive RFQs
-- **[Quotation](Quotation.md)** - Vendors submit quotations
-- **[PurchaseOrder](PurchaseOrder.md)** - Vendors receive purchase orders
-- **[Notification](Notification.md)** - Vendor registration, approval, rejection notifications
+- **[Document](./Document.md)** - Polymorphic relationship for vendor documents
+- **[Certificate](./Certificate.md)** - Polymorphic relationship for vendor certificates
+- **[ContactPerson](./ContactPerson.md)** - Polymorphic relationship for vendor contacts
+- **[Review](./Review.md)** - Polymorphic relationship for vendor reviews
+- **[Rfq](./Rfq.md)** - Vendors receive RFQs
+- **Quotation** - Vendors submit quotations
+- **[PurchaseOrder](./PurchaseOrder.md)** - Vendors receive purchase orders
+- **[Notification](./Notification.md)** - Vendor registration, approval, rejection notifications
 
 ## Red Flags & Tech Debt
 
@@ -560,3 +560,4 @@ if (! $this->is_rejected) {
 - `database/migrations/2025_11_03_050335_create_category_vendor.php`
 - `database/migrations/2026_04_28_133008_add_boost_score_to_vendors.php`
 - `database/migrations/Favorite/2025_12_23_112417_create_favorite_vendors_table.php`
+.php`

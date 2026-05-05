@@ -14,7 +14,7 @@ The QutationService model represents line items within a quotation, allowing ven
 ### Model Structure
 - **Table**: `qutation_services` (note: typo in table name too)
 - **Key Attributes**:
-  - `quotation_id`: FK to [Quotation Model](Quotation Model.md)
+  - `quotation_id`: FK to [Quotation Model](./Quotation Model.md)
   - `name`: Service/item name
   - `unit`: Unit of measurement
   - `unit_price`: Price per unit
@@ -22,7 +22,7 @@ The QutationService model represents line items within a quotation, allowing ven
   - `total_price`: Calculated total (unit_price × quantity)
 
 ### Relationships
-- `quotation()`: BelongsTo [Quotation Model](Quotation Model.md)
+- `quotation()`: BelongsTo [Quotation Model](./Quotation Model.md)
 
 ### Auto-Calculation
 The model automatically calculates `total_price` on save:
@@ -36,9 +36,9 @@ static::saving(function ($service) {
 
 ## Dependencies & Graph Links
 
-- Created by [QuotationService](QuotationService.md) when building quotations
-- Referenced by [Quotation Model](Quotation Model.md) via `quotationServices()` relationship
-- Included in [QuotationResource](QuotationResource.md) transformation
+- Created by [QuotationService](./QuotationService.md) when building quotations
+- Referenced by [Quotation Model](./Quotation Model.md) via `quotationServices()` relationship
+- Included in [QuotationResource](./QuotationResource.md) transformation
 
 ## Red Flags & Tech Debt
 

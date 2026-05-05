@@ -19,7 +19,7 @@ title: "RfqController"
 - **Document Handling**: Handle RFQ document uploads
 - **Image Management**: Handle product images for RFQs
 
-This controller delegates business logic to [RfqService](RfqService.md), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized buyers can access their RFQs.
+This controller delegates business logic to [RfqService](./RfqService.md), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized buyers can access their RFQs.
 
 ## Controller Dependencies
 
@@ -373,11 +373,11 @@ if (!$buyer) {
 
 ## Cross-References
 
-- [RfqService](RfqService.md) - Business logic for RFQ operations
-- [Rfq-Model](Rfq-Model.md) - Data model for RFQs
-- [Quotation-Model](Quotation-Model.md) - Vendor responses to RFQs
-- [RfqResource](RfqResource.md) - API resource for serialization
-- [[PrivateRfqResource]] - API resource for private RFQs
+- [RfqService](./RfqService.md) - Business logic for RFQ operations
+- [Rfq-Model](./Rfq-Model.md) - Data model for RFQs
+- [Quotation-Model](./Quotation-Model.md) - Vendor responses to RFQs
+- [RfqResource](./RfqResource.md) - API resource for serialization
+- PrivateRfqResource - API resource for private RFQs
 
 ## Usage Examples
 

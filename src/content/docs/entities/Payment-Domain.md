@@ -7,7 +7,7 @@ title: "Payment Domain"
 
 ## Overview
 
-The Payment domain is the most interconnected domain in the application (31 edges in the knowledge graph), handling all payment processing for [PurchaseOrder](PurchaseOrder.md) transactions. It integrates with SSL Commerce payment gateway for online payments and supports offline payment methods including bank transfers, cash, cheques, BEFTN, RTGS, and NPSB.
+The Payment domain is the most interconnected domain in the application (31 edges in the knowledge graph), handling all payment processing for PurchaseOrder transactions. It integrates with SSL Commerce payment gateway for online payments and supports offline payment methods including bank transfers, cash, cheques, BEFTN, RTGS, and NPSB.
 
 ## Current Architecture & Flow
 
@@ -15,15 +15,15 @@ The Payment domain is the most interconnected domain in the application (31 edge
 
 #### Models
 
-- **[PurchaseOrderPayment](PurchaseOrderPayment.md)** - Represents successful payments. Only created when a transaction is verified and completed.
-- **[PurchaseOrderTransactionDetail](PurchaseOrderTransactionDetail.md)** - Tracks all payment attempts (pending, success, failed, cancelled). Contains gateway metadata and verification status.
-- **[PurchaseOrderPaymentInfo](PurchaseOrderPaymentInfo.md)** - Stores scheduled payment information (installments, due dates, amounts).
-- **[PaymentType](PaymentType.md)** - Defines payment types: `100_percent_advance`, `100_percent_credit`, `installment`.
-- **[PaymentMethod](PaymentMethod.md)** - Available payment methods (ssl_commerce, bank_transfer, cash, cheque, BEFTN, RTGS, NPSB).
+- **PurchaseOrderPayment** - Represents successful payments. Only created when a transaction is verified and completed.
+- **PurchaseOrderTransactionDetail** - Tracks all payment attempts (pending, success, failed, cancelled). Contains gateway metadata and verification status.
+- **PurchaseOrderPaymentInfo** - Stores scheduled payment information (installments, due dates, amounts).
+- **PaymentType** - Defines payment types: `100_percent_advance`, `100_percent_credit`, `installment`.
+- **PaymentMethod** - Available payment methods (ssl_commerce, bank_transfer, cash, cheque, BEFTN, RTGS, NPSB).
 
 #### Services
 
-- **[PaymentService](PaymentService.md)** - Core payment processing service (1116 lines). Handles:
+- **PaymentService** - Core payment processing service (1116 lines). Handles:
   - Online payment initiation with SSL Commerce
   - Transaction verification via SSL Commerce API
   - IPN (Instant Payment Notification) webhook handling
@@ -31,11 +31,11 @@ The Payment domain is the most interconnected domain in the application (31 edge
   - Payment history and summaries
   - Notification dispatch
 
-- **[SubscriptionPaymentService](SubscriptionPaymentService.md)** - Handles subscription payments (separate from purchase order payments).
+- **SubscriptionPaymentService** - Handles subscription payments (separate from purchase order payments).
 
 #### Controllers
 
-- **[Buyer/PaymentController](Buyer/PaymentController.md)** - Buyer-facing payment endpoints (367 lines):
+- **Buyer/PaymentController** - Buyer-facing payment endpoints (367 lines):
   - `initiate()` - Start SSL Commerce payment
   - `createOnlinePayment()` - Create online payment from payment info
   - `createOfflinePayment()` - Create offline payment with bank/cash details
@@ -44,19 +44,20 @@ The Payment domain is the most interconnected domain in the application (31 edge
   - `ipn()` - Handle IPN webhook
   - `history()` - Get payment history
 
-- **[Vendor/PaymentController](Vendor/PaymentController.md)** - Vendor-facing payment endpoints.
-- **[Vendor/SubscriptionPaymentController](Vendor/SubscriptionPaymentController.md)** - Vendor subscription payment handling.
+- **Vendor/PaymentController** - Vendor-facing payment endpoints.
+- **Vendor/SubscriptionPaymentController** - Vendor subscription payment handling.
 
 #### Resources
 
-- **[TransactionSuccessPaymentResource](TransactionSuccessPaymentResource.md)** - Response for successful payment verification.
-- **[PurchaseOrderPaymentResource](PurchaseOrderPaymentResource.md)** - Payment details response.
-- **[PaymentInfoResource](PaymentInfoResource.md)** - Payment info/schedule response.
+- **TransactionSuccessPaymentResource** - Response for successful payment verification.
+- **PurchaseOrderPaymentResource** - Payment details response.
+- **PaymentInfoResource** - Payment info/schedule response.
 
 #### Notifications
 
-- **[PurchaseOrderPaymentBuyerNotification](PurchaseOrderPaymentBuyerNotification.md)** - Database notification sent to buyer on payment.
-- **[PurchaseOrderPaymentVendorNotification](PurchaseOrderPaymentVendorNotification.md)** - Database notification sent to vendor on payment.
+- **PurchaseOrderPaymentBuyerNotification** - Database notification sent to buyer on payment.
+- **PurchaseOrderPaymentVendorNotification** - Database notification sent to vendor on payment.
+
 
 ### Payment Flow
 
@@ -112,16 +113,17 @@ Example: `PAY-20260501-456-123-001`
 
 ### Direct Dependencies
 
-- **[PurchaseOrder](PurchaseOrder.md)** - Payments are always associated with a purchase order
-- **[Buyer](Buyer.md)** - Payments are made by buyers
-- **[Vendor](Vendor.md)** - Vendors receive payment notifications
-- **[PaymentType](PaymentType.md)** - Defines payment structure (advance, credit, installment)
-- **[PurchaseOrderPaymentInfo](PurchaseOrderPaymentInfo.md)** - Scheduled payment information
+- **[PurchaseOrder](./PurchaseOrder-Domain.md)** - Payments are always associated with a purchase order
+- **Buyer** - Payments are made by buyers
+- **[Vendor](./Vendor-Domain.md)** - Vendors receive payment notifications
+- **PaymentType** - Defines payment structure (advance, credit, installment)
+- **PurchaseOrderPaymentInfo** - Scheduled payment information
 
 ### Cross-Domain Connections
 
-- **[Notification](Notification.md)** - Payment notifications sent via database notifications
-- **[Subscription](Subscription.md)** - Separate subscription payment flow via `SubscriptionPaymentService`
+- **Notification** - Payment notifications sent via database notifications
+- **Subscription** - Separate subscription payment flow via `SubscriptionPaymentService`
+
 
 ## Red Flags & Tech Debt
 

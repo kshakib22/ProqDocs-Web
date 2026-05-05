@@ -18,7 +18,7 @@ title: "BoqEntryController"
 - **Cell styling**: Update cell colors for dynamic columns
 - **Sheet transfer**: Move entries between sheets
 
-This controller delegates business logic to [BoqSheetEntryService](BoqSheetEntryService.md), following the thin controller pattern.
+This controller delegates business logic to [BoqSheetEntryService](./BoqSheetEntryService.md), following the thin controller pattern.
 
 ## Controller Dependencies
 
@@ -494,10 +494,10 @@ private function currentBuyer()
 
 ## Cross-References
 
-- [BoqSheetEntryService](BoqSheetEntryService.md) - Business logic for entry operations
-- [[BoqEntry-Model]] - Data model for entries
-- [BoqSheetController](BoqSheetController.md) - Controller for sheets
-- [BoqEntryResource](BoqEntryResource.md) - API resource for serialization
+- [BoqSheetEntryService](./BoqSheetEntryService.md) - Business logic for entry operations
+- [BoqEntry-Model](./BoqEntryModel.md) - Data model for entries
+- [BoqSheetController](./BoqSheetController.md) - Controller for sheets
+- [BoqEntryResource](./BoqEntryResource.md) - API resource for serialization
 
 ## Usage Examples
 

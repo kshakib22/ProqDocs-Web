@@ -369,12 +369,12 @@ The `BoqSheetEntryService` has deep integration with the `PurchaseList` domain:
 
 ## Cross-References
 
-- [[BoqEntry-Model]] - Data model for entries
-- [BoqSheet-Model](BoqSheet-Model.md) - Data model for sheets
-- [[PurchaseListService]] - Procurement workflow integration
-- [BoqSheetMergeService](BoqSheetMergeService.md) - Merge operations
-- [[Quotation]] - Source data for entries
-- [[Rfq]] - Request for quotation management
+- [BoqEntry-Model](./BoqEntryModel.md) - Data model for entries
+- [BoqSheet-Model](./BoqSheet-Model.md) - Data model for sheets
+- [PurchaseListService](./PurchaseListService.md) - Procurement workflow integration
+- [BoqSheetMergeService](./BoqSheetMergeService.md) - Merge operations
+- [Quotation](./Quotation.md) - Source data for entries
+- Rfq - Request for quotation management
 
 ## Usage Examples
 

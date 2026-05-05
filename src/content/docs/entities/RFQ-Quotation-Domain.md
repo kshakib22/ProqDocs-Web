@@ -5,13 +5,13 @@ title: "RFQ-Quotation-Domain"
 ---
 # RFQ-Quotation-Domain
 
-The Request for Quotation (RFQ) and Quotation domain manages the procurement workflow where buyers request quotes and vendors submit quotations. This is a core business domain connecting [Buyer-Domain](Buyer-Domain.md), [Vendor-Domain](Vendor-Domain.md), and [Product-Domain](Product-Domain.md).
+The Request for Quotation (RFQ) and Quotation domain manages the procurement workflow where buyers request quotes and vendors submit quotations. This is a core business domain connecting Buyer-Domain, **[Vendor-Domain](./Vendor-Domain.md)**, and **[Product-Domain](./Product-Domain.md)**.
 
 ## Current Architecture & Flow
 
 ### RFQ (Request for Quotation) Flow
 
-1. **Buyer creates RFQ** via [RfqController](RfqController.md) → [RfqService](RfqService.md)
+1. **Buyer creates RFQ** via **[RfqController](./RfqController.md)** → **[RfqService](./RfqService.md)**
    - Public RFQ: Visible to all vendors, multiple vendors can quote
    - Private RFQ: Sent to specific vendor, only that vendor can quote
    - RFQ includes: product details, quantity, budget range, deadline, urgency
@@ -29,7 +29,7 @@ The Request for Quotation (RFQ) and Quotation domain manages the procurement wor
 
 ### Quotation Flow
 
-1. **Vendor submits quotation** via [QuotationController](QuotationController.md) → [QuotationService](QuotationService.md)
+1. **Vendor submits quotation** via **[QuotationController](./QuotationController.md)** → **[QuotationService](./QuotationService.md)**
    - Validates RFQ accessibility (private RFQs restricted to assigned vendor)
    - Checks deadline hasn't passed
    - Prevents duplicate quotations from same vendor
@@ -42,7 +42,7 @@ The Request for Quotation (RFQ) and Quotation domain manages the procurement wor
 
 3. **Quotation Components**:
    - Unit price × quantity = subtotal
-   - [QutationService](QutationService.md) items (additional services)
+   - QutationService items (additional services)
    - VAT/tax amount
    - Shipping amount
    - Loading charge
@@ -60,56 +60,58 @@ Quotation → has many → QutationService (line items)
 ## Dependencies & Graph Links
 
 ### Models
-- [Rfq Model](Rfq Model.md) - RFQ entity with soft deletes
-- [Quotation Model](Quotation Model.md) - Quotation entity with soft deletes
-- [QutationService Model](QutationService Model.md) - Quotation line items (note: typo in class name)
+- **[Rfq Model](./Rfq Model.md)** - RFQ entity with soft deletes
+- **[Quotation Model](./Quotation Model.md)** - Quotation entity with soft deletes
+- **[QutationService Model](./QutationService Model.md)** - Quotation line items (note: typo in class name)
 
 ### Services
-- [RfqService](RfqService.md) - RFQ business logic (654 lines)
-- [QuotationService](QuotationService.md) - Quotation business logic (800 lines)
-- [QuotationBoostScoreService](QuotationBoostScoreService.md) - Subscription-based quotation ranking
+- **[RfqService](./RfqService.md)** - RFQ business logic (654 lines)
+- **[QuotationService](./QuotationService.md)** - Quotation business logic (800 lines)
+- QuotationBoostScoreService - Subscription-based quotation ranking
 
 ### Controllers
-- [RfqController](RfqController.md) - Buyer RFQ endpoints
-- [QuotationController](QuotationController.md) - Vendor quotation endpoints
+- **[RfqController](./RfqController.md)** - Buyer RFQ endpoints
+- **[QuotationController](./QuotationController.md)** - Vendor quotation endpoints
 
 ### Resources
-- [RfqResource](RfqResource.md) - RFQ API transformation
-- [QuotationResource](QuotationResource.md) - Quotation API transformation
-- [PublicRfqResource](PublicRfqResource.md) - Public RFQ view for vendors
-- [PrivateRfqResource](PrivateRfqResource.md) - Private RFQ view
+- **[RfqResource](./RfqResource.md)** - RFQ API transformation
+- **[QuotationResource](./QuotationResource.md)** - Quotation API transformation
+- PublicRfqResource - Public RFQ view for vendors
+- PrivateRfqResource - Private RFQ view
 
 ### Notifications
-- [QuotationSubmittedNotification](QuotationSubmittedNotification.md) - Sent to buyer when vendor quotes
-- [QuotationUpdatedNotification](QuotationUpdatedNotification.md) - Sent to buyer when vendor updates quote
-- [PrivateRfqCreatedNotification](PrivateRfqCreatedNotification.md) - Sent to vendor for private RFQs
+- QuotationSubmittedNotification - Sent to buyer when vendor quotes
+- QuotationUpdatedNotification - Sent to buyer when vendor updates quote
+- PrivateRfqCreatedNotification - Sent to vendor for private RFQs
+
 
 ## Red Flags & Tech Debt
 
 ### Fat Controllers
-- **[RfqController](RfqController.md)**: 613 lines with extensive inline authorization checks
+- **[RfqController](./RfqController.md)**: 613 lines with extensive inline authorization checks
   - Authorization logic repeated across methods
   - Should extract to policies or middleware
 
-- **[QuotationController](QuotationController.md)**: 577 lines with similar issues
+- **[QuotationController](./QuotationController.md)**: 577 lines with similar issues
   - Mixed concerns: authorization, validation, business logic
   - JWTAuth mixed with Auth facade
 
 ### Service Layer Issues
-- **[RfqService](RfqService.md)**: 654 lines - large service class
+- **[RfqService](./RfqService.md)**: 654 lines - large service class
   - Multiple responsibilities: RFQ CRUD, document handling, public/private RFQs
   - `updateRfq()` has manual field filtering (lines 228-271) - should use request validation
   - Commented-out code for category sync and purchase list integration
 
-- **[QuotationService](QuotationService.md)**: 800 lines - largest service in codebase
+- **[QuotationService](./QuotationService.md)**: 800 lines - largest service in codebase
   - Complex document upload handling with multiple formats (uploaded file, base64)
   - Manual total calculation logic scattered throughout
   - `createQuotation()` has extensive logging and conditional logic
 
 ### Naming Issues
-- **[QutationService Model](QutationService Model.md)**: Typo in class name ("Qutation" instead of "Quotation")
+- **[QutationService Model](./QutationService Model.md)**: Typo in class name ("Qutation" instead of "Quotation")
   - This is a breaking change waiting to happen
   - Used throughout the codebase
+
 
 ### Data Integrity
 - RFQ deadline validation only in service layer, not database constraints

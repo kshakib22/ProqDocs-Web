@@ -8,18 +8,18 @@ title: "Qutationservice Model"
 
 **Note: This model name contains a typo and should be QuotationService.**
 
-Represents additional services (e.g., installation, labor) associated with a [Quotation Model](Quotation Model.md).
+Represents additional services (e.g., installation, labor) associated with a [Quotation Model](./Quotation Model.md).
 
 ## Current Architecture & Flow
 
 - **Table**: `qutation_services`
 - **Fields**: `name`, `unit`, `unit_price`, `quantity`, `total_price`.
-- **Relationship**: `belongsTo` [Quotation Model](Quotation Model.md).
+- **Relationship**: `belongsTo` [Quotation Model](./Quotation Model.md).
 
 ## Dependencies & Graph Links
 
-- [Quotation Model](Quotation Model.md)
-- [QuotationService](QuotationService.md) (the business logic class)
+- [Quotation Model](./Quotation Model.md)
+- [QuotationService](./QuotationService.md) (the business logic class)
 
 ## Red Flags & Tech Debt
 
