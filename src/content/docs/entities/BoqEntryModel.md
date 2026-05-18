@@ -348,11 +348,11 @@ total_amount = total + tax_amount + shipping_amount + loading_charge + services_
 
 ## Cross-References
 
-- [BoqSheet-Model](./BoqSheet-Model.md) - Parent sheet containing this entry
-- [BoqSheetService](./BoqSheetService.md) - Business logic for entry operations
-- [BoqEntryController](./BoqEntryController.md) - HTTP endpoint handler
+- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet containing this entry
+- [BoqSheetService](/entities/boqsheetservice) - Business logic for entry operations
+- [BoqEntryController](/entities/boqentrycontroller) - HTTP endpoint handler
 - PurchaseList - Downstream purchase order item
-- [BoqEntry-BoqSheet-Domain](./BoqEntry-BoqSheet-Domain.md) - Domain overview
+- [BoqEntry-BoqSheet-Domain](/entities/boqentry-boqsheet-domain) - Domain overview
 
 ## Usage Examples
 

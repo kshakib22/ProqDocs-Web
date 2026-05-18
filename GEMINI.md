@@ -17,11 +17,23 @@ When instructed to run maintenance, you must autonomously execute these exact st
 
 ## 1. STRICT LINK RESOLUTION RULES
 
+### For Astro Starlight (URL-based routing):
+
 - **Detect:** Scan the file for any Obsidian-style wiki links (e.g., `[[Target File]]` or `[[Target File|Custom Text]]`).
 - **Resolve:** Cross-reference the "Target File" with your mental map of the directory.
-- **Calculate:** Determine the _exact relative path_ from the current file to the target file.
-- **Format:** Replace the wiki link with standard Astro Starlight Markdown links (e.g., `[Target File](../path/to/target-file.md)`).
-- **ANTI-HALLUCINATION GUARD:** If the target file does NOT exist in your directory map, do NOT guess the path. Strip the brackets and leave it as plain text, or leave the wiki link untouched.
+- **Calculate:** Determine the **URL slug path** from the target file, NOT the relative filesystem path.
+  - Remove `src/content/docs/` prefix from target file's absolute path
+  - Remove `.md` or `.mdx` extension
+  - Convert spaces to hyphens, lowercase everything
+  - Example: `src/content/docs/guides/getting-started.md` → `/guides/getting-started`
+- **Format:** Replace the wiki link with standard Astro Starlight links: `[Custom Text](/guides/getting-started)` or `[Target File](/guides/getting-started)`.
+- **ANTI-HALLUCINATION GUARD:** If the target file does NOT exist in your directory map, do NOT guess the path. Leave the wiki link untouched as `[[Target File]]`.
+
+### CRITICAL CORRECTION FOR EXISTING BROKEN LINKS:
+
+If you encounter an existing link that was previously converted to a relative path (e.g., `[text](../other/file.md)`) and it's NOT working in Astro:
+
+- Convert it to the URL slug format instead: `[text](/actual/url/slug)`
 
 ## 2. YAML FRONTMATTER STANDARDS
 
@@ -33,6 +45,6 @@ When instructed to run maintenance, you must autonomously execute these exact st
 ## 3. OPERATIONAL CONSTRAINTS
 
 - **Formatting Only:** Restrict all edits strictly to link formatting, frontmatter generation, and standardizing Markdown syntax (e.g., fixing broken tables or lists if explicitly malformed).
-- **Case Sensitivity:** Ensure all generated relative paths and filenames exactly match the file system's casing.
+- **Slug Generation:** Ensure all generated URLs are lowercase with hyphens for spaces. No file extensions in URLs.
 - **Silent Operation:** Do not output your thought process, file diffs, or progress to the terminal. Work silently.
 - **Completion Trigger:** Once the entire mapped directory has been processed, STOP and reply ONLY with: "Global sweep complete. Links and frontmatter strictly aligned to protocol."

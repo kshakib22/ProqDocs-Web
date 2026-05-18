@@ -179,10 +179,10 @@ protected static function booted(): void
 
 ## Cross-References
 
-- [BoqSheet-Model](./BoqSheet-Model.md) - Parent sheet that owns this merge
-- [BoqSheetMergeService](./BoqSheetMergeService.md) - Business logic for merge operations
+- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet that owns this merge
+- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Business logic for merge operations
 - BoqEntry-Model - Entries affected by merge
-- [BoqSheetController](./BoqSheetController.md) - HTTP endpoint handler
+- [BoqSheetController](/entities/boqsheetcontroller) - HTTP endpoint handler
 
 ## Usage Examples
 
@@ -242,32 +242,4 @@ $merge->save();
 
 ## Architecture Notes
 
-### Why This Model Exists
-
-The `BoqSheetMerge` model serves several critical purposes:
-
-1. **Audit Trail**: Track all merge operations for compliance and debugging
-2. **Undo Capability**: Store enough information to reverse merge operations
-3. **Conflict Resolution**: Identify which entries came from which source sheets
-4. **Metadata Storage**: Store arbitrary merge-related data without schema changes
-
-### Relationship to Other Models
-
-```
-BoqSheet (1) ────────< (N) BoqSheetMerge
-     │                      │
-     │                      │
-     └───────< (N) BoqEntry
-```
-
-The merge model is a sibling to entries, both children of the sheet. This allows merges to exist independently of specific entries while still tracking which entries were affected.
-
-### Future Enhancements
-
-Potential improvements to this model:
-
-1. **Add status tracking**: Track merge state (pending, in_progress, completed, failed)
-2. **Add error handling**: Store merge errors for debugging
-3. **Add versioning**: Track multiple versions of merged sheets
-4. **Add conflict resolution**: Store how conflicts were resolved
-5. **Add performance metrics**: Track merge operation duration
+...

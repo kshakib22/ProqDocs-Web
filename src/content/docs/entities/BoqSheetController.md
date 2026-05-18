@@ -18,7 +18,7 @@ title: "BoqSheetController"
 - **Export functionality**: Export sheets to Excel format
 - **Authorization**: Enforce buyer ownership and access control
 
-This controller delegates business logic to [BoqSheetService](./BoqSheetService.md) and [BoqSheetMergeService](./BoqSheetMergeService.md), following the thin controller pattern.
+This controller delegates business logic to [BoqSheetService](/entities/boqsheetservice) and [BoqSheetMergeService](/entities/boqsheetmergeservice), following the thin controller pattern.
 
 ## Controller Dependencies
 
@@ -500,11 +500,11 @@ private function currentBuyer()
 
 ## Cross-References
 
-- [BoqSheetService](./BoqSheetService.md) - Business logic for sheet operations
-- [BoqSheetMergeService](./BoqSheetMergeService.md) - Business logic for merge operations
-- [BoqSheet-Model](./BoqSheet-Model.md) - Data model for sheets
-- [BoqEntryController](./BoqEntryController.md) - Controller for entries
-- [BoqSheetResource](./BoqSheetResource.md) - API resource for serialization
+- [BoqSheetService](/entities/boqsheetservice) - Business logic for sheet operations
+- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Business logic for merge operations
+- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
+- [BoqEntryController](/entities/boqentrycontroller) - Controller for entries
+- [BoqSheetResource](/entities/boqsheetresource) - API resource for serialization
 
 ## Usage Examples
 

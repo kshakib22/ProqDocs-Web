@@ -15,7 +15,7 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Services
 
-- **[ElasticService](./ElasticService.md)** - Core Elasticsearch service (1012 lines). Handles:
+- **[ElasticService](/entities/elasticservice)** - Core Elasticsearch service (1012 lines). Handles:
   - Index management (products, vendors, architectural/interior slot products)
   - Product and vendor indexing with boost scores
   - Public catalog search with filters, pagination, and sorting
@@ -25,7 +25,7 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Controllers
 
-- **[ElasticsearchHomeController](./ElasticsearchHomeController.md)** - Public search endpoints (400 lines):
+- **[ElasticsearchHomeController](/entities/elasticsearchhomecontroller)** - Public search endpoints (400 lines):
   - `getProducts()` - Search products with filters and sorting
   - `getVendors()` - Search vendors with filters and sorting
   - `getVendorProducts()` - Get products for a specific vendor
@@ -35,13 +35,13 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Console Commands
 
-- **[IndexSubscribedProductsToElasticsearch](./IndexSubscribedProductsToElasticsearch.md)** - Index all products and vendors with subscription boost scores
-- **[RebuildProjectElasticsearchIndexes](./RebuildProjectElasticsearchIndexes.md)** - Rebuild all Elasticsearch indexes with environment-safe names
+- **[IndexSubscribedProductsToElasticsearch](/entities/indexsubscribedproductstoelasticsearch)** - Index all products and vendors with subscription boost scores
+- **[RebuildProjectElasticsearchIndexes](/entities/rebuildprojectelasticsearchindexes)** - Rebuild all Elasticsearch indexes with environment-safe names
 
 #### Tests
 
-- **[ElasticsearchHomeControllerTest](./ElasticsearchHomeControllerTest.md)** - Tests for Elasticsearch home controller endpoints
-- **[ProductElasticsearchLifecycleTest](./ProductElasticsearchLifecycleTest.md)** - Tests for product Elasticsearch sync lifecycle
+- **[ElasticsearchHomeControllerTest](/entities/elasticsearchhomecontrollertest)** - Tests for Elasticsearch home controller endpoints
+- **[ProductElasticsearchLifecycleTest](/entities/productelasticsearchlifecycletest)** - Tests for product Elasticsearch sync lifecycle
 
 ### Index Structure
 
@@ -155,12 +155,12 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
    - Indexes product document with all fields
 
 2. **Sync on Changes**: `ElasticService::syncProductToIndex()`
-   - Called by [ProductService](./ProductService.md) on create/update
+   - Called by [ProductService](/entities/productservice) on create/update
    - Loads missing relationships
    - Upserts product document
 
 3. **Remove on Delete**: `ElasticService::removeProductFromIndex()`
-   - Called by [ProductService](./ProductService.md) on delete
+   - Called by [ProductService](/entities/productservice) on delete
    - Deletes product document (ignores 404)
 
 4. **Bulk Indexing**: `ElasticService::indexAllProducts()`
@@ -203,18 +203,18 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 ### Direct Dependencies
 
-- **[Product](./Product.md)** - Products are indexed and searched
+- **[Product](/entities/product)** - Products are indexed and searched
 - **Vendor** - Vendors are indexed and searched
-- **[Category](./Category.md)** - Used for filtering in search
-- **[VendorType](./VendorType.md)** - Used for filtering in vendor search
-- **[Subscription](./Subscription.md)** - Provides boost scores for products and vendors
-- **[Package](./Package.md)** - Determines slot-based product indexing
+- **[Category](/entities/category)** - Used for filtering in search
+- **[VendorType](/entities/vendortype)** - Used for filtering in vendor search
+- **[Subscription](/entities/subscription)** - Provides boost scores for products and vendors
+- **[Package](/entities/package)** - Determines slot-based product indexing
 
 ### Cross-Domain Connections
 
-- **[HomeController](./HomeController.md)** - Fallback when Elasticsearch fails
-- **[ProductService](./ProductService.md)** - Triggers Elasticsearch sync on product changes
-- **[SubscriptionSlotScoreService](./SubscriptionSlotScoreService.md)** - Syncs boost scores before indexing
+- **[HomeController](/entities/homecontroller)** - Fallback when Elasticsearch fails
+- **[ProductService](/entities/productservice)** - Triggers Elasticsearch sync on product changes
+- **[SubscriptionSlotScoreService](/entities/subscriptionslotscoreservice)** - Syncs boost scores before indexing
 
 ## Red Flags & Tech Debt
 
@@ -388,133 +388,4 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 ## Future Upgrades (Postgres & Scalability)
 
-### Database Schema Improvements
-
-1. **Add Search Analytics Table**:
-   ```sql
-   CREATE TABLE search_analytics (
-       id BIGSERIAL PRIMARY KEY,
-       user_id BIGINT,
-       search_term VARCHAR(255),
-       search_type VARCHAR(50),
-       results_count INTEGER,
-       filters JSONB,
-       created_at TIMESTAMP DEFAULT NOW()
-   );
-
-   CREATE INDEX idx_search_analytics_search_term ON search_analytics(search_term);
-   CREATE INDEX idx_search_analytics_created_at ON search_analytics(created_at DESC);
-   ```
-
-2. **Add Search Suggestions Table**:
-   ```sql
-   CREATE TABLE search_suggestions (
-       id BIGSERIAL PRIMARY KEY,
-       term VARCHAR(255) UNIQUE NOT NULL,
-       frequency INTEGER DEFAULT 1,
-       last_used_at TIMESTAMP DEFAULT NOW()
-   );
-
-   CREATE INDEX idx_search_suggestions_frequency ON search_suggestions(frequency DESC);
-   ```
-
-### Architecture Improvements
-
-1. **Event-Driven Architecture**:
-   - Dispatch events on product/vendor changes
-   - Queue Elasticsearch sync operations
-   - Implement retry logic with exponential backoff
-
-2. **Index Versioning**:
-   - Implement index versioning with aliases
-   - Support zero-downtime index updates
-   - Add index migration strategy
-
-3. **Search Service Abstraction**:
-   - Create `SearchServiceInterface` for multiple search backends
-   - Implement factory pattern for search provider selection
-   - Support fallback to alternative search providers
-
-4. **Cache Layer**:
-   - Implement multi-level caching (Redis, CDN)
-   - Add cache warming for popular searches
-   - Implement cache invalidation strategies
-
-5. **Search Analytics**:
-   - Track search terms and results
-   - Monitor search performance
-   - Implement search optimization based on analytics
-
-### Performance Optimizations
-
-1. **Elasticsearch Optimizations**:
-   - Optimize index mappings for search performance
-   - Implement search result pagination with scroll API
-   - Add search result caching at multiple levels
-
-2. **Batch Processing**:
-   - Implement bulk indexing with parallel processing
-   - Batch search operations for multiple queries
-   - Implement queue-based indexing for high-volume updates
-
-3. **Read Replicas**:
-   - Route search queries to Elasticsearch read replicas
-   - Keep write operations on primary cluster
-
-4. **Query Optimization**:
-   - Optimize search queries for performance
-   - Implement query caching
-   - Add search result pre-fetching
-
-### Security Improvements
-
-1. **Search Query Validation**:
-   - Validate and sanitize all search queries
-   - Implement query length limits
-   - Add protection against query injection
-
-2. **Rate Limiting**:
-   - Rate limit all search endpoints
-   - Implement per-user rate limits
-   - Add abuse detection and prevention
-
-3. **Access Control**:
-   - Implement role-based access control for search
-   - Add audit logging for search queries
-   - Implement data retention policies for search analytics
-
-### Monitoring Improvements
-
-1. **Metrics**:
-   - Track search query rates
-   - Monitor search latency
-   - Track index health and performance
-
-2. **Alerting**:
-   - Alert on high search failure rates
-   - Alert on index health issues
-   - Alert on search performance degradation
-
-3. **Logging**:
-   - Structured logging for all search operations
-   - Correlation IDs for request tracing
-   - Performance logging for slow queries
-
-## Related Files
-
-### Services
-- `app/Service/ElasticService.php`
-
-### Controllers
-- `app/Http/Controllers/ElasticsearchHomeController.php`
-
-### Console Commands
-- `app/Console/Commands/IndexSubscribedProductsToElasticsearch.php`
-- `app/Console/Commands/RebuildProjectElasticsearchIndexes.php`
-
-### Tests
-- `tests/Feature/ElasticsearchHomeControllerTest.php`
-- `tests/Feature/ProductElasticsearchLifecycleTest.php`
-- `tests/Feature/ElasticsearchIndexCatalogTest.php`
-- `tests/Feature/RebuildProjectElasticsearchIndexesCommandTest.php`
-.php`
+...

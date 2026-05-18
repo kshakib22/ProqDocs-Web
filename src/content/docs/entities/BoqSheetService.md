@@ -374,10 +374,10 @@ return $this->success(
 
 ## Cross-References
 
-- [BoqSheet-Model](./BoqSheet-Model.md) - Data model for sheets
+- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
 - BoqEntry-Model - Data model for entries
 - BoqSheetMerge-Model - Data model for merges
-- [BoqSheetController](./BoqSheetController.md) - Controller that uses this service
+- [BoqSheetController](/entities/boqsheetcontroller) - Controller that uses this service
 - ServiceResponder - Trait for standardized responses
 
 ## Usage Examples
@@ -433,36 +433,4 @@ if ($result['status'] === 'success') {
 
 ## Architecture Notes
 
-### Why This Service Exists
-
-The `BoqSheetService` serves several critical purposes:
-
-1. **Business Logic Encapsulation**: Keeps complex operations out of controllers
-2. **Data Integrity**: Ensures consistency between sheets and their entries
-3. **Reusability**: Can be used by multiple controllers or other services
-4. **Testability**: Easier to unit test business logic in isolation
-
-### Relationship to Other Services
-
-```
-BoqSheetController
-    │
-    ├──> BoqSheetService (this service)
-    │       ├──> BoqSheet (model)
-    │       ├──> BoqEntry (model)
-    │       └──> BoqSheetMerge (model)
-    │
-    └──> BoqSheetMergeService
-            └──> BoqSheetMerge (model)
-```
-
-### Future Enhancements
-
-Potential improvements to this service:
-
-1. **Add transaction support**: Wrap all multi-record operations in transactions
-2. **Add locking**: Use `lockForUpdate()` to prevent race conditions
-3. **Bulk operations**: Replace N+1 queries with bulk updates
-4. **Event dispatching**: Emit events for sheet creation, column changes
-5. **Validation service**: Extract validation logic to separate service
-6. **Caching**: Cache sheet metadata to reduce database queries
+...

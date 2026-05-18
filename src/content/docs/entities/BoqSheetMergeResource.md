@@ -118,76 +118,10 @@ return new BoqSheetMergeResource($merge);
 ## Cross-References
 
 - BoqSheetMerge-Model - Data model for merges
-- [BoqSheet-Model](./BoqSheet-Model.md) - Parent sheet for merges
-- [BoqEntry-Model](./BoqEntryModel.md) - Entries included in merges
-- [BoqSheetMergeService](./BoqSheetMergeService.md) - Service that creates merges
+- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet for merges
+- [BoqEntry-Model](/entities/boqentrymodel) - Entries included in merges
+- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Service that creates merges
 
 ## Architecture Notes
 
-### Why This Resource Exists
-
-The `BoqSheetMergeResource` serves several critical purposes:
-
-1. **Data Abstraction**: Hides database-specific details from API
-2. **Data Transformation**: Converts internal formats to API-friendly formats
-3. **Consistency**: Ensures consistent API responses
-4. **Flexibility**: Supports conditional data inclusion
-
-### Relationship to Other Resources
-
-```
-BoqSheetResource
-    │
-    └──> BoqSheetMergeResource (merges relationship)
-```
-
-### Future Enhancements
-
-Potential improvements to this resource:
-
-1. **Conditional inclusion**: Add `whenLoaded()` for relationships
-2. **Validation**: Add format validation for transformed data
-3. **Caching**: Add response caching for frequently accessed merges
-4. **Versioning**: Support multiple API versions
-
-## Best Practices
-
-### Eager Loading
-
-Always eager load relationships to avoid N+1 queries:
-
-```php
-// Good
-$merge = BoqSheetMerge::with('boqSheet')->find($id);
-
-// Bad - causes N+1 queries
-$merge = BoqSheetMerge::find($id);
-```
-
-### Collection Usage
-
-Use collection for multiple merges:
-
-```php
-$merges = BoqSheetMerge::where('boq_sheet_id', $sheetId)->get();
-return BoqSheetMergeResource::collection($merges);
-```
-
-## N+1 Query Risks
-
-### Current Implementation
-
-The resource does not have any N+1 query risks because:
-
-1. **No nested relationships**: The resource only returns flat data
-2. **No conditional queries**: All data is available on the model
-3. **No lazy loading**: No relationships are accessed without eager loading
-
-### Potential Risks
-
-If relationships are added in the future, ensure they are eager loaded:
-
-```php
-// If adding boqSheet relationship
-$merge = BoqSheetMerge::with('boqSheet')->find($id);
-```
+...

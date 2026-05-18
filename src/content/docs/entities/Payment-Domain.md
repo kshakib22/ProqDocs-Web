@@ -113,9 +113,9 @@ Example: `PAY-20260501-456-123-001`
 
 ### Direct Dependencies
 
-- **[PurchaseOrder](./PurchaseOrder-Domain.md)** - Payments are always associated with a purchase order
+- **[PurchaseOrder](/entities/purchaseorder-domain)** - Payments are always associated with a purchase order
 - **Buyer** - Payments are made by buyers
-- **[Vendor](./Vendor-Domain.md)** - Vendors receive payment notifications
+- **[Vendor](/entities/vendor-domain)** - Vendors receive payment notifications
 - **PaymentType** - Defines payment structure (advance, credit, installment)
 - **PurchaseOrderPaymentInfo** - Scheduled payment information
 

@@ -15,7 +15,7 @@ title: "BoqSheet Model"
 - **BoqEntry**: Contains the actual line items/rows of the quantity sheet
 - **BoqSheetMerge**: Tracks merge operations when sheets are combined
 
-The BOQ sheet is the foundational document used throughout the procurement lifecycle, feeding into [PurchaseListService](./PurchaseListService.md) and RFQ generation workflows.
+The BOQ sheet is the foundational document used throughout the procurement lifecycle, feeding into [PurchaseListService](/entities/purchaselist-domain) and RFQ generation workflows.
 
 ## Database Schema
 
@@ -243,12 +243,12 @@ Converts an array of column names back to a comma-separated string for storage.
 
 ## Cross-References
 
-- [BoqSheetService](./BoqSheetService.md) - Business logic for sheet operations
-- [BoqEntry-Model](./BoqEntryModel.md) - Line items contained within sheets
+- [BoqSheetService](/entities/boqsheetservice) - Business logic for sheet operations
+- [BoqEntry-Model](/entities/boqentrymodel) - Line items contained within sheets
 - BoqSheetMerge-Model - Merge operations tracking
-- [PurchaseListService](./PurchaseListService.md) - Downstream consumer of BOQ data
-- [BoqSheetController](./BoqSheetController.md) - HTTP endpoint handler
-- [BoqEntry-BoqSheet-Domain](./BoqEntry-BoqSheet-Domain.md) - Domain overview
+- [PurchaseListService](/entities/purchaselist-domain) - Downstream consumer of BOQ data
+- [BoqSheetController](/entities/boqsheetcontroller) - HTTP endpoint handler
+- [BoqEntry-BoqSheet-Domain](/entities/boqentry-boqsheet-domain) - Domain overview
 
 ## Usage Examples
 
@@ -290,6 +290,4 @@ $sheets = BoqSheet::where('project_id', $projectId)
 ```php
 $sheet->extra_columns_array = ['new_column', 'another_column'];
 $sheet->save();
-```
-();
 ```

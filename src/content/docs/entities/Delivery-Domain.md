@@ -17,8 +17,8 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 **Purpose**: Represents the delivery plan for a purchase order, containing financial summaries and shipment information.
 
 **Relationships**:
-- `purchaseOrder()` → [PurchaseOrder](./PurchaseOrder-Domain.md) (BelongsTo)
-- `shipments()` → [Shipment](./Shipment Model.md) (HasMany)
+- `purchaseOrder()` → [PurchaseOrder](/entities/purchaseorder-domain) (BelongsTo)
+- `shipments()` → [Shipment](/entities/shipment-model) (HasMany)
 
 **Key Methods**:
 - `calculateFinancialSummary()` - Recalculates all delivery-related charges and updates both DeliveryDetail and PurchaseOrder
@@ -28,7 +28,7 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 - `delivery_cost` - Sum of all shipment charges
 - `loading_unloading_charge` - Sum of all loading/unloading charges
 - `services_charge` - Sum of all services charges from shipments
-- `platform_fee` - Calculated percentage based on total amount using [PlatformFeeSlab](./PlatformFeeSlab.md)
+- `platform_fee` - Calculated percentage based on total amount using [PlatformFeeSlab](/entities/platformfeeslab)
 - `tax_amount` - Tax from purchase order
 - `total_amount` - Final total including all charges
 - `status` - Current delivery status
@@ -47,8 +47,8 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 **Purpose**: Represents a single shipment within a delivery detail, containing delivery date, charges, and status.
 
 **Relationships**:
-- `deliveryDetail()` → [DeliveryDetail](./DeliveryDetail Model.md) (BelongsTo)
-- `shipmentItems()` → [ShipmentItem](./ShipmentItem Model.md) (HasMany)
+- `deliveryDetail()` → [DeliveryDetail](/entities/deliverydetail-model) (BelongsTo)
+- `shipmentItems()` → [ShipmentItem](/entities/shipmentitem-model) (HasMany)
 
 **Key Fields**:
 - `expected_delivery_date` - Planned delivery date
@@ -74,9 +74,9 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 **Purpose**: Represents individual items within a shipment, linking to purchase lists and RFQs.
 
 **Relationships**:
-- `shipment()` → [Shipment](./Shipment Model.md) (BelongsTo)
-- `purchaseList()` → [PurchaseList](./PurchaseList-Domain.md) (BelongsTo)
-- `rfq()` → [Rfq](./RFQ-Quotation-Domain.md) (BelongsTo)
+- `shipment()` → [Shipment](/entities/shipment-model) (BelongsTo)
+- `purchaseList()` → [PurchaseList](/entities/purchaselist-domain) (BelongsTo)
+- `rfq()` → [Rfq](/entities/rfq-quotation-domain) (BelongsTo)
 
 **Key Fields**:
 - `quantity` - Quantity for this shipment (can be partial from purchase list)
@@ -165,7 +165,7 @@ Saves payment information for the purchase order.
 - `show(DeliveryDetail $deliveryDetail)` - View a specific delivery detail
 
 **Red Flags**:
-- Manual authorization checks instead of using [DeliveryDetailPolicy](./DeliveryDetailPolicy.md)
+- Manual authorization checks instead of using [DeliveryDetailPolicy](/entities/deliverydetailpolicy)
 - No caching for frequently accessed delivery details
 - No rate limiting on endpoints
 
@@ -187,7 +187,7 @@ Saves payment information for the purchase order.
 - Line 98-100: Updates all shipments without database transaction
 - No validation that all items are covered before confirming shipments
 - No check for minimum shipment requirements
-- Manual authorization checks instead of using [DeliveryDetailPolicy](./DeliveryDetailPolicy.md)
+- Manual authorization checks instead of using [DeliveryDetailPolicy](/entities/deliverydetailpolicy)
 
 ---
 
@@ -239,7 +239,7 @@ Saves payment information for the purchase order.
 
 **Columns**:
 - `id` - Primary key
-- `purchase_order_id` - Foreign key to [purchase_orders](./PurchaseOrder-Domain.md)
+- `purchase_order_id` - Foreign key to [purchase_orders](/entities/purchaseorder-domain)
 - `sub_total` - Base amount
 - `delivery_cost` - Total shipping charges
 - `loading_unloading_charge` - Total loading/unloading charges
@@ -263,7 +263,7 @@ Saves payment information for the purchase order.
 
 **Columns**:
 - `id` - Primary key
-- `delivery_detail_id` - Foreign key to [delivery_details](./DeliveryDetail Model.md)
+- `delivery_detail_id` - Foreign key to [delivery_details](/entities/deliverydetail-model)
 - `expected_delivery_date` - Planned delivery date
 - `shipment_charge` - Shipping cost
 - `loading_unloading_charge` - Loading/unloading cost
@@ -285,8 +285,8 @@ Saves payment information for the purchase order.
 **Columns**:
 - `id` - Primary key
 - `shipment_id` - Foreign key to shipments
-- `purchase_list_id` - Foreign key to [purchase_lists](./PurchaseList-Domain.md)
-- `rfq_id` - Foreign key to [rfqs](./RFQ-Quotation-Domain.md) (nullable)
+- `purchase_list_id` - Foreign key to [purchase_lists](/entities/purchaselist-domain)
+- `rfq_id` - Foreign key to [rfqs](/entities/rfq-quotation-domain) (nullable)
 - `quantity` - Shipment quantity
 - `services` - JSON array of services
 - `created_at`, `updated_at` - Timestamps
@@ -300,10 +300,10 @@ Saves payment information for the purchase order.
 
 ## Cross-References
 
-- [PurchaseOrder-Domain](./PurchaseOrder-Domain.md) - Delivery details are created from purchase orders
-- [PurchaseList-Domain](./PurchaseList-Domain.md) - Shipment items reference purchase lists
-- [RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md) - Shipment items reference RFQs for tracking
-- [Payment-Domain](./Payment-Domain.md) - Payment infos are saved with delivery details
+- [PurchaseOrder-Domain](/entities/purchaseorder-domain) - Delivery details are created from purchase orders
+- [PurchaseList-Domain](/entities/purchaselist-domain) - Shipment items reference purchase lists
+- [RFQ-Quotation-Domain](/entities/rfq-quotation-domain) - Shipment items reference RFQs for tracking
+- [Payment-Domain](/entities/payment-domain) - Payment infos are saved with delivery details
 
 ---
 

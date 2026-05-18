@@ -12,7 +12,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 - **Total Items**: 63
 - **Critical**: 16 (race conditions, data integrity risks, security issues)
-- **High**: 24 (performance issues, N+1 queries, missing indexes)
+- **High**: 24 (performance issues, n+1 queries, missing indexes)
 - **Medium**: 18 (code quality, duplication, incomplete features)
 - **Low**: 5 (cosmetic issues, commented code)
 
@@ -92,11 +92,11 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
   - **Fix**: Split into `ProjectCreationService`, `ProjectUpdateService`, `ProjectBoqService`, `ProjectRfqService`
 
 - [ ] **N+1 Query in ProjectResource** - `app/Http/Resources/ProjectResource.php`
-  - Multiple relationship calls cause N+1 queries
+  - Multiple relationship calls cause n+1 queries
   - **Fix**: Use `with()` for eager loading
 
 - [ ] **N+1 Query in ProjectResourceWithCompletion** - `app/Http/Resources/ProjectResourceWithCompletion.php`
-  - Completion calculation causes N+1 queries
+  - Completion calculation causes n+1 queries
   - **Fix**: Use `withCount()` and eager loading
 
 ### Medium
@@ -125,7 +125,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 - [ ] **Dashboard RFQ Query Inefficiency** - `app/Http/Controllers/ProjectController.php`
   - No eager loading for related data
-  - Could cause N+1 queries
+  - Could cause n+1 queries
   - **Fix**: Add eager loading
 
 - [ ] **Profile Completion Score Logic Issues** - `app/Models/Project.php`
@@ -147,11 +147,11 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 ### High
 
 - [ ] **N+1 Query in VendorResource** - `app/Http/Resources/VendorResource.php:45-46`
-  - `$this->products->count()` causes N+1 query in vendor lists
+  - `$this->products->count()` causes n+1 query in vendor lists
   - **Fix**: Use `withCount('products')` in query
 
 - [ ] **N+1 Query in FavoriteVendorResource** - `app/Http/Resources/FavoriteVendorResource.php:42-51`
-  - `$this->purchaseOrders->map()` causes N+1 queries
+  - `$this->purchaseOrders->map()` causes n+1 queries
   - **Fix**: Use `with('purchaseOrders')` in query
 
 - [ ] **Profile Completion Calculation Inefficiency** - `app/Models/Vendor.php:95-224`
@@ -237,11 +237,11 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
   - **Fix**: Split into `DeliveryCreationService`, `DeliveryUpdateService`, `DeliveryShipmentService`, `DeliveryFinanceService`
 
 - [ ] **N+1 Query in DeliveryDetailResource** - `app/Http/Resources/DeliveryDetailResource.php`
-  - Multiple relationship calls cause N+1 queries
+  - Multiple relationship calls cause n+1 queries
   - **Fix**: Use `with()` for eager loading
 
 - [ ] **N+1 Query in ShipmentResource** - `app/Http/Resources/ShipmentResource.php`
-  - Shipment items cause N+1 queries
+  - Shipment items cause n+1 queries
   - **Fix**: Use `with('shipmentItems')` in query
 
 ### Medium
@@ -270,7 +270,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 - [ ] **Dashboard Query Inefficiency** - `app/Http/Controllers/DeliveryDetailsController.php`
   - No eager loading for related data
-  - Could cause N+1 queries
+  - Could cause n+1 queries
   - **Fix**: Add eager loading
 
 - [ ] **Financial Calculation Issues** - `app/Service/DeliveryDetailService.php`
@@ -307,7 +307,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 ### Medium
 
 - [ ] **N+1 Query in BoqSheetController::index()**
-  - Loading sheets with entries and merges for a project causes N+1 queries.
+  - Loading sheets with entries and merges for a project causes n+1 queries.
   - **Fix**: Use `with(['entries', 'boqSheetMerges'])`.
 
 - [ ] **Lack of Audit Trail**
@@ -444,7 +444,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
    - **Fix**: Enable and add indexes as listed above
 
 2. **N+1 Queries** - All domains
-   - Multiple resources cause N+1 queries
+   - Multiple resources cause n+1 queries
    - Will cause performance issues with large datasets
    - **Fix**: Use eager loading and `withCount()`
 
@@ -457,7 +457,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 ## Related Files
 
-- [Payment-Domain](../entities/Payment-Domain.md)
-- [Project-Domain](../entities/Project-Domain.md)
-- [Vendor-Domain](../entities/Vendor-Domain.md)
-- [Delivery-Domain](../entities/Delivery-Domain.md)
+- [Payment-Domain](/entities/payment-domain)
+- [Project-Domain](/entities/project-domain)
+- [Vendor-Domain](/entities/vendor-domain)
+- [Delivery-Domain](/entities/delivery-domain)

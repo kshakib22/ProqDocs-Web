@@ -369,11 +369,11 @@ The `BoqSheetEntryService` has deep integration with the `PurchaseList` domain:
 
 ## Cross-References
 
-- [BoqEntry-Model](./BoqEntryModel.md) - Data model for entries
-- [BoqSheet-Model](./BoqSheet-Model.md) - Data model for sheets
-- [PurchaseListService](./PurchaseListService.md) - Procurement workflow integration
-- [BoqSheetMergeService](./BoqSheetMergeService.md) - Merge operations
-- [Quotation](./Quotation.md) - Source data for entries
+- [BoqEntry-Model](/entities/boqentrymodel) - Data model for entries
+- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
+- [PurchaseListService](/entities/purchaselist-domain) - Procurement workflow integration
+- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Merge operations
+- [Quotation](/entities/quotation-model) - Source data for entries
 - Rfq - Request for quotation management
 
 ## Usage Examples
@@ -442,36 +442,4 @@ if ($result['status'] === 'success') {
 
 ## Architecture Notes
 
-### Why This Service Exists
-
-The `BoqSheetEntryService` serves several critical purposes:
-
-1. **Business Logic Encapsulation**: Keeps complex operations out of controllers
-2. **PurchaseList Integration**: Ensures consistency between BOQ and procurement domains
-3. **Order Management**: Maintains entry order within sheets
-4. **Financial Calculations**: Uses `bcmath` for precise calculations
-5. **Transaction Safety**: Wraps multi-record operations in transactions
-
-### Relationship to Other Services
-
-```
-BoqEntryController
-    │
-    └──> BoqSheetEntryService (this service)
-            ├──> BoqEntry (model)
-            ├──> BoqSheet (model)
-            ├──> PurchaseListService (procurement integration)
-            ├──> BoqSheetMergeService (merge operations)
-            └──> Quotation/Rfq (procurement data)
-```
-
-### Future Enhancements
-
-Potential improvements to this service:
-
-1. **Event dispatching**: Emit events for entry creation, deletion, movement
-2. **Validation service**: Extract validation logic to separate service
-3. **Image service**: Extract image handling to separate service
-4. **Caching**: Cache entry metadata to reduce database queries
-5. **Queue processing**: Move heavy operations to background jobs
-6. **Audit logging**: Add comprehensive audit trail
+...

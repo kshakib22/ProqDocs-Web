@@ -11,11 +11,11 @@ title: "BoqSheet Model"
 
 `BoqSheet` is the root entity of the BOQ (Bill of Quantities) domain. It represents a complete quantity sheet for a construction project, serving as the container for all line items (entries) that define materials, labor, and equipment quantities. This model is the central hub that connects to:
 
-- **[Projects](./Project-Domain.md)**: Each BOQ sheet belongs to a specific project
-- **[BoqEntry](./BoqEntryModel.md)**: Contains the actual line items/rows of the quantity sheet
-- **[BoqSheetMerge](./BoqSheetMergeModel.md)**: Tracks merge operations when sheets are combined
+- **[Projects](/entities/project-domain)**: Each BOQ sheet belongs to a specific project
+- **[BoqEntry](/entities/boqentrymodel)**: Contains the actual line items/rows of the quantity sheet
+- **[BoqSheetMerge](/entities/boqsheetmergemodel)**: Tracks merge operations when sheets are combined
 
-The BOQ sheet is the foundational document used throughout the procurement lifecycle, feeding into [PurchaseListService](./PurchaseListService.md) and RFQ generation workflows.
+The BOQ sheet is the foundational document used throughout the procurement lifecycle, feeding into [PurchaseListService](/entities/purchaselist-domain) and RFQ generation workflows.
 
 ## Database Schema
 
@@ -80,7 +80,7 @@ public function entries(): HasMany
 - **Purpose:** Retrieves all line items belonging to this sheet
 - **Cardinality:** One-to-many (one sheet has many entries)
 - **Usage:** Primary access point for iterating through quantity data
-- **Related:** [BoqEntry-Model](./BoqEntryModel.md)
+- **Related:** [BoqEntry-Model](/entities/boqentrymodel)
 
 ### `boqSheetMerges(): HasMany`
 
@@ -195,11 +195,11 @@ Converts an array of column names back to a comma-separated string for storage.
 
 ## Cross-References
 
-- [BoqSheetService](./BoqSheetService.md) - Business logic for sheet operations
-- [BoqEntry-Model](./BoqEntryModel.md) - Line items contained within sheets
+- [BoqSheetService](/entities/boqsheetservice) - Business logic for sheet operations
+- [BoqEntry-Model](/entities/boqentrymodel) - Line items contained within sheets
 - BoqSheetMerge-Model - Merge operations tracking
-- [PurchaseListService](./PurchaseListService.md) - Downstream consumer of BOQ data
-- [BoqSheetController](./BoqSheetController.md) - HTTP endpoint handler
+- [PurchaseListService](/entities/purchaselist-domain) - Downstream consumer of BOQ data
+- [BoqSheetController](/entities/boqsheetcontroller) - HTTP endpoint handler
 
 ## Usage Examples
 

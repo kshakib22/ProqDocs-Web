@@ -213,11 +213,11 @@ A merge must span at least 2 cells:
 
 ## Cross-References
 
-- [BoqSheetMerge-Model](./BoqSheetMergeModel.md) - Data model for merges
-- [BoqSheet-Model](./BoqSheet-Model.md) - Parent sheet for merges
+- [BoqSheetMerge-Model](/entities/boqsheetmergemodel) - Data model for merges
+- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet for merges
 - BoqEntry-Model - Entries included in merges
-- [BoqSheetController](./BoqSheetController.md) - Controller that uses this service
-- [BoqSheetMergeResource](./BoqSheetMergeResource.md) - API resource for serialization
+- [BoqSheetController](/entities/boqsheetcontroller) - Controller that uses this service
+- [BoqSheetMergeResource](/entities/boqsheetmergeresource) - API resource for serialization
 
 ## Usage Examples
 
@@ -269,33 +269,4 @@ if ($result['status'] === 'success') {
 
 ## Architecture Notes
 
-### Why This Service Exists
-
-The `BoqSheetMergeService` serves several critical purposes:
-
-1. **Business Logic Encapsulation**: Keeps merge operations out of controllers
-2. **Data Validation**: Ensures merge data integrity
-3. **Transaction Safety**: Wraps operations in transactions
-4. **Reusability**: Can be used by multiple controllers
-
-### Relationship to Other Services
-
-```
-BoqSheetController
-    │
-    └──> BoqSheetMergeService (this service)
-            ├──> BoqSheetMerge (model)
-            ├──> BoqSheet (model)
-            └──> BoqEntry (model)
-```
-
-### Future Enhancements
-
-Potential improvements to this service:
-
-1. **Conflict detection**: Prevent overlapping merges
-2. **Merge history**: Track merge changes over time
-3. **Merge preview**: Provide preview before creation
-4. **Bulk operations**: Support creating multiple merges at once
-5. **Merge templates**: Support reusable merge configurations
-6. **Validation service**: Extract validation logic to separate service
+...

@@ -15,7 +15,7 @@ title: "Quotation Model"
 - **Price negotiation**: Detailed breakdown of costs
 - **Vendor selection**: Buyer can compare and select the best quote
 - **Purchase order generation**: Accepted quotations become purchase orders
-- **Service breakdown**: Line items for complex quotes via [QutationService-Model](./QutationService-Model.md)
+- **Service breakdown**: Line items for complex quotes via [QutationService-Model](/entities/qutationservice-model)
 
 ## Database Schema
 
@@ -173,59 +173,9 @@ public function quotationServices(): HasMany
 - **Cardinality:** One-to-many
 - **Usage:** Detailed cost breakdown for complex quotes
 
-**Note:** Uses [QutationService-Model](./QutationService-Model.md) (note the typo in class name).
+**Note:** Uses [QutationService-Model](/entities/qutationservice-model) (note the typo in class name).
 
-## Total Calculation Formula
-
-The `total_amount` is calculated as:
-
-```
-total_amount = sub_amount + services_charge + tax_amount + shipping_amount + loading_charge
-```
-
-**Where:**
-- `sub_amount = unit_count × unit_price`
-- `services_charge = sum of all QutationService.total_price`
-- `tax_amount = calculated based on vat_rate`
-- `shipping_amount = delivery charges`
-- `loading_charge = handling charges`
-
-**Tech Debt:** This calculation is performed in the service layer, not in the model, which can lead to inconsistency.
-
-## Data Flow
-
-### Creation Flow
-
-```
-1. Vendor views RFQ
-2. Vendor submits quotation via UI
-3. QuotationController validates input
-4. QuotationService::create() instantiates model
-5. Model saves to database
-6. Returns Quotation instance with ID
-7. Notification sent to buyer
-```
-
-### Acceptance Flow
-
-```
-1. Buyer reviews quotation
-2. Buyer accepts quotation
-3. Quotation status set to 'accepted'
-4. Competing quotations set to 'rejected'
-5. RFQ status set to 'accepted'
-6. Purchase list created
-7. Purchase order generated
-```
-
-### Rejection Flow
-
-```
-1. Buyer rejects quotation
-2. Quotation status set to 'rejected'
-3. No purchase order created
-4. RFQ remains open for other quotes
-```
+...
 
 ## Tech Debt Summary
 
@@ -240,119 +190,11 @@ total_amount = sub_amount + services_charge + tax_amount + shipping_amount + loa
 
 ## Cross-References
 
-- [Rfq-Model](./Rfq-Model.md) - Parent RFQ for this quotation
-- [QutationService-Model](./QutationService-Model.md) - Line items/service breakdown
-- [QuotationService](./QuotationService.md) - Business logic for quotation operations
-- [QuotationController](./QuotationController.md) - HTTP endpoint handler
-- [QuotationResource](./QuotationResource.md) - API resource for serialization
+- [Rfq-Model](/entities/rfq-model) - Parent RFQ for this quotation
+- [QutationService-Model](/entities/qutationservice-model) - Line items/service breakdown
+- [QuotationService](/entities/quotationservice) - Business logic for quotation operations
+- [QuotationController](/entities/quotationcontroller) - HTTP endpoint handler
+- [QuotationResource](/entities/quotationresource) - API resource for serialization
 - PurchaseList - Downstream purchase order
 
-## Usage Examples
-
-### Creating a quotation
-
-```php
-$quotation = Quotation::create([
-    'quotation_number' => 'QT-' . $rfq->id . '-' . Str::random(6),
-    'rfq_id' => $rfq->id,
-    'vendor_id' => $vendor->id,
-    'buyer_id' => $buyer->id,
-    'user_id' => $user->id,
-    'project_id' => $project->id,
-    'product_id' => $product->id,
-    'category_id' => $category->id,
-    'status' => 'in_review',
-    'unit_count' => 100,
-    'unit_price' => 150.00,
-    'sub_amount' => 15000.00,
-    'services_charge' => 500.00,
-    'total_amount' => 15500.00,
-    'vat_rate' => 15.00,
-    'tax_amount' => 2325.00,
-    'shipping_amount' => 0.00,
-    'loading_charge' => 0.00,
-    'validity_period' => 30,
-    'quotation_date' => now(),
-]);
-```
-
-### Getting RFQ with all quotations
-
-```php
-$rfq = Rfq::with('quotations.vendor')->find($rfqId);
-
-foreach ($rfq->quotations as $quotation) {
-    echo "Vendor: {$quotation->vendor->name}, Price: {$quotation->total_amount}";
-}
-```
-
-### Adding service line items
-
-```php
-$quotation->quotationServices()->create([
-    'name' => 'Installation Service',
-    'unit' => 'hour',
-    'unit_price' => 50.00,
-    'quantity' => 10,
-    // total_price calculated automatically
-]);
-```
-
-### Accepting a quotation
-
-```php
-$quotation->update(['status' => 'accepted']);
-
-// Reject competing quotations
-$rfq->quotations()
-    ->where('id', '!=', $quotation->id)
-    ->update(['status' => 'rejected']);
-
-// Update RFQ status
-$rfq->update(['status' => 'accepted']);
-```
-
-### Checking quotation validity
-
-```php
-$expiryDate = $quotation->quotation_date->addDays($quotation->validity_period);
-
-if (now()->gt($expiryDate)) {
-    // Quotation has expired
-}
-```
-
-## Architecture Notes
-
-### Why This Model Exists
-
-The `Quotation` model serves several critical purposes:
-
-1. **Vendor Response**: Captures vendor pricing and terms
-2. **Competitive Bidding**: Enables comparison of multiple quotes
-3. **Purchase Order Foundation**: Accepted quotes become purchase orders
-4. **Audit Trail**: Tracks vendor engagement history
-5. **Service Breakdown**: Supports complex quotes with line items
-
-### Relationship to Other Models
-
-```
-Rfq (parent)
-    │
-    └──> Quotation (vendor response)
-            ├──> QutationService (line items)
-            ├──> Vendor (submitting vendor)
-            ├──> Product (quoted product)
-            └──> PurchaseList (downstream order)
-```
-
-### Future Enhancements
-
-Potential improvements to this model:
-
-1. **Add `calculateTotal()` method**: Encapsulate pricing logic
-2. **Add status transition validation**: Prevent invalid state changes
-3. **Add `isExpired()` accessor**: Check if quotation is still valid
-4. **Add event listeners**: Trigger actions on status changes
-5. **Add computed column**: For total_amount calculation
-6. **Fix `withTrashed()` usage**: Review and fix cascade behavior
+...

@@ -8,7 +8,7 @@ title: "BOQ (Bill of Quantities) Domain"
 
 ## Overview
 
-The BOQ (Bill of Quantities) domain is the central ledger for project materials, serving as the bridge between project requirements, vendor quotations, and final procurement. It represents one of the most complex subsystems in the application, implementing dynamic "Excel-like" behavior within a relational database. It is deeply integrated with the **[Project-Domain](./Project-Domain.md)**, **[RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md)**, and **[PurchaseList-Domain](./PurchaseList-Domain.md)**.
+The BOQ (Bill of Quantities) domain is the central ledger for project materials, serving as the bridge between project requirements, vendor quotations, and final procurement. It represents one of the most complex subsystems in the application, implementing dynamic "Excel-like" behavior within a relational database. It is deeply integrated with the **[Project-Domain](/entities/project-domain)**, **[RFQ-Quotation-Domain](/entities/rfq-quotation-domain)**, and **[PurchaseList-Domain](/entities/purchaselist-domain)**.
 
 ## Current Architecture & Flow
 
@@ -16,26 +16,26 @@ The BOQ (Bill of Quantities) domain is the central ledger for project materials,
 
 #### Models
 
-- **[Boq](./Boq Model.md)** - The root entity binding sheets to a project. A very thin wrapper model.
-- **[BoqSheet](./BoqSheet Model.md)** - Represents a single sheet (page) of a BOQ. Contains dynamic "Extra Columns" configured per sheet.
-- **[BoqEntry](./BoqEntryModel.md)** - Represents an individual line item. Stores dynamic cell values (`dynamic_values`) and UI properties (`cell_colors`) in JSON fields.
-- **[BoqSheetMerge](./BoqSheetMergeModel.md)** - Manages visual "merged cells" across rows and columns using coordinate-style mapping.
+- **[Boq](/entities/boq-model)** - The root entity binding sheets to a project. A very thin wrapper model.
+- **[BoqSheet](/entities/boqsheet-model)** - Represents a single sheet (page) of a BOQ. Contains dynamic "Extra Columns" configured per sheet.
+- **[BoqEntry](/entities/boqentrymodel)** - Represents an individual line item. Stores dynamic cell values (`dynamic_values`) and UI properties (`cell_colors`) in JSON fields.
+- **[BoqSheetMerge](/entities/boqsheetmergemodel)** - Manages visual "merged cells" across rows and columns using coordinate-style mapping.
 
 #### Services
 
-- **[BoqSheetService](./BoqSheetService.md)** - Manages sheet metadata and the fragile dynamic schema logic (adding, renaming, deleting extra columns). It handles cascading key renaming inside `BoqEntry` JSON fields.
-- **[BoqSheetEntryService](./BoqSheetEntryService.md)** - Orchestrates the lifecycle of entries. It acts as the bridge that converts a vendor's Quotation into an actionable BOQ line item, automatically creating downstream PurchaseList records.
-- **[BoqSheetMergeService](./BoqSheetMergeService.md)** - Handles coordinate overlap detection and validation for merged cells.
+- **[BoqSheetService](/entities/boqsheetservice)** - Manages sheet metadata and the fragile dynamic schema logic (adding, renaming, deleting extra columns). It handles cascading key renaming inside `BoqEntry` JSON fields.
+- **[BoqSheetEntryService](/entities/boqsheetentryservice)** - Orchestrates the lifecycle of entries. It acts as the bridge that converts a vendor's Quotation into an actionable BOQ line item, automatically creating downstream PurchaseList records.
+- **[BoqSheetMergeService](/entities/boqsheetmergeservice)** - Handles coordinate overlap detection and validation for merged cells.
 
 #### Controllers
 
-- **[BoqController](./BoqSheetController.md)** - Basic CRUD for the root BOQ entity. (Note: Using BoqSheetController as closest match if BoqController is missing)
-- **[BoqSheetController](./BoqSheetController.md)** - Manages sheets and the dynamic extra columns endpoints.
-- **[BoqEntryController](./BoqEntryController.md)** - Handles entry modifications, deletions, and entry shifting.
+- **[BoqController](/entities/boqsheetcontroller)** - Basic CRUD for the root BOQ entity. (Note: Using BoqSheetController as closest match if BoqController is missing)
+- **[BoqSheetController](/entities/boqsheetcontroller)** - Manages sheets and the dynamic extra columns endpoints.
+- **[BoqEntryController](/entities/boqentrycontroller)** - Handles entry modifications, deletions, and entry shifting.
 
 #### Resources
 
-- **[BoqSheetResource](./BoqSheetResource.md)**, **[BoqEntryResource](./BoqEntryResource.md)**, **[BoqSheetMergeResource](./BoqSheetMergeResource.md)**, **BoqDetails** - Transforms dynamic JSON payloads and normalizes coordinate tracking for the frontend grid rendering.
+- **[BoqSheetResource](/entities/boqsheetresource)**, **[BoqEntryResource](/entities/boqentryresource)**, **[BoqSheetMergeResource](/entities/boqsheetmergeresource)**, **BoqDetails** - Transforms dynamic JSON payloads and normalizes coordinate tracking for the frontend grid rendering.
 
 
 ### The BOQ Lifecycle Flow
@@ -65,9 +65,9 @@ Entries enter the BOQ primarily via accepted Quotations.
 ## Dependencies & Graph Links
 
 ### Direct Dependencies
-- **[Project-Domain](./Project-Domain.md)** - A BOQ cannot exist without a parent project.
-- **[PurchaseList-Domain](./PurchaseList-Domain.md)** - `BoqSheetEntryService` intimately drives `PurchaseListService` state.
-- **[RFQ-Quotation-Domain](./RFQ-Quotation-Domain.md)** - Quotations act as the primary data source for BOQ Entries.
+- **[Project-Domain](/entities/project-domain)** - A BOQ cannot exist without a parent project.
+- **[PurchaseList-Domain](/entities/purchaselist-domain)** - `BoqSheetEntryService` intimately drives `PurchaseListService` state.
+- **[RFQ-Quotation-Domain](/entities/rfq-quotation-domain)** - Quotations act as the primary data source for BOQ Entries.
 
 
 ## Red Flags & Tech Debt

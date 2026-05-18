@@ -6,19 +6,19 @@ title: "Boq Model"
 
 # Boq Model
 
-The root entity for a Bill of Quantities. It belongs to a [Project Model](./Project-Domain.md) and serves as a container for multiple [BoqSheet Model](./BoqSheet Model.md) instances.
+The root entity for a Bill of Quantities. It belongs to a [Project Model](/entities/project-domain) and serves as a container for multiple [BoqSheet Model](/entities/boqsheet-model) instances.
 
 ## Current Architecture & Flow
 
 - **Table**: `boqs`
 - **Relationships**:
-	- `belongsTo` [Project Model](./Project-Domain.md)
-	- `hasMany` [BoqSheet Model](./BoqSheet Model.md)
+	- `belongsTo` [Project Model](/entities/project-domain)
+	- `hasMany` [BoqSheet Model](/entities/boqsheet-model)
 
 ## Dependencies & Graph Links
 
-- [Project Model](./Project-Domain.md)
-- [BoqSheet Model](./BoqSheet Model.md)
+- [Project Model](/entities/project-domain)
+- [BoqSheet Model](/entities/boqsheet-model)
 
 ## Red Flags & Tech Debt
 

@@ -207,79 +207,12 @@ return new BoqSheetResource($sheet);
 
 ## Cross-References
 
-- [BoqSheet-Model](./BoqSheet-Model.md) - Data model for sheets
-- [BoqSheetController](./BoqSheetController.md) - Controller that uses this resource
-- [BoqEntryResource](./BoqEntryResource.md) - Resource for entry data
-- [BoqSheetMergeResource](./BoqSheetMergeResource.md) - Resource for merge data
+- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
+- [BoqSheetController](/entities/boqsheetcontroller) - Controller that uses this resource
+- [BoqEntryResource](/entities/boqentryresource) - Resource for entry data
+- [BoqSheetMergeResource](/entities/boqsheetmergeresource) - Resource for merge data
 - ProjectResource - Resource for project data
 
 ## Architecture Notes
 
-### Why This Resource Exists
-
-The `BoqSheetResource` serves several critical purposes:
-
-1. **Data Abstraction**: Hides database-specific details from API
-2. **Data Transformation**: Converts internal formats to API-friendly formats
-3. **Performance Optimization**: Enables efficient eager loading
-4. **Consistency**: Ensures consistent API responses
-5. **Flexibility**: Supports conditional data inclusion
-
-### Relationship to Other Resources
-
-```
-BoqSheetResource
-    │
-    ├──> ProjectResource (project relationship)
-    ├──> BoqEntryResource (entries relationship)
-    └──> BoqSheetMergeResource (merges relationship)
-```
-
-### Future Enhancements
-
-Potential improvements to this resource:
-
-1. **Pagination support**: Add pagination wrapper for collections
-2. **Filtering support**: Add field filtering capabilities
-3. **Sorting support**: Add custom sorting options
-4. **Validation**: Add format validation for transformed data
-5. **Caching**: Add response caching for frequently accessed sheets
-6. **Versioning**: Support multiple API versions
-
-## Best Practices
-
-### Eager Loading
-
-Always eager load relationships to avoid N+1 queries:
-
-```php
-// Good
-$sheet = BoqSheet::with('project', 'entries', 'boqSheetMerges')->find($id);
-
-// Bad - causes N+1 queries
-$sheet = BoqSheet::find($id);
-```
-
-### Conditional Loading
-
-Only load relationships when needed:
-
-```php
-// For list view - minimal data
-$sheets = BoqSheet::with('project')->get();
-
-// For detail view - full data
-$sheet = BoqSheet::with('project', 'entries', 'boqSheetMerges')->find($id);
-```
-
-### Response Size
-
-Be mindful of response size when including entries:
-
-```php
-// For list view - exclude entries
-$sheets = BoqSheet::with('project')->get();
-
-// For detail view - include entries
-$sheet = BoqSheet::with('project', 'entries', 'boqSheetMerges')->find($id);
-```
+...
