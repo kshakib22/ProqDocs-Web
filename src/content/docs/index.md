@@ -9,7 +9,7 @@ title: "Wiki Index"
 
 ## Domains
 
-- [Payment-Domain](/entities/payment-domain) - Payment processing, SSL Commerce integration, offline payments
+- [Payment-Domain](/entities/Payment-Domain) - Payment processing, SSL Commerce integration, offline payments
 - [Product-Domain](/entities/product-domain) - Product management, Elasticsearch indexing, Excel import/export
 - [Vendor-Domain](/entities/vendor-domain) - Vendor registration, verification, profile management
 - [BoqEntry-BoqSheet-Domain](/entities/boqentry-boqsheet-domain) - BOQ sheet management, dynamic columns, Excel-style merging, quotation integration
