@@ -18,7 +18,7 @@ title: "QuotationController"
 - **Document Management**: Handling quotation document uploads
 - **RFQ Integration**: Linking quotations to parent RFQs
 
-This controller delegates business logic to [QuotationService](/entities/quotationservice), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized vendors can access their quotations.
+This controller delegates business logic to [QuotationService](/ProqDocs-Web/entities/quotation-service/), following the thin controller pattern. It enforces strict authorization rules to ensure only authorized vendors can access their quotations.
 
 ## Controller Dependencies
 
@@ -159,10 +159,10 @@ This controller delegates business logic to [QuotationService](/entities/quotati
 
 ## Cross-References
 
-- [QuotationService](/entities/quotationservice) - Business logic for quotation operations
-- [Quotation-Model](/entities/quotation-model) - Data model for quotations
-- [Rfq-Model](/entities/rfq-model) - Parent RFQ for quotations
-- [QuotationResource](/entities/quotationresource) - API resource for serialization
+- [QuotationService](/ProqDocs-Web/entities/quotation-service/) - Business logic for quotation operations
+- [Quotation-Model](/ProqDocs-Web/entities/quotation-model/) - Data model for quotations
+- [Rfq-Model](/ProqDocs-Web/entities/rfq-model/) - Parent RFQ for quotations
+- [QuotationResource](/ProqDocs-Web/entities/quotation-resource/) - API resource for serialization
 - PrivateRfqResource - API resource for private RFQs
 
 ...

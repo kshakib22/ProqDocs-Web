@@ -164,7 +164,7 @@ Model methods: `scopeSetActive()`, `scopeSetDraft()`, `scopeSetArchive()`
 
 ### Direct Dependencies
 
-- **[Vendor](/entities/vendor-domain)** - Products belong to vendors
+- **[Vendor](/ProqDocs-Web/entities/vendor-domain/)** - Products belong to vendors
 - **Category** - Products have many-to-many relationship with categories
 - **Unit** - Products have a unit (kg, pcs, box, etc.)
 - **Subscription** - Products can be featured in subscription slots

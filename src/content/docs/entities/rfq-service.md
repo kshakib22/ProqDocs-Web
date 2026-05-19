@@ -179,10 +179,10 @@ This service serves as the central hub for RFQ operations, ensuring data consist
 
 ## Cross-References
 
-- [Rfq-Model](/entities/rfq-model) - Data model for RFQs
-- [RfqController](/entities/rfqcontroller) - Controller that uses this service
-- [Quotation-Model](/entities/quotation-model) - Vendor responses to RFQs
-- [QuotationService](/entities/quotationservice) - Service for quotation operations
+- [Rfq-Model](/ProqDocs-Web/entities/rfq-model/) - Data model for RFQs
+- [RfqController](/ProqDocs-Web/entities/rfq-controller/) - Controller that uses this service
+- [Quotation-Model](/ProqDocs-Web/entities/quotation-model/) - Vendor responses to RFQs
+- [QuotationService](/ProqDocs-Web/entities/quotation-service/) - Service for quotation operations
 
 ## Usage Examples
 

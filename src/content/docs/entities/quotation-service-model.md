@@ -1,17 +1,17 @@
 ---
-name: QutationService-Model
+name: Quotation-Service-Model
 description: Laravel Eloquent model for Quotation Service line items - represents service/product breakdown within a quotation
 type: entity
-title: "QutationService Model"
+title: "Quotation Service Model"
 ---
 
-# QutationService Model
+# Quotation Service Model
 
 ## Architectural Purpose
 
-**⚠️ CRITICAL: This class has a typo in its name - "Qutation" instead of "Quotation". This is a breaking change waiting to happen.**
+**⚠️ CRITICAL: This class currently has a typo in its name in the codebase - "Qutation" instead of "Quotation".**
 
-`QutationService` represents line items within a quotation, allowing vendors to break down their quote into multiple service/product components. This model enables detailed cost breakdowns for complex quotations, supporting:
+`QuotationService` represents line items within a quotation, allowing vendors to break down their quote into multiple service/product components. This model enables detailed cost breakdowns for complex quotations, supporting:
 
 - **Service breakdown**: Multiple line items per quotation
 - **Itemized pricing**: Individual pricing for each component
@@ -45,29 +45,28 @@ public function quotation(): BelongsTo
 }
 ```
 
-- **Purpose:** Links to the parent quotation
+- **Purpose:** Links to the parent [Quotation Model](/ProqDocs-Web/entities/quotation-model/)
 - **Cardinality:** Many-to-one
 - **Usage:** Access quotation details and totals
 
-## Attribute Casts
-
-...
+## Auto-Calculation
+The model automatically calculates `total_price` on save:
+```php
+static::saving(function ($service) {
+    if ($service->unit_price && $service->quantity) {
+        $service->total_price = $service->unit_price * $service->quantity;
+    }
+});
+```
 
 ## Data Flow
 
 ### Creation Flow
-
-```
 1. Vendor creates quotation with service items
-2. QuotationService::create() instantiates QutationService models
-3. Model boot hook calculates total_price
+2. `QuotationService::create()` instantiates `QutationService` models
+3. Model boot hook calculates `total_price`
 4. Models save to database
-5. Quotation.services_charge updated with sum of totals
-```
-
-### Update Flow
-
-...
+5. `Quotation.services_charge` updated with sum of totals
 
 ## Tech Debt Summary
 
@@ -75,21 +74,28 @@ public function quotation(): BelongsTo
 |-------|----------|--------|-------------------|
 | **Class name typo** | **CRITICAL** | Breaking change risk | Rename to `QuotationServiceItem` |
 | **Table name typo** | **CRITICAL** | Breaking change risk | Rename to `quotation_service_items` |
+| Precision | MEDIUM | Potential drift | Use `bcmath` for financial precision in PHP |
 | No check constraint on totals | MEDIUM | Inconsistent data | Add `CHECK (total_price = unit_price * quantity)` |
 | No positive value validation | MEDIUM | Negative values possible | Add validation rules |
 | No FK cascade for soft-deleted quotations | MEDIUM | Orphaned data | Add cascade handling |
 | Auto-calculation bypassable | LOW | Data inconsistency | Use database triggers or computed columns |
 
-## Naming Issue Details
-
-...
-
 ## Cross-References
 
-- [Quotation-Model](/entities/quotation-model) - Parent quotation for this service
-- [QuotationService](/entities/quotationservice) - Business logic for quotation operations
-- [QuotationsServiceResource](/entities/quotationsserviceresource) - API resource for serialization
+- [Quotation Model](/ProqDocs-Web/entities/quotation-model/) - Parent quotation for this service
+- [Quotation Service](/ProqDocs-Web/entities/quotation-service/) - Business logic for quotation operations
+- [Quotations Service Resource](/ProqDocs-Web/entities/quotations-service-resource/) - API resource for serialization
 
 ## Usage Examples
 
-...
+### Creating a new service item
+```php
+$item = QutationService::create([
+    'quotation_id' => $quotation->id,
+    'name' => 'Installation Labor',
+    'unit' => 'hour',
+    'unit_price' => 50.00,
+    'quantity' => 10,
+]);
+// total_price is automatically set to 500.00
+```

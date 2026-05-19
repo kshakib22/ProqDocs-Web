@@ -60,11 +60,11 @@ use Illuminate\Support\Str;
 
 ## Cross-References
 
-- [Quotation-Model](/entities/quotation-model) - Data model for quotations
-- [QutationService-Model](/entities/qutationservice-model) - Line items for quotations
-- [Rfq-Model](/entities/rfq-model) - Parent RFQ for quotations
-- [QuotationController](/entities/quotationcontroller) - Controller that uses this service
-- [QuotationResource](/entities/quotationresource) - API resource for serialization
+- [Quotation-Model](/ProqDocs-Web/entities/quotation-model/) - Data model for quotations
+- [QutationService-Model](/ProqDocs-Web/entities/qutationservice-model/) - Line items for quotations
+- [Rfq-Model](/ProqDocs-Web/entities/rfq-model/) - Parent RFQ for quotations
+- [QuotationController](/ProqDocs-Web/entities/quotation-controller/) - Controller that uses this service
+- [QuotationResource](/ProqDocs-Web/entities/quotation-resource/) - API resource for serialization
 
 ## Usage Examples
 

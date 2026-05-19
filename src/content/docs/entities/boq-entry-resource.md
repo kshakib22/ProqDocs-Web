@@ -406,11 +406,11 @@ return new BoqSheetResource($sheet);
 ## Cross-References
 
 - BoqEntry-Model - Data model for entries
-- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet for entries
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Parent sheet for entries
 - BoqSheetMerge-Model - Merge configurations
-- [BoqEntryController](/entities/boqentrycontroller) - Controller that uses this resource
-- [QuotationResource](/entities/quotationresource) - Resource for quotation data
-- [RfqResource](/entities/rfqresource) - Resource for RFQ data
+- [BoqEntryController](/ProqDocs-Web/entities/boq-entry-controller/) - Controller that uses this resource
+- [QuotationResource](/ProqDocs-Web/entities/quotation-resource/) - Resource for quotation data
+- [RfqResource](/ProqDocs-Web/entities/rfq-resource/) - Resource for RFQ data
 - VendorResource - Resource for vendor data
 - BuyerResource - Resource for buyer data
 

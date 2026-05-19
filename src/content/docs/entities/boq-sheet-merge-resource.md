@@ -118,9 +118,9 @@ return new BoqSheetMergeResource($merge);
 ## Cross-References
 
 - BoqSheetMerge-Model - Data model for merges
-- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet for merges
-- [BoqEntry-Model](/entities/boqentrymodel) - Entries included in merges
-- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Service that creates merges
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Parent sheet for merges
+- [BoqEntry-Model](/ProqDocs-Web/entities/boq-entry-model/) - Entries included in merges
+- [BoqSheetMergeService](/ProqDocs-Web/entities/boq-sheet-merge-service/) - Service that creates merges
 
 ## Architecture Notes
 

@@ -207,10 +207,10 @@ return new BoqSheetResource($sheet);
 
 ## Cross-References
 
-- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
-- [BoqSheetController](/entities/boqsheetcontroller) - Controller that uses this resource
-- [BoqEntryResource](/entities/boqentryresource) - Resource for entry data
-- [BoqSheetMergeResource](/entities/boqsheetmergeresource) - Resource for merge data
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Data model for sheets
+- [BoqSheetController](/ProqDocs-Web/entities/boq-sheet-controller/) - Controller that uses this resource
+- [BoqEntryResource](/ProqDocs-Web/entities/boq-entry-resource/) - Resource for entry data
+- [BoqSheetMergeResource](/ProqDocs-Web/entities/boq-sheet-merge-resource/) - Resource for merge data
 - ProjectResource - Resource for project data
 
 ## Architecture Notes

@@ -13,17 +13,17 @@ The Project domain manages construction projects within the system. Projects are
 
 ### Core Components
 
-#### [Project Model](/entities/project-model)
+#### [Project Model](/ProqDocs-Web/entities/project-model/)
 - **Location**: `app/Models/Project.php` (64 lines)
 - **Relationships**:
-  - `buyer()` - BelongsTo [Buyer Model](/entities/buyer-model)
-  - `projectManager()` - BelongsTo [User Model](/entities/user-model)
-  - `boqEntries()` - HasMany [BoqEntry Model](/entities/boqentrymodel)
-  - `boqSheets()` - HasMany [BoqSheet Model](/entities/boqsheet-model)
-  - `rfqs()` - HasMany [Rfq Model](/entities/rfq-model)
+  - `buyer()` - BelongsTo [Buyer Model](/ProqDocs-Web/entities/buyer-model/)
+  - `projectManager()` - BelongsTo [User Model](/ProqDocs-Web/entities/user-model/)
+  - `boqEntries()` - HasMany [BoqEntry Model](/ProqDocs-Web/entities/boq-entry-model/)
+  - `boqSheets()` - HasMany [BoqSheet Model](/ProqDocs-Web/entities/boq-sheet-model/)
+  - `rfqs()` - HasMany [Rfq Model](/ProqDocs-Web/entities/rfq-model/)
 - **Features**: Soft deletes enabled
 
-#### [ProjectService](/entities/projectservice)
+#### [ProjectService](/ProqDocs-Web/entities/projectservice/)
 - **Location**: `app/Service/ProjectService.php` (183 lines)
 - **Methods**:
   - `listProjects()` - Paginated listing with search, filters, and RFQ counts
@@ -34,18 +34,18 @@ The Project domain manages construction projects within the system. Projects are
   - `prepareData()` - Prepares data with auto-generated project codes
   - `generateUniqueProjectCode()` - Generates unique codes (PRJ-XXX-XXXXX)
 
-#### [ProjectController](/entities/projectcontroller)
+#### [ProjectController](/ProqDocs-Web/entities/projectcontroller/)
 - **Location**: `app/Http/Controllers/Buyer/ProjectController.php` (93 lines)
 - **Endpoints**: index, store, show, update, destroy
 - **Authentication**: Uses `JWTAuth::user()` for buyer resolution
 - **Pattern**: Thin controller delegating to service layer
 
 #### Resources
-- `[ProjectResource](/entities/projectresource)` - Basic project data (40 lines)
-- `[ProjectResourceWithCompletion](/entities/projectresourcewithcompletion)` - Includes RFQ counts (41 lines)
+- `[ProjectResource](/ProqDocs-Web/entities/projectresource/)` - Basic project data (40 lines)
+- `[ProjectResourceWithCompletion](/ProqDocs-Web/entities/projectresourcewithcompletion/)` - Includes RFQ counts (41 lines)
 
 #### Validation
-- `[ProjectRequest](/entities/projectrequest)` - Form request with validation rules (93 lines)
+- `[ProjectRequest](/ProqDocs-Web/entities/projectrequest/)` - Form request with validation rules (93 lines)
 
 ### Database Schema
 
@@ -97,18 +97,18 @@ The Project domain manages construction projects within the system. Projects are
 ## Dependencies & Graph Links
 
 ### Community 11 (Cohesion: 0.07)
-- [ProjectController](/entities/projectcontroller)
-- [PurchaseOrderController](/entities/purchaseordercontroller)
+- [ProjectController](/ProqDocs-Web/entities/projectcontroller/)
+- [PurchaseOrderController](/ProqDocs-Web/entities/purchaseordercontroller/)
 - EnsureBoqSheetForProjects (Console Command)
-- [Buyer Model](/entities/buyer-model)
-- [ProjectResourceWithCompletion](/entities/projectresourcewithcompletion)
-- [ProjectSeeder](/entities/projectseeder)
-- [ProjectService](/entities/projectservice)
+- [Buyer Model](/ProqDocs-Web/entities/buyer-model/)
+- [ProjectResourceWithCompletion](/ProqDocs-Web/entities/projectresourcewithcompletion/)
+- [ProjectSeeder](/ProqDocs-Web/entities/projectseeder/)
+- [ProjectService](/ProqDocs-Web/entities/projectservice/)
 
 ### External Connections
-- Connects to [BoqSheet Model](/entities/boqsheet-model) via `boqSheets()` relationship
-- Connects to [BoqEntry Model](/entities/boqentrymodel) via `boqEntries()` relationship
-- Connects to [Rfq Model](/entities/rfq-model) via `rfqs()` relationship
-- Connects to [PurchaseOrderController](/entities/purchaseordercontroller) (cross-community bridge)
+- Connects to [BoqSheet Model](/ProqDocs-Web/entities/boq-sheet-model/) via `boqSheets()` relationship
+- Connects to [BoqEntry Model](/ProqDocs-Web/entities/boq-entry-model/) via `boqEntries()` relationship
+- Connects to [Rfq Model](/ProqDocs-Web/entities/rfq-model/) via `rfqs()` relationship
+- Connects to [PurchaseOrderController](/ProqDocs-Web/entities/purchaseordercontroller/) (cross-community bridge)
 
 ...

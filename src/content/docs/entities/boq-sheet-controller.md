@@ -18,7 +18,7 @@ title: "BoqSheetController"
 - **Export functionality**: Export sheets to Excel format
 - **Authorization**: Enforce buyer ownership and access control
 
-This controller delegates business logic to [BoqSheetService](/entities/boqsheetservice) and [BoqSheetMergeService](/entities/boqsheetmergeservice), following the thin controller pattern.
+This controller delegates business logic to [BoqSheetService](/ProqDocs-Web/entities/boq-sheet-service/) and [BoqSheetMergeService](/ProqDocs-Web/entities/boq-sheet-merge-service/), following the thin controller pattern.
 
 ## Controller Dependencies
 
@@ -500,11 +500,11 @@ private function currentBuyer()
 
 ## Cross-References
 
-- [BoqSheetService](/entities/boqsheetservice) - Business logic for sheet operations
-- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Business logic for merge operations
-- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
-- [BoqEntryController](/entities/boqentrycontroller) - Controller for entries
-- [BoqSheetResource](/entities/boqsheetresource) - API resource for serialization
+- [BoqSheetService](/ProqDocs-Web/entities/boq-sheet-service/) - Business logic for sheet operations
+- [BoqSheetMergeService](/ProqDocs-Web/entities/boq-sheet-merge-service/) - Business logic for merge operations
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Data model for sheets
+- [BoqEntryController](/ProqDocs-Web/entities/boq-entry-controller/) - Controller for entries
+- [BoqSheetResource](/ProqDocs-Web/entities/boq-sheet-resource/) - API resource for serialization
 
 ## Usage Examples
 

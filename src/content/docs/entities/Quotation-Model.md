@@ -1,5 +1,5 @@
 ---
-name: Quotation-Model
+name: quotation-model
 description: Laravel Eloquent model for Quotation - represents a vendor's response to an RFQ with pricing details and terms
 type: entity
 title: "Quotation Model"
@@ -15,7 +15,7 @@ title: "Quotation Model"
 - **Price negotiation**: Detailed breakdown of costs
 - **Vendor selection**: Buyer can compare and select the best quote
 - **Purchase order generation**: Accepted quotations become purchase orders
-- **Service breakdown**: Line items for complex quotes via [QutationService-Model](/entities/qutationservice-model)
+- **Service breakdown**: Line items for complex quotes via [Quotation Service Model](/ProqDocs-Web/entities/quotation-service-model/)
 
 ## Database Schema
 
@@ -34,7 +34,7 @@ title: "Quotation Model"
 | `unit_count` | decimal | Quantity being quoted | Number of units |
 | `unit_price` | decimal | Price per unit | Base price |
 | `sub_amount` | decimal | Subtotal | unit_count × unit_price |
-| `services_charge` | decimal | Service fees | Total of QutationService items |
+| `services_charge` | decimal | Service fees | Total of QuotationService items |
 | `total_amount` | decimal | Final total | Sum of all charges |
 | `vat_rate` | decimal | VAT percentage | Tax rate |
 | `tax_amount` | decimal | Calculated tax | Based on vat_rate |
@@ -173,9 +173,7 @@ public function quotationServices(): HasMany
 - **Cardinality:** One-to-many
 - **Usage:** Detailed cost breakdown for complex quotes
 
-**Note:** Uses [QutationService-Model](/entities/qutationservice-model) (note the typo in class name).
-
-...
+**Note:** Uses [Quotation Service Model](/ProqDocs-Web/entities/quotation-service-model/) (note the typo `Qutation` in the class name).
 
 ## Tech Debt Summary
 
@@ -187,14 +185,13 @@ public function quotationServices(): HasMany
 | Total calculation in service layer | MEDIUM | Inconsistency risk | Move to model or use computed column |
 | `withTrashed()` on relationships | LOW | Orphaned data risk | Review and fix cascade behavior |
 | No status transition validation | LOW | Invalid state transitions | Add validation rules |
+| **Typo in Model Name** | **HIGH** | `QutationService` is missing the 'o'. | Rename to `QuotationServiceItem` (the model, not the service class). |
 
 ## Cross-References
 
-- [Rfq-Model](/entities/rfq-model) - Parent RFQ for this quotation
-- [QutationService-Model](/entities/qutationservice-model) - Line items/service breakdown
-- [QuotationService](/entities/quotationservice) - Business logic for quotation operations
-- [QuotationController](/entities/quotationcontroller) - HTTP endpoint handler
-- [QuotationResource](/entities/quotationresource) - API resource for serialization
-- PurchaseList - Downstream purchase order
-
-...
+- [Rfq Model](/ProqDocs-Web/entities/rfq-model/) - Parent RFQ for this quotation
+- [Quotation Service Model](/ProqDocs-Web/entities/quotation-service-model/) - Line items/service breakdown
+- [Quotation Service](/ProqDocs-Web/entities/quotation-service/) - Business logic for quotation operations
+- [Quotation Controller](/ProqDocs-Web/entities/quotation-controller/) - HTTP endpoint handler
+- [Quotation Resource](/ProqDocs-Web/entities/quotation-resource/) - API resource for serialization
+- [Purchase List](/ProqDocs-Web/entities/purchase-list-domain/) - Downstream purchase order

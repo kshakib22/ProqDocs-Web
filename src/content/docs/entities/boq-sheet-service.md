@@ -374,10 +374,10 @@ return $this->success(
 
 ## Cross-References
 
-- [BoqSheet-Model](/entities/boqsheet-model) - Data model for sheets
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Data model for sheets
 - BoqEntry-Model - Data model for entries
 - BoqSheetMerge-Model - Data model for merges
-- [BoqSheetController](/entities/boqsheetcontroller) - Controller that uses this service
+- [BoqSheetController](/ProqDocs-Web/entities/boq-sheet-controller/) - Controller that uses this service
 - ServiceResponder - Trait for standardized responses
 
 ## Usage Examples

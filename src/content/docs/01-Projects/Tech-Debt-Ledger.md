@@ -457,7 +457,7 @@ Master checklist of actionable bugs, raw SQL risks, missing indexes, and Postgre
 
 ## Related Files
 
-- [Payment-Domain](/entities/payment-domain)
-- [Project-Domain](/entities/project-domain)
-- [Vendor-Domain](/entities/vendor-domain)
-- [Delivery-Domain](/entities/delivery-domain)
+- [Payment-Domain](/ProqDocs-Web/entities/payment-domain/)
+- [Project-Domain](/ProqDocs-Web/entities/project-domain/)
+- [Vendor-Domain](/ProqDocs-Web/entities/vendor-domain/)
+- [Delivery-Domain](/ProqDocs-Web/entities/delivery-domain/)
