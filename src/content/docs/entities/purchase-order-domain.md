@@ -7,7 +7,7 @@ title: "PurchaseOrder Domain"
 
 ## Overview
 
-The PurchaseOrder Domain manages the procurement lifecycle from order creation through delivery confirmation. It serves as the central entity connecting [Buyer-Domain](/entities/buyer-domain), [Vendor-Domain](/entities/vendor-domain), [Product-Domain](/entities/product-domain), [RFQ-Quotation-Domain](/entities/rfq-quotation-domain), and [PurchaseList-Domain](/entities/purchaselist-domain).
+The PurchaseOrder Domain manages the procurement lifecycle from order creation through delivery confirmation. It serves as the central entity connecting [Buyer-Domain](/ProqDocs-Web/entities/buyer-domain/), [Vendor-Domain](/ProqDocs-Web/entities/vendor-domain/), [Product-Domain](/ProqDocs-Web/entities/product-domain/), [RFQ-Quotation-Domain](/ProqDocs-Web/entities/rfq-quotation-domain/), and [PurchaseList-Domain](/ProqDocs-Web/entities/purchase-list-domain/).
 
 ## Current Architecture & Flow
 
@@ -27,10 +27,10 @@ The central entity representing a formal purchase order sent to a vendor.
 - `receipt_time`, `delivery_completion_time`, `confirm_time` - Timestamps for status transitions
 
 **Relationships:**
-- `belongsTo` [Project](/entities/project-model), [Vendor](/entities/vendor-model), [Buyer](/entities/buyer-model)
-- `hasMany` [PurchaseList](/entities/purchaselist-model), [PurchaseOrderPayment](/entities/purchaseorderpayment-model), [PurchaseOrderTransactionDetail](/entities/purchaseordertransactiondetail-model), [PurchaseOrderPaymentInfo](/entities/purchaseorderpaymentinfo-model)
+- `belongsTo` [Project](/ProqDocs-Web/entities/project-model/), [Vendor](/ProqDocs-Web/entities/vendor-model/), [Buyer](/ProqDocs-Web/entities/buyer-model/)
+- `hasMany` [PurchaseList](/ProqDocs-Web/entities/purchaselist-model/), [PurchaseOrderPayment](/ProqDocs-Web/entities/purchaseorderpayment-model/), [PurchaseOrderTransactionDetail](/ProqDocs-Web/entities/purchaseordertransactiondetail-model/), [PurchaseOrderPaymentInfo](/ProqDocs-Web/entities/purchaseorderpaymentinfo-model/)
 - `hasOne` DeliveryDetail
-- `hasManyThrough` [Shipment](/entities/shipment-model)
+- `hasManyThrough` [Shipment](/ProqDocs-Web/entities/shipment-model/)
 
 **Query Scopes:**
 - `scopeStatusCounts()` - Aggregates order status counts
@@ -54,8 +54,8 @@ Represents payment records for purchase orders.
 - `metadata` - JSON for gateway-specific data
 
 **Relationships:**
-- `belongsTo` [PurchaseOrder](/entities/purchaseorder-model), [PaymentType](/entities/paymenttype-model), [Buyer](/entities/buyer-model)
-- `belongsTo` [PurchaseOrderTransactionDetail](/entities/purchaseordertransactiondetail-model) (one-to-one)
+- `belongsTo` [PurchaseOrder](/ProqDocs-Web/entities/purchaseorder-model/), [PaymentType](/ProqDocs-Web/entities/paymenttype-model/), [Buyer](/ProqDocs-Web/entities/buyer-model/)
+- `belongsTo` [PurchaseOrderTransactionDetail](/ProqDocs-Web/entities/purchaseordertransactiondetail-model/) (one-to-one)
 
 **Helper Methods:**
 - `isCompleted()` - Checks if payment status is completed
@@ -77,8 +77,8 @@ Tracks individual payment transactions with verification status.
 - `PAYMENT_METHODS` - Supported methods: SSL Commerce, Bank Transfer, Cash, Cheque, BEFTN, RTGS, NPSB
 
 **Relationships:**
-- `hasOne` [PurchaseOrderPayment](/entities/purchaseorderpayment-model)
-- `belongsTo` [PurchaseOrder](/entities/purchaseorder-model), [PaymentType](/entities/paymenttype-model), [Buyer](/entities/buyer-model)
+- `hasOne` [PurchaseOrderPayment](/ProqDocs-Web/entities/purchaseorderpayment-model/)
+- `belongsTo` [PurchaseOrder](/ProqDocs-Web/entities/purchaseorder-model/), [PaymentType](/ProqDocs-Web/entities/paymenttype-model/), [Buyer](/ProqDocs-Web/entities/buyer-model/)
 
 **Helper Methods:**
 - `isSuccess()` - Checks status + verification
@@ -93,7 +93,7 @@ Tracks individual payment transactions with verification status.
 Stores verified payment information for due amount calculations.
 
 **Relationships:**
-- `belongsTo` [PurchaseOrder](/entities/purchaseorder-model)
+- `belongsTo` [PurchaseOrder](/ProqDocs-Web/entities/purchaseorder-model/)
 
 ...
 
@@ -102,12 +102,12 @@ Stores verified payment information for due amount calculations.
 ### Domain Dependencies
 - Buyer-Domain - PO owner
 - Vendor-Domain - PO recipient
-- [Project-Domain](/entities/project-domain) - Associated project
-- [Product-Domain](/entities/product-domain) - Items being purchased
-- [RFQ-Quotation-Domain](/entities/rfq-quotation-domain) - Source of pricing
-- [PurchaseList-Domain](/entities/purchaselist-domain) - Line items
-- [Payment-Domain](/entities/payment-domain) - Payment processing
-- [Delivery-Domain](/entities/delivery-domain) - Shipment tracking
+- [Project-Domain](/ProqDocs-Web/entities/project-domain/) - Associated project
+- [Product-Domain](/ProqDocs-Web/entities/product-domain/) - Items being purchased
+- [RFQ-Quotation-Domain](/ProqDocs-Web/entities/rfq-quotation-domain/) - Source of pricing
+- [PurchaseList-Domain](/ProqDocs-Web/entities/purchase-list-domain/) - Line items
+- [Payment-Domain](/ProqDocs-Web/entities/payment-domain/) - Payment processing
+- [Delivery-Domain](/ProqDocs-Web/entities/delivery-domain/) - Shipment tracking
 
 ...
 - `confirmDelivery()` updates shipments without DB transaction

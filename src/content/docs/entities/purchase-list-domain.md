@@ -5,7 +5,7 @@ title: "PurchaseList-Domain"
 ---
 # PurchaseList-Domain
 
-The PurchaseList domain manages the procurement cart where buyers accumulate items for purchase orders. Items can be added from RFQs, quotations, or directly from BOQ entries. This domain bridges the [RFQ-Quotation-Domain](/entities/rfq-quotation-domain) and [BoqEntry-BoqSheet-Domain](/entities/boqentry-boqsheet-domain) with the purchase order workflow.
+The PurchaseList domain manages the procurement cart where buyers accumulate items for purchase orders. Items can be added from RFQs, quotations, or directly from BOQ entries. This domain bridges the [RFQ-Quotation-Domain](/ProqDocs-Web/entities/rfq-quotation-domain/) and [BoqEntry-BoqSheet-Domain](/ProqDocs-Web/entities/boq-entry-boq-sheet-domain/) with the purchase order workflow.
 
 ## Current Architecture & Flow
 
@@ -64,20 +64,20 @@ PurchaseOrder → has many → PurchaseList
 ## Dependencies & Graph Links
 
 ### Models
-- [PurchaseList Model](/entities/purchaselist-model) - Purchase list entity with scopes
-- [PurchaseOrder Model](/entities/purchaseorder-model) - Parent purchase order with status counts
+- [PurchaseList Model](/ProqDocs-Web/entities/purchaselist-model/) - Purchase list entity with scopes
+- [PurchaseOrder Model](/ProqDocs-Web/entities/purchaseorder-model/) - Parent purchase order with status counts
 
 ### Services
-- [PurchaseListService](/entities/purchaselistservice) - Purchase list business logic (451 lines)
+- [PurchaseListService](/ProqDocs-Web/entities/purchaselistservice/) - Purchase list business logic (451 lines)
 
 ### Controllers
-- [PurchaseOrderController](/entities/purchaseordercontroller) - Purchase order endpoints that manage purchase lists
+- [PurchaseOrderController](/ProqDocs-Web/entities/purchaseordercontroller/) - Purchase order endpoints that manage purchase lists
 
 ### Resources
-- [PurchaseListResource](/entities/purchaselistresource) - Purchase list API transformation with image handling
+- [PurchaseListResource](/ProqDocs-Web/entities/purchaselistresource/) - Purchase list API transformation with image handling
 
 ### Related Domains
-- [RFQ-Quotation-Domain](/entities/rfq-quotation-domain) - Source of RFQ-based purchase lists
-- [BoqEntry-BoqSheet-Domain](/entities/boqentry-boqsheet-domain) - Source of BOQ-based purchase lists
+- [RFQ-Quotation-Domain](/ProqDocs-Web/entities/rfq-quotation-domain/) - Source of RFQ-based purchase lists
+- [BoqEntry-BoqSheet-Domain](/ProqDocs-Web/entities/boq-entry-boq-sheet-domain/) - Source of BOQ-based purchase lists
 
 ...

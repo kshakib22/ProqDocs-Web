@@ -179,10 +179,10 @@ protected static function booted(): void
 
 ## Cross-References
 
-- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet that owns this merge
-- [BoqSheetMergeService](/entities/boqsheetmergeservice) - Business logic for merge operations
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Parent sheet that owns this merge
+- [BoqSheetMergeService](/ProqDocs-Web/entities/boq-sheet-merge-service/) - Business logic for merge operations
 - BoqEntry-Model - Entries affected by merge
-- [BoqSheetController](/entities/boqsheetcontroller) - HTTP endpoint handler
+- [BoqSheetController](/ProqDocs-Web/entities/boq-sheet-controller/) - HTTP endpoint handler
 
 ## Usage Examples
 

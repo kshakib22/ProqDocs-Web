@@ -15,7 +15,7 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Services
 
-- **[ElasticService](/entities/elasticservice)** - Core Elasticsearch service (1012 lines). Handles:
+- **[ElasticService](/ProqDocs-Web/entities/elasticservice/)** - Core Elasticsearch service (1012 lines). Handles:
   - Index management (products, vendors, architectural/interior slot products)
   - Product and vendor indexing with boost scores
   - Public catalog search with filters, pagination, and sorting
@@ -25,7 +25,7 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Controllers
 
-- **[ElasticsearchHomeController](/entities/elasticsearchhomecontroller)** - Public search endpoints (400 lines):
+- **[ElasticsearchHomeController](/ProqDocs-Web/entities/elasticsearchhomecontroller/)** - Public search endpoints (400 lines):
   - `getProducts()` - Search products with filters and sorting
   - `getVendors()` - Search vendors with filters and sorting
   - `getVendorProducts()` - Get products for a specific vendor
@@ -35,13 +35,13 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 #### Console Commands
 
-- **[IndexSubscribedProductsToElasticsearch](/entities/indexsubscribedproductstoelasticsearch)** - Index all products and vendors with subscription boost scores
-- **[RebuildProjectElasticsearchIndexes](/entities/rebuildprojectelasticsearchindexes)** - Rebuild all Elasticsearch indexes with environment-safe names
+- **[IndexSubscribedProductsToElasticsearch](/ProqDocs-Web/entities/indexsubscribedproductstoelasticsearch/)** - Index all products and vendors with subscription boost scores
+- **[RebuildProjectElasticsearchIndexes](/ProqDocs-Web/entities/rebuildprojectelasticsearchindexes/)** - Rebuild all Elasticsearch indexes with environment-safe names
 
 #### Tests
 
-- **[ElasticsearchHomeControllerTest](/entities/elasticsearchhomecontrollertest)** - Tests for Elasticsearch home controller endpoints
-- **[ProductElasticsearchLifecycleTest](/entities/productelasticsearchlifecycletest)** - Tests for product Elasticsearch sync lifecycle
+- **[ElasticsearchHomeControllerTest](/ProqDocs-Web/entities/elasticsearchhomecontrollertest/)** - Tests for Elasticsearch home controller endpoints
+- **[ProductElasticsearchLifecycleTest](/ProqDocs-Web/entities/productelasticsearchlifecycletest/)** - Tests for product Elasticsearch sync lifecycle
 
 ### Index Structure
 
@@ -155,12 +155,12 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
    - Indexes product document with all fields
 
 2. **Sync on Changes**: `ElasticService::syncProductToIndex()`
-   - Called by [ProductService](/entities/productservice) on create/update
+   - Called by [ProductService](/ProqDocs-Web/entities/productservice/) on create/update
    - Loads missing relationships
    - Upserts product document
 
 3. **Remove on Delete**: `ElasticService::removeProductFromIndex()`
-   - Called by [ProductService](/entities/productservice) on delete
+   - Called by [ProductService](/ProqDocs-Web/entities/productservice/) on delete
    - Deletes product document (ignores 404)
 
 4. **Bulk Indexing**: `ElasticService::indexAllProducts()`
@@ -203,18 +203,18 @@ The Elasticsearch domain is the 5th most interconnected domain in the applicatio
 
 ### Direct Dependencies
 
-- **[Product](/entities/product)** - Products are indexed and searched
+- **[Product](/ProqDocs-Web/entities/product/)** - Products are indexed and searched
 - **Vendor** - Vendors are indexed and searched
-- **[Category](/entities/category)** - Used for filtering in search
-- **[VendorType](/entities/vendortype)** - Used for filtering in vendor search
-- **[Subscription](/entities/subscription)** - Provides boost scores for products and vendors
-- **[Package](/entities/package)** - Determines slot-based product indexing
+- **[Category](/ProqDocs-Web/entities/category/)** - Used for filtering in search
+- **[VendorType](/ProqDocs-Web/entities/vendortype/)** - Used for filtering in vendor search
+- **[Subscription](/ProqDocs-Web/entities/subscription/)** - Provides boost scores for products and vendors
+- **[Package](/ProqDocs-Web/entities/package/)** - Determines slot-based product indexing
 
 ### Cross-Domain Connections
 
-- **[HomeController](/entities/homecontroller)** - Fallback when Elasticsearch fails
-- **[ProductService](/entities/productservice)** - Triggers Elasticsearch sync on product changes
-- **[SubscriptionSlotScoreService](/entities/subscriptionslotscoreservice)** - Syncs boost scores before indexing
+- **[HomeController](/ProqDocs-Web/entities/homecontroller/)** - Fallback when Elasticsearch fails
+- **[ProductService](/ProqDocs-Web/entities/productservice/)** - Triggers Elasticsearch sync on product changes
+- **[SubscriptionSlotScoreService](/ProqDocs-Web/entities/subscriptionslotscoreservice/)** - Syncs boost scores before indexing
 
 ## Red Flags & Tech Debt
 

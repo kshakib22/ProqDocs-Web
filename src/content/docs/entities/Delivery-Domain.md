@@ -17,8 +17,8 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 **Purpose**: Represents the delivery plan for a purchase order, containing financial summaries and shipment information.
 
 **Relationships**:
-- `purchaseOrder()` → [PurchaseOrder](/entities/purchaseorder-domain) (BelongsTo)
-- `shipments()` → [Shipment](/entities/shipment-model) (HasMany)
+- `purchaseOrder()` → [PurchaseOrder](/ProqDocs-Web/entities/purchase-order-domain/) (BelongsTo)
+- `shipments()` → [Shipment](/ProqDocs-Web/entities/shipment-model/) (HasMany)
 
 **Key Methods**:
 - `calculateFinancialSummary()` - Recalculates all delivery-related charges and updates both DeliveryDetail and PurchaseOrder
@@ -28,7 +28,7 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 - `delivery_cost` - Sum of all shipment charges
 - `loading_unloading_charge` - Sum of all loading/unloading charges
 - `services_charge` - Sum of all services charges from shipments
-- `platform_fee` - Calculated percentage based on total amount using [PlatformFeeSlab](/entities/platformfeeslab)
+- `platform_fee` - Calculated percentage based on total amount using [PlatformFeeSlab](/ProqDocs-Web/entities/platform-fee-slab/)
 - `tax_amount` - Tax from purchase order
 - `total_amount` - Final total including all charges
 - `status` - Current delivery status
@@ -47,8 +47,8 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 **Purpose**: Represents a single shipment within a delivery detail, containing delivery date, charges, and status.
 
 **Relationships**:
-- `deliveryDetail()` → [DeliveryDetail](/entities/deliverydetail-model) (BelongsTo)
-- `shipmentItems()` → [ShipmentItem](/entities/shipmentitem-model) (HasMany)
+- `deliveryDetail()` → [DeliveryDetail](/ProqDocs-Web/entities/delivery-detail-model/) (BelongsTo)
+- `shipmentItems()` → [ShipmentItem](/ProqDocs-Web/entities/shipment-item-model/) (HasMany)
 
 **Key Fields**:
 - `expected_delivery_date` - Planned delivery date
@@ -74,9 +74,9 @@ The Delivery domain manages the shipment and delivery lifecycle of purchase orde
 **Purpose**: Represents individual items within a shipment, linking to purchase lists and RFQs.
 
 **Relationships**:
-- `shipment()` → [Shipment](/entities/shipment-model) (BelongsTo)
-- `purchaseList()` → [PurchaseList](/entities/purchaselist-domain) (BelongsTo)
-- `rfq()` → [Rfq](/entities/rfq-quotation-domain) (BelongsTo)
+- `shipment()` → [Shipment](/ProqDocs-Web/entities/shipment-model/) (BelongsTo)
+- `purchaseList()` → [PurchaseList](/ProqDocs-Web/entities/purchase-list-domain/) (BelongsTo)
+- `rfq()` → [Rfq](/ProqDocs-Web/entities/rfq-quotation-domain/) (BelongsTo)
 
 **Key Fields**:
 - `quantity` - Quantity for this shipment (can be partial from purchase list)
@@ -165,7 +165,7 @@ Saves payment information for the purchase order.
 - `show(DeliveryDetail $deliveryDetail)` - View a specific delivery detail
 
 **Red Flags**:
-- Manual authorization checks instead of using [DeliveryDetailPolicy](/entities/deliverydetailpolicy)
+- Manual authorization checks instead of using [DeliveryDetailPolicy](/ProqDocs-Web/entities/delivery-detail-policy/)
 - No caching for frequently accessed delivery details
 - No rate limiting on endpoints
 
@@ -187,7 +187,7 @@ Saves payment information for the purchase order.
 - Line 98-100: Updates all shipments without database transaction
 - No validation that all items are covered before confirming shipments
 - No check for minimum shipment requirements
-- Manual authorization checks instead of using [DeliveryDetailPolicy](/entities/deliverydetailpolicy)
+- Manual authorization checks instead of using [DeliveryDetailPolicy](/ProqDocs-Web/entities/delivery-detail-policy/)
 
 ---
 
@@ -239,7 +239,7 @@ Saves payment information for the purchase order.
 
 **Columns**:
 - `id` - Primary key
-- `purchase_order_id` - Foreign key to [purchase_orders](/entities/purchaseorder-domain)
+- `purchase_order_id` - Foreign key to [purchase_orders](/ProqDocs-Web/entities/purchase-order-domain/)
 - `sub_total` - Base amount
 - `delivery_cost` - Total shipping charges
 - `loading_unloading_charge` - Total loading/unloading charges
@@ -263,7 +263,7 @@ Saves payment information for the purchase order.
 
 **Columns**:
 - `id` - Primary key
-- `delivery_detail_id` - Foreign key to [delivery_details](/entities/deliverydetail-model)
+- `delivery_detail_id` - Foreign key to [delivery_details](/ProqDocs-Web/entities/delivery-detail-model/)
 - `expected_delivery_date` - Planned delivery date
 - `shipment_charge` - Shipping cost
 - `loading_unloading_charge` - Loading/unloading cost
@@ -285,8 +285,8 @@ Saves payment information for the purchase order.
 **Columns**:
 - `id` - Primary key
 - `shipment_id` - Foreign key to shipments
-- `purchase_list_id` - Foreign key to [purchase_lists](/entities/purchaselist-domain)
-- `rfq_id` - Foreign key to [rfqs](/entities/rfq-quotation-domain) (nullable)
+- `purchase_list_id` - Foreign key to [purchase_lists](/ProqDocs-Web/entities/purchase-list-domain/)
+- `rfq_id` - Foreign key to [rfqs](/ProqDocs-Web/entities/rfq-quotation-domain/) (nullable)
 - `quantity` - Shipment quantity
 - `services` - JSON array of services
 - `created_at`, `updated_at` - Timestamps
@@ -300,10 +300,10 @@ Saves payment information for the purchase order.
 
 ## Cross-References
 
-- [PurchaseOrder-Domain](/entities/purchaseorder-domain) - Delivery details are created from purchase orders
-- [PurchaseList-Domain](/entities/purchaselist-domain) - Shipment items reference purchase lists
-- [RFQ-Quotation-Domain](/entities/rfq-quotation-domain) - Shipment items reference RFQs for tracking
-- [Payment-Domain](/entities/payment-domain) - Payment infos are saved with delivery details
+- [PurchaseOrder-Domain](/ProqDocs-Web/entities/purchase-order-domain/) - Delivery details are created from purchase orders
+- [PurchaseList-Domain](/ProqDocs-Web/entities/purchase-list-domain/) - Shipment items reference purchase lists
+- [RFQ-Quotation-Domain](/ProqDocs-Web/entities/rfq-quotation-domain/) - Shipment items reference RFQs for tracking
+- [Payment-Domain](/ProqDocs-Web/entities/payment-domain/) - Payment infos are saved with delivery details
 
 ---
 

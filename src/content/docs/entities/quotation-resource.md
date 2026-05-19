@@ -140,7 +140,7 @@ Quotation::with(['vendor', 'rfq'])->get();
 
 ## See Also
 
-- [QuotationService](/entities/quotationservice) - Service line items
+- [QuotationService](/ProqDocs-Web/entities/quotation-service/) - Service line items
 - Document Model: Supporting documents
-- [RfqResource](/entities/rfqresource): Related RFQ API resource
+- [RfqResource](/ProqDocs-Web/entities/rfq-resource/): Related RFQ API resource
 - VendorResource: Related vendor API resource

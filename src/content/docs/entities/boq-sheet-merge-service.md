@@ -213,11 +213,11 @@ A merge must span at least 2 cells:
 
 ## Cross-References
 
-- [BoqSheetMerge-Model](/entities/boqsheetmergemodel) - Data model for merges
-- [BoqSheet-Model](/entities/boqsheet-model) - Parent sheet for merges
+- [BoqSheetMerge-Model](/ProqDocs-Web/entities/boq-sheet-merge-model/) - Data model for merges
+- [BoqSheet-Model](/ProqDocs-Web/entities/boq-sheet-model/) - Parent sheet for merges
 - BoqEntry-Model - Entries included in merges
-- [BoqSheetController](/entities/boqsheetcontroller) - Controller that uses this service
-- [BoqSheetMergeResource](/entities/boqsheetmergeresource) - API resource for serialization
+- [BoqSheetController](/ProqDocs-Web/entities/boq-sheet-controller/) - Controller that uses this service
+- [BoqSheetMergeResource](/ProqDocs-Web/entities/boq-sheet-merge-resource/) - API resource for serialization
 
 ## Usage Examples
 
